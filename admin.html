@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oversabijojo | Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --admin-navy: #1a252f;
+      --admin-blue: #2c3e50;
+      --temu-orange: #fb5200;
+      --bg: #f8f9fa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: #333; padding-bottom: 40px; }
+
+    header {
+      background: var(--admin-navy);
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .container { padding: 15px; max-width: 900px; margin: 0 auto; }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--admin-navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Forms */
+    .form-group { margin-bottom: 10px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+    .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn-primary { background: var(--temu-orange); color: #fff; }
+    .btn-dark { background: var(--admin-navy); color: #fff; }
+
+    /* Orders List */
+    .order-box {
+      border: 1px solid #eee;
+      border-left: 4px solid var(--temu-orange);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+
+    .order-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 6px; }
+    .order-details { font-size: 12px; color: #555; line-height: 1.5; }
+
+    .badge-gps {
+      background: #e7f3ff;
+      color: #0066cc;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 6px;
+      text-decoration: none;
+    }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
+    th { background: #f0f0f0; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="font-size: 18px; font-weight: 800;">Oversabijojo | Admin Control</div>
+    <span style="font-size: 12px; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 12px;">Admin Mode</span>
+  </header>
+
+  <div class="container">
+
+    <!-- Incoming Delivery Requests -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-truck-ramp-box" style="color: var(--temu-orange);"></i> Incoming Order Requests & Location</div>
+      <div id="ordersContainer">
+        <p style="font-size: 12px; color: #777;">No pending customer order requests.</p>
+      </div>
+    </div>
+
+    <!-- Add / Edit Products -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-cart-plus"></i> Upload / Add New Product</div>
+      <div class="form-group">
+        <label>Product Title</label>
+        <input type="text" id="pTitle" class="form-control" placeholder="e.g. Wireless Gaming Mouse">
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Price (₦)</label>
+          <input type="number" id="pPrice" class="form-control" placeholder="10000">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Original Price (₦)</label>
+          <input type="number" id="pOldPrice" class="form-control" placeholder="15000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="text" id="pImg" class="form-control" placeholder="https://example.com/image.jpg">
+      </div>
+      <button class="btn btn-primary" onclick="addProduct()">Publish Product to Store</button>
+    </div>
+
+    <!-- Current Products Table -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-boxes-stacked"></i> Live Store Inventory</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryTable">
+          <!-- Live items populated here -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script>
+    // Live Inventory Mock Data
+    let products = [
+      { id: 1, name: "Smart Bluetooth Earbuds Super Bass", price: 8500 },
+      { id: 2, name: "Luxury Quartz Wrist Watch Water-Resistant", price: 14200 },
+      { id: 3, name: "Wireless Fast Charging Power Bank 20000mAh", price: 12000 },
+      { id: 4, name: "Portable Mini Blender for Juices", price: 9500 }
+    ];
+
+    function renderInventory() {
+      const tbody = document.getElementById('inventoryTable');
+      tbody.innerHTML = products.map((p, index) => `
+        <tr>
+          <td><b>${p.name}</b></td>
+          <td>₦${p.price.toLocaleString()}</td>
+          <td>
+            <button style="background:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;" onclick="deleteProduct(${index})">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function addProduct() {
+      const title = document.getElementById('pTitle').value;
+      const price = document.getElementById('pPrice').value;
+
+      if (!title || !price) return alert('Please enter product title and price.');
+
+      products.push({ id: Date.now(), name: title, price: Number(price) });
+      renderInventory();
+      alert('Product added successfully!');
+
+      document.getElementById('pTitle').value = '';
+      document.getElementById('pPrice').value = '';
+    }
+
+    function deleteProduct(index) {
+      if (confirm('Delete this product from your live store?')) {
+        products.splice(index, 1);
+        renderInventory();
+      }
+    }
+
+    // Init
+    renderInventory();
+  </script>
+</body>
+</html>
