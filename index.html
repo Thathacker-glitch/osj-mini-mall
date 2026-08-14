@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OVERSABIJOJO - Accessories & Jewelry</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oversabijojo | Premium Deals</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-color: #0b0f19;
-      --card-bg: #151c2c;
-      --accent-red: #e63946;
-      --accent-green: #2ec4b6;
-      --text-main: #ffffff;
-      --text-sub: #94a3b8;
-      --border-color: #2a354d;
+      --temu-orange: #fb5200;
+      --temu-yellow: #ffc200;
+      --temu-bg: #f4f4f4;
+      --text-dark: #222222;
+      --text-gray: #777777;
     }
 
     * {
@@ -20,266 +20,226 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      padding-bottom: 90px;
+      background-color: var(--temu-bg);
+      color: var(--text-dark);
+      padding-bottom: 70px;
     }
 
-    /* Header */
+    /* Top Sticky Header */
     header {
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(11, 15, 25, 0.9);
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
+      background: #ffffff;
+      padding: 10px 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .brand-logo {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--accent-red);
-      letter-spacing: 1px;
-    }
-
-    .brand-sub {
-      font-size: 11px;
-      color: var(--text-sub);
-      display: block;
-    }
-
-    /* Hero Banner */
-    .hero-banner {
-      margin: 16px;
-      padding: 20px;
-      background: linear-gradient(135deg, #d62828 0%, #003049 100%);
-      border-radius: 16px;
-      box-shadow: 0 10px 20px rgba(230, 57, 70, 0.2);
-    }
-
-    .hero-tag {
-      background: #fff;
-      color: #000;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 10px;
-      display: inline-block;
-      margin-bottom: 8px;
-    }
-
-    .hero-banner h2 {
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-
-    .hero-banner p {
-      font-size: 12px;
-      opacity: 0.9;
-    }
-
-    /* Search & Filters */
-    .search-box {
-      margin: 0 16px 16px 16px;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      background: var(--card-bg);
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-    }
-
-    .categories-bar {
+    .header-top {
       display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 0 16px 16px 16px;
-      scrollbar-width: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .categories-bar::-webkit-scrollbar {
-      display: none;
+    .logo {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--temu-orange);
+      letter-spacing: -0.5px;
     }
 
-    .cat-chip {
-      padding: 8px 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
+    .search-bar {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: #f0f0f0;
       border-radius: 20px;
-      font-size: 13px;
-      white-space: nowrap;
-      color: var(--text-sub);
+      padding: 8px 14px;
+      font-size: 14px;
+      color: var(--text-gray);
+    }
+
+    .search-bar input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      margin-left: 8px;
+    }
+
+    .header-cart-icon {
+      position: relative;
+      font-size: 20px;
+      color: #333;
       cursor: pointer;
     }
 
-    .cat-chip.active {
-      background: var(--accent-red);
-      color: #fff;
-      border-color: var(--accent-red);
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      background: var(--temu-orange);
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 2px 5px;
     }
 
-    /* Feed Grid */
+    /* Category Chips */
+    .categories {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 10px 15px;
+      background: #fff;
+      gap: 10px;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar { display: none; }
+
+    .chip {
+      padding: 6px 14px;
+      background: #f0f0f0;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    .chip.active {
+      background: var(--temu-orange);
+      color: white;
+    }
+
+    /* Hero Promo Banner */
+    .promo-banner {
+      margin: 12px 15px;
+      background: linear-gradient(135deg, #fb5200, #ff0055);
+      border-radius: 12px;
+      padding: 16px;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(251, 82, 0, 0.25);
+    }
+
+    .promo-text h2 { font-size: 18px; font-weight: 800; }
+    .promo-text p { font-size: 12px; opacity: 0.9; margin-top: 4px; }
+
+    /* Product Grid */
+    .section-title {
+      padding: 10px 15px 5px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
     .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      padding: 0 16px;
+      gap: 10px;
+      padding: 10px 15px;
     }
 
     .product-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      position: relative;
+    }
+
+    .product-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .product-details {
       padding: 10px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .product-image {
-      width: 100%;
-      height: 130px;
-      border-radius: 10px;
-      object-fit: cover;
-      background: #0b0f19;
-      margin-bottom: 8px;
+      flex: 1;
     }
 
     .product-title {
       font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 4px;
       line-height: 1.3;
+      font-weight: 500;
+      height: 34px;
+      overflow: hidden;
+      margin-bottom: 6px;
     }
 
-    .product-price {
-      color: var(--accent-red);
-      font-weight: 700;
-      font-size: 15px;
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
       margin-bottom: 8px;
     }
 
-    .offer-btn {
-      width: 100%;
-      padding: 10px;
-      background: var(--accent-red);
+    .current-price {
+      color: var(--temu-orange);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .original-price {
+      color: var(--text-gray);
+      font-size: 11px;
+      text-decoration: line-through;
+    }
+
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 7px 0;
       border: none;
-      color: white;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
+      text-align: center;
     }
 
-    /* Modals & Panels */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 200;
-      justify-content: center;
-      align-items: flex-end;
+    .btn-cart {
+      background: #fff3ed;
+      color: var(--temu-orange);
+      border: 1px solid var(--temu-orange);
     }
 
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: var(--card-bg);
-      width: 100%;
-      max-width: 500px;
-      border-radius: 20px 20px 0 0;
-      padding: 20px;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .chat-box {
-      height: 180px;
-      overflow-y: auto;
-      border: 1px solid var(--border-color);
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      background: #0b0f19;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .chat-msg {
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 12px;
-      max-width: 80%;
-    }
-
-    .chat-msg.bot {
-      background: #2a354d;
-      align-self: flex-start;
-    }
-
-    .chat-msg.user {
-      background: var(--accent-red);
-      align-self: flex-end;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .input-row input {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background: #0b0f19;
+    .btn-buy {
+      background: var(--temu-orange);
       color: #fff;
     }
 
-    /* Admin Panel */
-    .admin-form label {
-      font-size: 12px;
-      color: var(--text-sub);
-      display: block;
-      margin-top: 10px;
-    }
-
-    .admin-form input, .admin-form select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 4px;
-      background: #0b0f19;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: #fff;
-    }
-
-    /* Bottom Navigation Bar */
+    /* Floating Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
-      width: 100%;
-      background: rgba(21, 28, 44, 0.95);
-      border-top: 1px solid var(--border-color);
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #fff;
       display: flex;
       justify-content: space-around;
-      padding: 12px 0;
-      backdrop-filter: blur(10px);
+      align-items: center;
+      border-top: 1px solid #eaeaea;
       z-index: 100;
     }
 
@@ -287,252 +247,461 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      color: var(--text-sub);
-      font-size: 11px;
-      cursor: pointer;
+      color: var(--text-gray);
+      font-size: 10px;
+      text-decoration: none;
+      gap: 3px;
     }
 
     .nav-item.active {
-      color: var(--accent-red);
+      color: var(--temu-orange);
+      font-weight: 700;
     }
 
-    .nav-icon {
-      font-size: 18px;
-      margin-bottom: 2px;
+    .nav-item i { font-size: 18px; }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 200;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+      background: #fff;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 16px 16px 0 0;
+      padding: 20px;
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideUp 0.25s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .modal-title { font-size: 16px; font-weight: 700; }
+
+    .qty-picker {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #444;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .btn-full {
+      width: 100%;
+      padding: 12px;
+      background: var(--temu-orange);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 15px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+      margin-top: 6px;
+    }
+
+    /* GPS Button */
+    .btn-gps {
+      background: #e7f3ff;
+      color: #0066cc;
+      border: 1px dashed #0066cc;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Top Header -->
   <header>
-    <div>
-      <span class="brand-logo">OVERSABIJOJO</span>
-      <span class="brand-sub">Accessories & Jewelry</span>
+    <div class="header-top">
+      <div class="logo">Oversabijojo</div>
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Search wholesale items...">
+      </div>
+      <div class="header-cart-icon" onclick="openCart()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </div>
     </div>
   </header>
 
-  <!-- Views Wrapper -->
-  <div id="home-view">
-    <!-- Hero Banner -->
-    <div class="hero-banner">
-      <span class="hero-tag">FLASH SALE</span>
-      <h2>Beautiful accessories at amazing prices.</h2>
-      <p>Negotiate directly with our automated live agent.</p>
-    </div>
-
-    <!-- Search Box -->
-    <div class="search-box">
-      <input type="text" placeholder="Search accessories..." id="search-input" onkeyup="filterProducts()" />
-    </div>
-
-    <!-- Categories -->
-    <div class="categories-bar">
-      <div class="cat-chip active" onclick="filterCategory('All', this)">All</div>
-      <div class="cat-chip" onclick="filterCategory('Jewelry', this)">Jewelry</div>
-      <div class="cat-chip" onclick="filterCategory('Bags', this)">Bags</div>
-      <div class="cat-chip" onclick="filterCategory('Watches', this)">Watches</div>
-      <div class="cat-chip" onclick="filterCategory('Hair', this)">Hair</div>
-    </div>
-
-    <!-- Product Grid -->
-    <div class="product-grid" id="product-grid"></div>
+  <!-- Categories -->
+  <div class="categories">
+    <div class="chip active">All</div>
+    <div class="chip">Electronics</div>
+    <div class="chip">Fashion</div>
+    <div class="chip">Home & Kitchen</div>
+    <div class="chip">Gadgets</div>
   </div>
 
-  <!-- Admin / Account View -->
-  <div id="admin-view" style="display: none; padding: 20px;">
-    <h2 style="margin-bottom: 16px;">Admin Product Upload</h2>
-    <form class="admin-form" onsubmit="addNewProduct(event)">
-      <label>Product Title</label>
-      <input type="text" id="p-title" required placeholder="e.g. Designer Gold Necklace" />
-
-      <label>Category</label>
-      <select id="p-category">
-        <option value="Jewelry">Jewelry</option>
-        <option value="Bags">Bags</option>
-        <option value="Watches">Watches</option>
-        <option value="Hair">Hair</option>
-      </select>
-
-      <label>Price (₦)</label>
-      <input type="number" id="p-price" required placeholder="e.g. 35000" />
-
-      <label>Image URL</label>
-      <input type="url" id="p-image" required placeholder="https://example.com/image.jpg" />
-
-      <button type="submit" class="offer-btn" style="margin-top: 16px; background: var(--accent-green);">Upload Product</button>
-    </form>
+  <!-- Promo Banner -->
+  <div class="promo-banner">
+    <div class="promo-text">
+      <h2>⚡ Wholesale Discounts</h2>
+      <p>Direct deals & bargaining available on all products!</p>
+    </div>
   </div>
 
-  <!-- AliExpress-Style Negotiation Chat Modal -->
-  <div class="modal" id="chat-modal">
-    <div class="modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <h3 id="modal-item-name" style="font-size: 14px;">Negotiate Price</h3>
-        <span style="cursor: pointer; font-weight: bold;" onclick="closeModal()">✕</span>
-      </div>
-
-      <div class="chat-box" id="chat-box"></div>
-
-      <div class="input-row">
-        <input type="number" id="offer-input" placeholder="Enter offer in ₦..." />
-        <button class="offer-btn" style="width: auto; padding: 0 16px;" onclick="sendOffer()">Send</button>
-      </div>
-    </div>
+  <!-- Product Showcase -->
+  <div class="section-title">Trending Items</div>
+  <div class="product-grid" id="productGrid">
+    <!-- Rendered Dynamically -->
   </div>
 
   <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('home', this)">
-      <span class="nav-icon">🏠</span>
+  <div class="bottom-nav">
+    <a href="#" class="nav-item active">
+      <i class="fa-solid fa-house"></i>
       <span>Home</span>
-    </div>
-    <div class="nav-item" onclick="switchTab('orders', this)">
-      <span class="nav-icon">🛍️</span>
-      <span>Orders</span>
-    </div>
-    <div class="nav-item" onclick="switchTab('admin', this)">
-      <span class="nav-icon">👤</span>
+    </a>
+    <a href="#" class="nav-item" onclick="openCart()">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span>Cart</span>
+    </a>
+    <a href="#" class="nav-item" onclick="openAccount()">
+      <i class="fa-solid fa-user"></i>
       <span>Account</span>
+    </a>
+  </div>
+
+  <!-- Product Detail Modal (4 Action Options) -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Product Options</h3>
+        <i class="fa-solid fa-xmark" onclick="closeModal('productModal')"></i>
+      </div>
+      
+      <div class="qty-picker">
+        <span>Quantity:</span>
+        <button class="qty-btn" onclick="changeQty(-1)">-</button>
+        <span id="qtyVal" style="font-weight: bold;">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+
+      <div style="font-size: 18px; font-weight: bold; color: var(--temu-orange); margin-bottom: 15px;" id="modalPrice">
+        ₦0.00
+      </div>
+
+      <button class="btn-full" onclick="addToCartFromModal()">Add to Cart</button>
+      <button class="btn-full" style="background: #28a745;" onclick="triggerDirectBuy()">Buy Now</button>
+      <button class="btn-full btn-secondary" onclick="openNegotiateModal()">Bargain / Negotiate Price</button>
     </div>
-  </nav>
+  </div>
+
+  <!-- Bargain Modal -->
+  <div class="modal-overlay" id="negotiateModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Make an Offer</h3>
+        <i class="fa-solid fa-xmark" onclick="closeModal('negotiateModal')"></i>
+      </div>
+      <p style="font-size: 12px; color: #666; margin-bottom: 12px;">Submit your counter-offer price to the seller.</p>
+      <div class="form-group">
+        <label>Your Offered Price (₦)</label>
+        <input type="number" id="offerPriceInput" class="form-control" placeholder="Enter offer amount">
+      </div>
+      <button class="btn-full" onclick="submitOffer()">Send Counter Offer</button>
+    </div>
+  </div>
+
+  <!-- Checkout & Location Modal -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Delivery & Checkout</h3>
+        <i class="fa-solid fa-xmark" onclick="closeModal('checkoutModal')"></i>
+      </div>
+
+      <!-- GPS Detection Button -->
+      <button class="btn-gps" onclick="requestGPSLocation()">
+        <i class="fa-solid fa-location-crosshairs"></i> Use My Exact Phone GPS Location
+      </button>
+
+      <p id="gpsStatus" style="font-size: 11px; color: green; margin-bottom: 10px; display: none;"></p>
+
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="custName" class="form-control" placeholder="John Doe">
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="custPhone" class="form-control" placeholder="08012345678">
+      </div>
+
+      <div class="form-group">
+        <label>Country</label>
+        <select id="custCountry" class="form-control">
+          <option>Nigeria</option>
+          <option>Ghana</option>
+          <option>Kenya</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>State</label>
+        <input type="text" id="custState" class="form-control" placeholder="e.g. Lagos, Rivers, Abuja">
+      </div>
+
+      <div class="form-group">
+        <label>Local Government Area (LGA)</label>
+        <input type="text" id="custLGA" class="form-control" placeholder="e.g. Ikeja">
+      </div>
+
+      <div class="form-group">
+        <label>Street Address</label>
+        <input type="text" id="custAddress" class="form-control" placeholder="House number and street name">
+      </div>
+
+      <button class="btn-full" onclick="completeOrderRequest()">Submit Order Request</button>
+      <button class="btn-full btn-secondary" onclick="redirectToApp()">Order via Mobile App</button>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Your Cart</h3>
+        <i class="fa-solid fa-xmark" onclick="closeModal('cartModal')"></i>
+      </div>
+      <div id="cartItemsList" style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;">
+        <!-- Items inserted dynamically -->
+      </div>
+      <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px;" id="cartTotalVal">Total: ₦0.00</div>
+      <button class="btn-full" onclick="openCheckoutModal()">Pay All / Request Delivery</button>
+    </div>
+  </div>
 
   <script>
-    const BACKEND_URL = "https://oversabijojo.onrender.com";
-
-    // Default Products
-    let defaultProducts = [
-      { id: 1, name: "Elegant Crystal Necklace", category: "Jewelry", price: 18500, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400" },
-      { id: 2, name: "Luxury Mini Handbag", category: "Bags", price: 35000, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
-      { id: 3, name: "Classic Ladies Watch", category: "Watches", price: 27500, image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=400" },
-      { id: 4, name: "Premium Hair Accessories", category: "Hair", price: 12000, image: "https://images.unsplash.com/photo-1606760227091-3dd850d97f1d?w=400" }
+    // Sample Products Data
+    const products = [
+      { id: 1, name: "Smart Bluetooth Earbuds Super Bass", price: 8500, oldPrice: 15000, img: "https://via.placeholder.com/200?text=Earbuds" },
+      { id: 2, name: "Luxury Quartz Wrist Watch Water-Resistant", price: 14200, oldPrice: 25000, img: "https://via.placeholder.com/200?text=Watch" },
+      { id: 3, name: "Wireless Fast Charging Power Bank 20000mAh", price: 12000, oldPrice: 18000, img: "https://via.placeholder.com/200?text=Powerbank" },
+      { id: 4, name: "Portable Mini Blender for Juices & Smoothies", price: 9500, oldPrice: 14000, img: "https://via.placeholder.com/200?text=Blender" }
     ];
 
-    let currentItem = null;
-    let selectedCategory = "All";
+    let cart = [];
+    let selectedProduct = null;
+    let selectedQty = 1;
+    let userGPS = null;
 
-    // Shuffle Array for Automatic Page Refresh Effect
-    function shuffleArray(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
-
-    function getStoredProducts() {
-      const stored = localStorage.getItem("oversabi_products");
-      return stored ? JSON.parse(stored) : defaultProducts;
-    }
-
+    // Render Storefront Grid
     function renderProducts() {
-      const grid = document.getElementById("product-grid");
-      grid.innerHTML = "";
-      
-      let products = shuffleArray(getStoredProducts());
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = products.map(p => `
+        <div class="product-card">
+          <img src="${p.img}" class="product-img" alt="${p.name}">
+          <div class="product-details">
+            <div class="product-title">${p.name}</div>
+            <div class="price-row">
+              <span class="current-price">₦${p.price.toLocaleString()}</span>
+              <span class="original-price">₦${p.oldPrice.toLocaleString()}</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn-action btn-cart" onclick="openProductModal(${p.id})"><i class="fa-solid fa-cart-plus"></i></button>
+              <button class="btn-action btn-buy" onclick="openProductModal(${p.id})">Buy</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
 
-      if (selectedCategory !== "All") {
-        products = products.filter(p => p.category === selectedCategory);
+    function openProductModal(id) {
+      selectedProduct = products.find(p => p.id === id);
+      selectedQty = 1;
+      document.getElementById('modalTitle').innerText = selectedProduct.name;
+      document.getElementById('modalPrice').innerText = '₦' + (selectedProduct.price * selectedQty).toLocaleString();
+      document.getElementById('qtyVal').innerText = selectedQty;
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function changeQty(delta) {
+      if (selectedQty + delta >= 1) {
+        selectedQty += delta;
+        document.getElementById('qtyVal').innerText = selectedQty;
+        document.getElementById('modalPrice').innerText = '₦' + (selectedProduct.price * selectedQty).toLocaleString();
+      }
+    }
+
+    function addToCartFromModal() {
+      cart.push({ ...selectedProduct, qty: selectedQty });
+      updateCartBadge();
+      closeModal('productModal');
+      alert('Added to cart!');
+    }
+
+    function triggerDirectBuy() {
+      cart = [{ ...selectedProduct, qty: selectedQty }];
+      updateCartBadge();
+      closeModal('productModal');
+      openCheckoutModal();
+    }
+
+    function openCart() {
+      const container = document.getElementById('cartItemsList');
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="font-size:12px; color:#777;">Your cart is currently empty.</p>';
+      } else {
+        container.innerHTML = cart.map(item => `
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px;">
+            <span>${item.name} (x${item.qty})</span>
+            <b>₦${(item.price * item.qty).toLocaleString()}</b>
+          </div>
+        `).join('');
+      }
+      const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      document.getElementById('cartTotalVal').innerText = 'Total: ₦' + total.toLocaleString();
+      document.getElementById('cartModal').classList.add('active');
+    }
+
+    function updateCartBadge() {
+      document.getElementById('cartBadge').innerText = cart.length;
+    }
+
+    function openNegotiateModal() {
+      closeModal('productModal');
+      document.getElementById('negotiateModal').classList.add('active');
+    }
+
+    function submitOffer() {
+      const offer = document.getElementById('offerPriceInput').value;
+      if (!offer) return alert('Please enter an offer amount.');
+      alert(`Offer of ₦${Number(offer).toLocaleString()} submitted to seller!`);
+      closeModal('negotiateModal');
+    }
+
+    function openCheckoutModal() {
+      closeModal('cartModal');
+      document.getElementById('checkoutModal').classList.add('active');
+    }
+
+    // GPS Location Fetching
+    function requestGPSLocation() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+          userGPS = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          const status = document.getElementById('gpsStatus');
+          status.innerText = `✓ GPS Captured: (${userGPS.lat.toFixed(4)}, ${userGPS.lng.toFixed(4)})`;
+          status.style.display = 'block';
+        }, error => {
+          alert('GPS access denied or unavailable. Please fill address manually.');
+        });
+      } else {
+        alert('Geolocation is not supported by your browser.');
+      }
+    }
+
+    function completeOrderRequest() {
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+
+      if (!name || !phone) {
+        return alert('Please fill in your name and phone number.');
       }
 
-      products.forEach(product => {
-        grid.innerHTML += `
-          <div class="product-card">
-            <img src="${product.image}" class="product-image" alt="${product.name}" />
-            <div>
-              <div class="product-title">${product.name}</div>
-              <div class="product-price">₦${product.price.toLocaleString()}</div>
-            </div>
-            <button class="offer-btn" onclick="openChat('${product.name}', ${product.price})">Negotiate / Offer</button>
-          </div>
-        `;
-      });
-    }
-
-    function filterCategory(cat, element) {
-      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-      element.classList.add('active');
-      selectedCategory = cat;
-      renderProducts();
-    }
-
-    function openChat(name, price) {
-      currentItem = { name, price };
-      document.getElementById("modal-item-name").innerText = `${name} (₦${price.toLocaleString()})`;
-      const chatBox = document.getElementById("chat-box");
-      chatBox.innerHTML = `
-        <div class="chat-msg bot">Hello! The listed price for ${name} is ₦${price.toLocaleString()}. What is your best offer?</div>
-      `;
-      document.getElementById("chat-modal").classList.add("active");
-    }
-
-    function closeModal() {
-      document.getElementById("chat-modal").classList.remove("active");
-    }
-
-    function sendOffer() {
-      const input = document.getElementById("offer-input");
-      const offerAmount = Number(input.value);
-      if (!offerAmount) return;
-
-      const chatBox = document.getElementById("chat-box");
-      chatBox.innerHTML += `<div class="chat-msg user">₦${offerAmount.toLocaleString()}</div>`;
-
-      // STRICT 10% FLOOR RULE: Minimum price allowed is 90% of original price
-      const minAcceptable = currentItem.price * 0.90;
-
-      setTimeout(() => {
-        if (offerAmount >= minAcceptable) {
-          chatBox.innerHTML += `
-            <div class="chat-msg bot" style="background: var(--accent-green); color: #000;">
-              🎉 <strong>Offer Accepted!</strong><br/>
-              Your price of ₦${offerAmount.toLocaleString()} has been approved. Proceed to checkout!
-            </div>
-          `;
-        } else {
-          chatBox.innerHTML += `
-            <div class="chat-msg bot" style="background: var(--accent-red);">
-              ❌ <strong>Offer Rejected.</strong><br/>
-              The discount limit for this item is 10%. The minimum offer we can accept is ₦${minAcceptable.toLocaleString()}.
-            </div>
-          `;
-        }
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }, 500);
-
-      input.value = "";
-    }
-
-    function addNewProduct(e) {
-      e.preventDefault();
-      const newP = {
-        id: Date.now(),
-        name: document.getElementById("p-title").value,
-        category: document.getElementById("p-category").value,
-        price: Number(document.getElementById("p-price").value),
-        image: document.getElementById("p-image").value
+      const orderData = {
+        customer: { name, phone },
+        gps: userGPS,
+        location: {
+          country: document.getElementById('custCountry').value,
+          state: document.getElementById('custState').value,
+          lga: document.getElementById('custLGA').value,
+          address: document.getElementById('custAddress').value
+        },
+        items: cart,
+        timestamp: new Date().toISOString()
       };
 
-      const products = getStoredProducts();
-      products.push(newP);
-      localStorage.setItem("oversabi_products", JSON.stringify(products));
-
-      alert("Product uploaded successfully!");
-      e.target.reset();
-      switchTab('home', document.querySelectorAll('.nav-item')[0]);
+      console.log('Order Sent to Admin:', orderData);
+      alert('Your Order Request has been submitted successfully! The seller will contact you shortly.');
+      cart = [];
+      updateCartBadge();
+      closeModal('checkoutModal');
     }
 
-    function switchTab(tab, element) {
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      element.classList.add('active');
-
-      if (tab === 'home') {
-        document.getElementById("home-view").style.display = "block";
-        document.getElementById("admin-view").style.display = "none";
-        renderProducts();
-      } else if (tab === 'admin') {
-        document.getElementById("home-view").style.display = "none";
-        document.getElementById("admin-view").style.display = "block";
-      }
+    function redirectToApp() {
+      alert('Redirecting to Oversabijojo Mobile App download...');
     }
 
-    // Initialize Page Load
+    function openAccount() {
+      alert('Sign Up / Login feature active for buyers!');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // Initialize Store
     renderProducts();
   </script>
 </body>
