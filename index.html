@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oversabijojo Accessories</title>
+
+  <style>
+    /* ==========================================
+       THEME VARIABLES (Light / Dark Auto System)
+    ========================================== */
+    :root {
+      --bg-color: #e5e7eb; /* Light Gray */
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-sub: #4b5563;
+      --accent-red: #dc2626; /* Sharp Red */
+      --accent-red-hover: #b91c1c;
+      --border-color: #d1d5db;
+      --pattern-bg: transparent;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #111827;
+        --card-bg: #1f2937;
+        --text-main: #f9fafb;
+        --text-sub: #9ca3af;
+        --border-color: #374151;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding-bottom: 70px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.15);
+    }
+
+    /* TOP HEADER */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border-bottom: 3px solid var(--accent-red);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .top-header h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent-red);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .top-header p {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    .icon-button {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* LAYERS */
+    .layer {
+      display: none;
+      padding: 20px;
+      flex: 1;
+    }
+
+    .layer.active {
+      display: block;
+    }
+
+    /* FLASH SALE BANNER */
+    .flash-sale {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    }
+
+    .sale-label {
+      background: #ffffff;
+      color: var(--accent-red);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .flash-sale h2 {
+      font-size: 15px;
+      margin: 6px 0 2px;
+    }
+
+    .flash-sale p { font-size: 11px; opacity: 0.9; }
+
+    /* SEARCH BOX */
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      gap: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    /* CATEGORIES & DYNAMIC PATTERNS */
+    .categories {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    .category {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .category.active {
+      background: var(--accent-red);
+      color: #ffffff;
+      border-color: var(--accent-red);
+    }
+
+    /* DYNAMIC BACKGROUND PATTERN AREA */
+    .product-grid-container {
+      border-radius: 12px;
+      padding: 12px;
+      background-color: var(--pattern-bg);
+      transition: background 0.4s ease;
+    }
+
+    /* Dynamic Category Patterns */
+    .pattern-all { background-image: radial-gradient(var(--border-color) 1px, transparent 1px); background-size: 12px 12px; }
+    .pattern-jewelry { background-image: repeating-linear-gradient(45deg, rgba(220, 38, 38, 0.05) 0, rgba(220, 38, 38, 0.05) 10px, transparent 0, transparent 20px); }
+    .pattern-bags { background-image: radial-gradient(circle, rgba(0,0,0,0.06) 20%, transparent 20%); background-size: 15px 15px; }
+    .pattern-watches { background-image: linear-gradient(0deg, rgba(220,38,38,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(220,38,38,0.04) 1px, transparent 1px); background-size: 16px 16px; }
+    .pattern-hair { background-image: repeating-radial-gradient(circle at 0 0, transparent 0, rgba(220,38,38,0.05) 10px, transparent 20px); }
+
+    /* PRODUCT CARDS */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .product-card {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      background: var(--card-bg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-image {
+      background: var(--bg-color);
+      height: 110px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+    }
+
+    .product-tag {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .product-tag.in-stock { background: #dcfce7; color: #15803d; }
+    .product-tag.pre-order { background: #fef3c7; color: #b45309; }
+
+    .product-info {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .product-info h3 { font-size: 12px; color: var(--text-main); }
+    .price-row strong { font-size: 13px; color: var(--accent-red); }
+
+    .offer-button {
+      background: var(--accent-red);
+      color: #ffffff;
+      border: none;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    /* COOKIE BANNER */
+    .cookie-banner {
+      position: fixed;
+      bottom: 75px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 440px;
+      background: var(--card-bg);
+      border: 1px solid var(--accent-red);
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      z-index: 99;
+    }
+
+    .cookie-banner p { font-size: 11px; color: var(--text-sub); }
+
+    .cookie-btn {
+      background: var(--accent-red);
+      color: #ffffff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* MODAL & NAV */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      border: 2px solid var(--accent-red);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      border-top: 2px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      z-index: 10;
+    }
+
+    .nav-item {
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 10px;
+    }
+
+    .nav-item.active { color: var(--accent-red); font-weight: bold; }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="top-header">
+      <div>
+        <h1>Oversabijojo</h1>
+        <p>Accessories & Jewelry</p>
+      </div>
+      <button class="icon-button" onclick="showLayer('account')">👤</button>
+    </header>
+
+    <!-- LAYER 1: HOME -->
+    <main id="home" class="layer active">
+
+      <section class="flash-sale">
+        <div>
+          <span class="sale-label">FLASH SALE</span>
+          <h2>Beautiful accessories<br>at amazing prices.</h2>
+          <p>Limited-time offers available now.</p>
+        </div>
+        <div style="font-size: 32px;">✨</div>
+      </section>
+
+      <div class="search-box">
+        🔍
+        <input type="search" placeholder="Search accessories..." id="searchInput">
+      </div>
+
+      <!-- Category Filter + Pattern Switcher -->
+      <div class="categories">
+        <button class="category active" onclick="switchPattern('all', this)">All</button>
+        <button class="category" onclick="switchPattern('jewelry', this)">Jewelry</button>
+        <button class="category" onclick="switchPattern('bags', this)">Bags</button>
+        <button class="category" onclick="switchPattern('watches', this)">Watches</button>
+        <button class="category" onclick="switchPattern('hair', this)">Hair</button>
+      </div>
+
+      <!-- Dynamic Pattern Container -->
+      <div id="patternContainer" class="product-grid-container pattern-all">
+        <section class="product-grid">
+
+          <article class="product-card">
+            <div class="product-image">
+              <span class="product-tag in-stock">In-Stock</span>
+              💎
+            </div>
+            <div class="product-info">
+              <h3>Elegant Crystal Necklace</h3>
+              <div class="price-row">
+                <strong>₦18,500</strong>
+                <button class="offer-button" onclick="openOffer('Elegant Crystal Necklace', 18500)">Make an Offer</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-image">
+              <span class="product-tag pre-order">Pre-Order</span>
+              👜
+            </div>
+            <div class="product-info">
+              <h3>Luxury Mini Handbag</h3>
+              <div class="price-row">
+                <strong>₦35,000</strong>
+                <button class="offer-button" onclick="openOffer('Luxury Mini Handbag', 35000)">Make an Offer</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-image">
+              <span class="product-tag in-stock">In-Stock</span>
+              ⌚
+            </div>
+            <div class="product-info">
+              <h3>Classic Ladies Watch</h3>
+              <div class="price-row">
+                <strong>₦27,500</strong>
+                <button class="offer-button" onclick="openOffer('Classic Ladies Watch', 27500)">Make an Offer</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-image">
+              <span class="product-tag pre-order">Pre-Order</span>
+              🎀
+            </div>
+            <div class="product-info">
+              <h3>Premium Hair Accessories</h3>
+              <div class="price-row">
+                <strong>₦12,000</strong>
+                <button class="offer-button" onclick="openOffer('Premium Hair Accessories', 12000)">Make an Offer</button>
+              </div>
+            </div>
+          </article>
+
+        </section>
+      </div>
+
+    </main>
+
+    <!-- LAYER 2: ORDERS -->
+    <main id="orders" class="layer">
+      <h2>My Orders</h2>
+      <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 16px;">Track your purchases</p>
+      <div style="padding: 16px; border: 1px solid var(--border-color); border-radius: 10px;">
+        <h3>Order #OSJ-10245</h3>
+        <p style="color: var(--accent-red); font-weight: bold; margin-top: 4px;">Pending Escrow</p>
+      </div>
+    </main>
+
+    <!-- LAYER 3: ACCOUNT -->
+    <main id="account" class="layer">
+      <h2>My Account</h2>
+      <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 16px;">Manage account & theme settings</p>
+      
+      <div style="padding: 16px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-color);">
+        <p><strong>System Dark/Light Mode:</strong> Active Auto-Detect</p>
+      </div>
+    </main>
+
+    <!-- COOKIE CONSENT BANNER -->
+    <div class="cookie-banner" id="cookieBanner">
+      <p>🍪 We use cookies to offer you a personalized shopping experience on Oversabijojo.</p>
+      <button class="cookie-btn" onclick="acceptCookies()">Accept</button>
+    </div>
+
+    <!-- HAGGLE MODAL -->
+    <div class="modal" id="offerModal">
+      <div class="modal-content">
+        <h3 style="color: var(--accent-red);">Make an Offer</h3>
+        <p id="offerProduct" style="font-size: 13px; margin: 8px 0;"></p>
+
+        <input type="number" id="offerPrice" placeholder="Enter offer amount" style="width: 100%; padding: 10px; margin: 8px 0; border: 1px solid var(--border-color); border-radius: 6px;">
+        
+        <button class="offer-button" onclick="submitOffer()" style="padding: 10px; margin-top: 10px;">Send Offer to Server</button>
+        <button onclick="closeOffer()" style="width: 100%; background: transparent; border: none; color: var(--text-sub); margin-top: 8px; cursor: pointer;">Cancel</button>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="showLayer('home', this)"><span>⌂</span>Home</button>
+      <button class="nav-item" onclick="showLayer('orders', this)"><span>🛍</span>Orders</button>
+      <button class="nav-item" onclick="showLayer('account', this)"><span>👤</span>Account</button>
+    </nav>
+
+  </div>
+
+  <script>
+    // 1. LAYER SWITCHING
+    function showLayer(layerId, element) {
+      document.querySelectorAll('.layer').forEach(layer => layer.classList.remove('active'));
+      document.getElementById(layerId).classList.add('active');
+
+      if (element) {
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        element.classList.add('active');
+      }
+    }
+
+    // 2. DYNAMIC BACKGROUND PATTERN SWITCHER
+    function switchPattern(category, btn) {
+      document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+
+      const container = document.getElementById('patternContainer');
+      container.className = 'product-grid-container pattern-' + category;
+    }
+
+    // 3. COOKIE CONSENT BANNER LOGIC
+    function acceptCookies() {
+      document.getElementById('cookieBanner').style.display = 'none';
+      localStorage.setItem('cookiesAccepted', 'true');
+    }
+
+    if (localStorage.getItem('cookiesAccepted') === 'true') {
+      document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    // 4. HAGGLE MODAL & SERVER INTEGRATION
+    let currentPrice = 0;
+
+    function openOffer(productName, price) {
+      currentPrice = price;
+      document.getElementById('offerProduct').innerText = productName + ' (Listed: ₦' + price.toLocaleString() + ')';
+      document.getElementById('offerModal').classList.add('active');
+    }
+
+    function closeOffer() {
+      document.getElementById('offerModal').classList.remove('active');
+    }
+
+    async function submitOffer() {
+      const offerVal = parseFloat(document.getElementById('offerPrice').value);
+      if (!offerVal) return alert('Please enter a valid price');
+
+      // Connects with your local Node.js server!
+      try {
+        const response = await fetch('http://localhost:3000/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: offerVal, productType: 'in_stock' })
+        });
+        const data = await response.json();
+        if(data.success) {
+          alert('Offer Accepted! Upfront payment: ₦' + data.paymentDetails.upfront);
+          closeOffer();
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch(err) {
+        // Fallback for offline mode
+        const discount = ((currentPrice - offerVal) / currentPrice) * 100;
+        if (discount > 10) alert('Haggle limit is 10%!');
+        else {
+          alert('Offer submitted successfully!');
+          closeOffer();
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
