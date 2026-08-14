@@ -1,579 +1,539 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oversabijojo Accessories</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OVERSABIJOJO - Accessories & Jewelry</title>
   <style>
-    /* ==========================================
-       THEME VARIABLES (Light / Dark Auto System)
-    ========================================== */
     :root {
-      --bg-color: #e5e7eb; /* Light Gray */
-      --card-bg: #ffffff;
-      --text-main: #111827;
-      --text-sub: #4b5563;
-      --accent-red: #dc2626; /* Sharp Red */
-      --accent-red-hover: #b91c1c;
-      --border-color: #d1d5db;
-      --pattern-bg: transparent;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-color: #111827;
-        --card-bg: #1f2937;
-        --text-main: #f9fafb;
-        --text-sub: #9ca3af;
-        --border-color: #374151;
-      }
+      --bg-color: #0b0f19;
+      --card-bg: #151c2c;
+      --accent-red: #e63946;
+      --accent-green: #2ec4b6;
+      --text-main: #ffffff;
+      --text-sub: #94a3b8;
+      --border-color: #2a354d;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
       background-color: var(--bg-color);
       color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
+      padding-bottom: 90px;
     }
 
-    .app {
-      width: 100%;
-      max-width: 480px;
-      background: var(--card-bg);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      padding-bottom: 70px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.15);
-    }
-
-    /* TOP HEADER */
-    .top-header {
+    /* Header */
+    header {
+      padding: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 20px;
-      background: var(--card-bg);
-      border-bottom: 3px solid var(--accent-red);
+      background: rgba(11, 15, 25, 0.9);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
     }
 
-    .top-header h1 {
+    .brand-logo {
       font-size: 20px;
       font-weight: 800;
       color: var(--accent-red);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
     }
 
-    .top-header p {
+    .brand-sub {
       font-size: 11px;
       color: var(--text-sub);
-    }
-
-    .icon-button {
-      background: var(--bg-color);
-      border: 1px solid var(--border-color);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    /* LAYERS */
-    .layer {
-      display: none;
-      padding: 20px;
-      flex: 1;
-    }
-
-    .layer.active {
       display: block;
     }
 
-    /* FLASH SALE BANNER */
-    .flash-sale {
-      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-      color: #ffffff;
-      border-radius: 14px;
-      padding: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    /* Hero Banner */
+    .hero-banner {
+      margin: 16px;
+      padding: 20px;
+      background: linear-gradient(135deg, #d62828 0%, #003049 100%);
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(230, 57, 70, 0.2);
     }
 
-    .sale-label {
-      background: #ffffff;
-      color: var(--accent-red);
-      padding: 3px 8px;
-      border-radius: 4px;
+    .hero-tag {
+      background: #fff;
+      color: #000;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 700;
       font-size: 10px;
-      font-weight: 800;
+      display: inline-block;
+      margin-bottom: 8px;
     }
 
-    .flash-sale h2 {
-      font-size: 15px;
-      margin: 6px 0 2px;
+    .hero-banner h2 {
+      font-size: 18px;
+      margin-bottom: 4px;
     }
 
-    .flash-sale p { font-size: 11px; opacity: 0.9; }
+    .hero-banner p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
 
-    /* SEARCH BOX */
+    /* Search & Filters */
     .search-box {
-      display: flex;
-      align-items: center;
-      background: var(--bg-color);
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      gap: 10px;
-      border: 1px solid var(--border-color);
+      margin: 0 16px 16px 16px;
     }
 
     .search-box input {
-      border: none;
-      background: transparent;
-      outline: none;
       width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: #fff;
       font-size: 14px;
-      color: var(--text-main);
+      outline: none;
     }
 
-    /* CATEGORIES & DYNAMIC PATTERNS */
-    .categories {
+    .categories-bar {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 16px;
+      padding: 0 16px 16px 16px;
+      scrollbar-width: none;
     }
 
-    .category {
-      background: var(--bg-color);
-      border: 1px solid var(--border-color);
+    .categories-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-chip {
       padding: 8px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-sub);
+      font-size: 13px;
       white-space: nowrap;
+      color: var(--text-sub);
       cursor: pointer;
     }
 
-    .category.active {
+    .cat-chip.active {
       background: var(--accent-red);
-      color: #ffffff;
+      color: #fff;
       border-color: var(--accent-red);
     }
 
-    /* DYNAMIC BACKGROUND PATTERN AREA */
-    .product-grid-container {
-      border-radius: 12px;
-      padding: 12px;
-      background-color: var(--pattern-bg);
-      transition: background 0.4s ease;
-    }
-
-    /* Dynamic Category Patterns */
-    .pattern-all { background-image: radial-gradient(var(--border-color) 1px, transparent 1px); background-size: 12px 12px; }
-    .pattern-jewelry { background-image: repeating-linear-gradient(45deg, rgba(220, 38, 38, 0.05) 0, rgba(220, 38, 38, 0.05) 10px, transparent 0, transparent 20px); }
-    .pattern-bags { background-image: radial-gradient(circle, rgba(0,0,0,0.06) 20%, transparent 20%); background-size: 15px 15px; }
-    .pattern-watches { background-image: linear-gradient(0deg, rgba(220,38,38,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(220,38,38,0.04) 1px, transparent 1px); background-size: 16px 16px; }
-    .pattern-hair { background-image: repeating-radial-gradient(circle at 0 0, transparent 0, rgba(220,38,38,0.05) 10px, transparent 20px); }
-
-    /* PRODUCT CARDS */
+    /* Feed Grid */
     .product-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 16px;
     }
 
     .product-card {
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
       background: var(--card-bg);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-image {
-      background: var(--bg-color);
-      height: 110px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 38px;
-    }
-
-    .product-tag {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-
-    .product-tag.in-stock { background: #dcfce7; color: #15803d; }
-    .product-tag.pre-order { background: #fef3c7; color: #b45309; }
-
-    .product-info {
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
       padding: 10px;
       display: flex;
       flex-direction: column;
-      flex: 1;
       justify-content: space-between;
     }
 
-    .product-info h3 { font-size: 12px; color: var(--text-main); }
-    .price-row strong { font-size: 13px; color: var(--accent-red); }
-
-    .offer-button {
-      background: var(--accent-red);
-      color: #ffffff;
-      border: none;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 6px;
-      border-radius: 6px;
-      cursor: pointer;
+    .product-image {
       width: 100%;
-      margin-top: 6px;
+      height: 130px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #0b0f19;
+      margin-bottom: 8px;
     }
 
-    /* COOKIE BANNER */
-    .cookie-banner {
-      position: fixed;
-      bottom: 75px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 40px);
-      max-width: 440px;
-      background: var(--card-bg);
-      border: 1px solid var(--accent-red);
-      border-radius: 12px;
-      padding: 14px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      z-index: 99;
+    .product-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.3;
     }
 
-    .cookie-banner p { font-size: 11px; color: var(--text-sub); }
+    .product-price {
+      color: var(--accent-red);
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
 
-    .cookie-btn {
+    .offer-btn {
+      width: 100%;
+      padding: 10px;
       background: var(--accent-red);
-      color: #ffffff;
       border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 11px;
+      color: white;
+      border-radius: 8px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
     }
 
-    /* MODAL & NAV */
+    /* Modals & Panels */
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 100;
-      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 200;
       justify-content: center;
-      padding: 20px;
+      align-items: flex-end;
     }
 
-    .modal.active { display: flex; }
+    .modal.active {
+      display: flex;
+    }
 
     .modal-content {
       background: var(--card-bg);
-      border-radius: 14px;
-      padding: 20px;
       width: 100%;
-      max-width: 400px;
-      border: 2px solid var(--accent-red);
+      max-width: 500px;
+      border-radius: 20px 20px 0 0;
+      padding: 20px;
+      border-top: 1px solid var(--border-color);
     }
 
+    .chat-box {
+      height: 180px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      background: #0b0f19;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .chat-msg {
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      max-width: 80%;
+    }
+
+    .chat-msg.bot {
+      background: #2a354d;
+      align-self: flex-start;
+    }
+
+    .chat-msg.user {
+      background: var(--accent-red);
+      align-self: flex-end;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .input-row input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #0b0f19;
+      color: #fff;
+    }
+
+    /* Admin Panel */
+    .admin-form label {
+      font-size: 12px;
+      color: var(--text-sub);
+      display: block;
+      margin-top: 10px;
+    }
+
+    .admin-form input, .admin-form select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 4px;
+      background: #0b0f19;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: #fff;
+    }
+
+    /* Bottom Navigation Bar */
     .bottom-nav {
       position: fixed;
       bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
       width: 100%;
-      max-width: 480px;
-      background: var(--card-bg);
-      border-top: 2px solid var(--border-color);
+      background: rgba(21, 28, 44, 0.95);
+      border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-around;
-      padding: 8px 0;
-      z-index: 10;
+      padding: 12px 0;
+      backdrop-filter: blur(10px);
+      z-index: 100;
     }
 
     .nav-item {
-      background: none;
-      border: none;
-      color: var(--text-sub);
-      cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 10px;
+      color: var(--text-sub);
+      font-size: 11px;
+      cursor: pointer;
     }
 
-    .nav-item.active { color: var(--accent-red); font-weight: bold; }
+    .nav-item.active {
+      color: var(--accent-red);
+    }
+
+    .nav-icon {
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
   </style>
 </head>
-
 <body>
 
-  <div class="app">
+  <!-- Header -->
+  <header>
+    <div>
+      <span class="brand-logo">OVERSABIJOJO</span>
+      <span class="brand-sub">Accessories & Jewelry</span>
+    </div>
+  </header>
 
-    <!-- HEADER -->
-    <header class="top-header">
-      <div>
-        <h1>Oversabijojo</h1>
-        <p>Accessories & Jewelry</p>
-      </div>
-      <button class="icon-button" onclick="showLayer('account')">👤</button>
-    </header>
-
-    <!-- LAYER 1: HOME -->
-    <main id="home" class="layer active">
-
-      <section class="flash-sale">
-        <div>
-          <span class="sale-label">FLASH SALE</span>
-          <h2>Beautiful accessories<br>at amazing prices.</h2>
-          <p>Limited-time offers available now.</p>
-        </div>
-        <div style="font-size: 32px;">✨</div>
-      </section>
-
-      <div class="search-box">
-        🔍
-        <input type="search" placeholder="Search accessories..." id="searchInput">
-      </div>
-
-      <!-- Category Filter + Pattern Switcher -->
-      <div class="categories">
-        <button class="category active" onclick="switchPattern('all', this)">All</button>
-        <button class="category" onclick="switchPattern('jewelry', this)">Jewelry</button>
-        <button class="category" onclick="switchPattern('bags', this)">Bags</button>
-        <button class="category" onclick="switchPattern('watches', this)">Watches</button>
-        <button class="category" onclick="switchPattern('hair', this)">Hair</button>
-      </div>
-
-      <!-- Dynamic Pattern Container -->
-      <div id="patternContainer" class="product-grid-container pattern-all">
-        <section class="product-grid">
-
-          <article class="product-card">
-            <div class="product-image">
-              <span class="product-tag in-stock">In-Stock</span>
-              💎
-            </div>
-            <div class="product-info">
-              <h3>Elegant Crystal Necklace</h3>
-              <div class="price-row">
-                <strong>₦18,500</strong>
-                <button class="offer-button" onclick="openOffer('Elegant Crystal Necklace', 18500)">Make an Offer</button>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-image">
-              <span class="product-tag pre-order">Pre-Order</span>
-              👜
-            </div>
-            <div class="product-info">
-              <h3>Luxury Mini Handbag</h3>
-              <div class="price-row">
-                <strong>₦35,000</strong>
-                <button class="offer-button" onclick="openOffer('Luxury Mini Handbag', 35000)">Make an Offer</button>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-image">
-              <span class="product-tag in-stock">In-Stock</span>
-              ⌚
-            </div>
-            <div class="product-info">
-              <h3>Classic Ladies Watch</h3>
-              <div class="price-row">
-                <strong>₦27,500</strong>
-                <button class="offer-button" onclick="openOffer('Classic Ladies Watch', 27500)">Make an Offer</button>
-              </div>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-image">
-              <span class="product-tag pre-order">Pre-Order</span>
-              🎀
-            </div>
-            <div class="product-info">
-              <h3>Premium Hair Accessories</h3>
-              <div class="price-row">
-                <strong>₦12,000</strong>
-                <button class="offer-button" onclick="openOffer('Premium Hair Accessories', 12000)">Make an Offer</button>
-              </div>
-            </div>
-          </article>
-
-        </section>
-      </div>
-
-    </main>
-
-    <!-- LAYER 2: ORDERS -->
-    <main id="orders" class="layer">
-      <h2>My Orders</h2>
-      <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 16px;">Track your purchases</p>
-      <div style="padding: 16px; border: 1px solid var(--border-color); border-radius: 10px;">
-        <h3>Order #OSJ-10245</h3>
-        <p style="color: var(--accent-red); font-weight: bold; margin-top: 4px;">Pending Escrow</p>
-      </div>
-    </main>
-
-    <!-- LAYER 3: ACCOUNT -->
-    <main id="account" class="layer">
-      <h2>My Account</h2>
-      <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 16px;">Manage account & theme settings</p>
-      
-      <div style="padding: 16px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-color);">
-        <p><strong>System Dark/Light Mode:</strong> Active Auto-Detect</p>
-      </div>
-    </main>
-
-    <!-- COOKIE CONSENT BANNER -->
-    <div class="cookie-banner" id="cookieBanner">
-      <p>🍪 We use cookies to offer you a personalized shopping experience on Oversabijojo.</p>
-      <button class="cookie-btn" onclick="acceptCookies()">Accept</button>
+  <!-- Views Wrapper -->
+  <div id="home-view">
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <span class="hero-tag">FLASH SALE</span>
+      <h2>Beautiful accessories at amazing prices.</h2>
+      <p>Negotiate directly with our automated live agent.</p>
     </div>
 
-    <!-- HAGGLE MODAL -->
-    <div class="modal" id="offerModal">
-      <div class="modal-content">
-        <h3 style="color: var(--accent-red);">Make an Offer</h3>
-        <p id="offerProduct" style="font-size: 13px; margin: 8px 0;"></p>
-
-        <input type="number" id="offerPrice" placeholder="Enter offer amount" style="width: 100%; padding: 10px; margin: 8px 0; border: 1px solid var(--border-color); border-radius: 6px;">
-        
-        <button class="offer-button" onclick="submitOffer()" style="padding: 10px; margin-top: 10px;">Send Offer to Server</button>
-        <button onclick="closeOffer()" style="width: 100%; background: transparent; border: none; color: var(--text-sub); margin-top: 8px; cursor: pointer;">Cancel</button>
-      </div>
+    <!-- Search Box -->
+    <div class="search-box">
+      <input type="text" placeholder="Search accessories..." id="search-input" onkeyup="filterProducts()" />
     </div>
 
-    <!-- BOTTOM NAV -->
-    <nav class="bottom-nav">
-      <button class="nav-item active" onclick="showLayer('home', this)"><span>⌂</span>Home</button>
-      <button class="nav-item" onclick="showLayer('orders', this)"><span>🛍</span>Orders</button>
-      <button class="nav-item" onclick="showLayer('account', this)"><span>👤</span>Account</button>
-    </nav>
+    <!-- Categories -->
+    <div class="categories-bar">
+      <div class="cat-chip active" onclick="filterCategory('All', this)">All</div>
+      <div class="cat-chip" onclick="filterCategory('Jewelry', this)">Jewelry</div>
+      <div class="cat-chip" onclick="filterCategory('Bags', this)">Bags</div>
+      <div class="cat-chip" onclick="filterCategory('Watches', this)">Watches</div>
+      <div class="cat-chip" onclick="filterCategory('Hair', this)">Hair</div>
+    </div>
 
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid"></div>
   </div>
 
+  <!-- Admin / Account View -->
+  <div id="admin-view" style="display: none; padding: 20px;">
+    <h2 style="margin-bottom: 16px;">Admin Product Upload</h2>
+    <form class="admin-form" onsubmit="addNewProduct(event)">
+      <label>Product Title</label>
+      <input type="text" id="p-title" required placeholder="e.g. Designer Gold Necklace" />
+
+      <label>Category</label>
+      <select id="p-category">
+        <option value="Jewelry">Jewelry</option>
+        <option value="Bags">Bags</option>
+        <option value="Watches">Watches</option>
+        <option value="Hair">Hair</option>
+      </select>
+
+      <label>Price (₦)</label>
+      <input type="number" id="p-price" required placeholder="e.g. 35000" />
+
+      <label>Image URL</label>
+      <input type="url" id="p-image" required placeholder="https://example.com/image.jpg" />
+
+      <button type="submit" class="offer-btn" style="margin-top: 16px; background: var(--accent-green);">Upload Product</button>
+    </form>
+  </div>
+
+  <!-- AliExpress-Style Negotiation Chat Modal -->
+  <div class="modal" id="chat-modal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 id="modal-item-name" style="font-size: 14px;">Negotiate Price</h3>
+        <span style="cursor: pointer; font-weight: bold;" onclick="closeModal()">✕</span>
+      </div>
+
+      <div class="chat-box" id="chat-box"></div>
+
+      <div class="input-row">
+        <input type="number" id="offer-input" placeholder="Enter offer in ₦..." />
+        <button class="offer-btn" style="width: auto; padding: 0 16px;" onclick="sendOffer()">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('home', this)">
+      <span class="nav-icon">🏠</span>
+      <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('orders', this)">
+      <span class="nav-icon">🛍️</span>
+      <span>Orders</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('admin', this)">
+      <span class="nav-icon">👤</span>
+      <span>Account</span>
+    </div>
+  </nav>
+
   <script>
-    // 1. LAYER SWITCHING
-    function showLayer(layerId, element) {
-      document.querySelectorAll('.layer').forEach(layer => layer.classList.remove('active'));
-      document.getElementById(layerId).classList.add('active');
+    const BACKEND_URL = "https://oversabijojo.onrender.com";
 
-      if (element) {
-        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-        element.classList.add('active');
+    // Default Products
+    let defaultProducts = [
+      { id: 1, name: "Elegant Crystal Necklace", category: "Jewelry", price: 18500, image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400" },
+      { id: 2, name: "Luxury Mini Handbag", category: "Bags", price: 35000, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+      { id: 3, name: "Classic Ladies Watch", category: "Watches", price: 27500, image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=400" },
+      { id: 4, name: "Premium Hair Accessories", category: "Hair", price: 12000, image: "https://images.unsplash.com/photo-1606760227091-3dd850d97f1d?w=400" }
+    ];
+
+    let currentItem = null;
+    let selectedCategory = "All";
+
+    // Shuffle Array for Automatic Page Refresh Effect
+    function shuffleArray(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function getStoredProducts() {
+      const stored = localStorage.getItem("oversabi_products");
+      return stored ? JSON.parse(stored) : defaultProducts;
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById("product-grid");
+      grid.innerHTML = "";
+      
+      let products = shuffleArray(getStoredProducts());
+
+      if (selectedCategory !== "All") {
+        products = products.filter(p => p.category === selectedCategory);
       }
+
+      products.forEach(product => {
+        grid.innerHTML += `
+          <div class="product-card">
+            <img src="${product.image}" class="product-image" alt="${product.name}" />
+            <div>
+              <div class="product-title">${product.name}</div>
+              <div class="product-price">₦${product.price.toLocaleString()}</div>
+            </div>
+            <button class="offer-btn" onclick="openChat('${product.name}', ${product.price})">Negotiate / Offer</button>
+          </div>
+        `;
+      });
     }
 
-    // 2. DYNAMIC BACKGROUND PATTERN SWITCHER
-    function switchPattern(category, btn) {
-      document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
-
-      const container = document.getElementById('patternContainer');
-      container.className = 'product-grid-container pattern-' + category;
+    function filterCategory(cat, element) {
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+      element.classList.add('active');
+      selectedCategory = cat;
+      renderProducts();
     }
 
-    // 3. COOKIE CONSENT BANNER LOGIC
-    function acceptCookies() {
-      document.getElementById('cookieBanner').style.display = 'none';
-      localStorage.setItem('cookiesAccepted', 'true');
+    function openChat(name, price) {
+      currentItem = { name, price };
+      document.getElementById("modal-item-name").innerText = `${name} (₦${price.toLocaleString()})`;
+      const chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML = `
+        <div class="chat-msg bot">Hello! The listed price for ${name} is ₦${price.toLocaleString()}. What is your best offer?</div>
+      `;
+      document.getElementById("chat-modal").classList.add("active");
     }
 
-    if (localStorage.getItem('cookiesAccepted') === 'true') {
-      document.getElementById('cookieBanner').style.display = 'none';
+    function closeModal() {
+      document.getElementById("chat-modal").classList.remove("active");
     }
 
-    // 4. HAGGLE MODAL & SERVER INTEGRATION
-    let currentPrice = 0;
+    function sendOffer() {
+      const input = document.getElementById("offer-input");
+      const offerAmount = Number(input.value);
+      if (!offerAmount) return;
 
-    function openOffer(productName, price) {
-      currentPrice = price;
-      document.getElementById('offerProduct').innerText = productName + ' (Listed: ₦' + price.toLocaleString() + ')';
-      document.getElementById('offerModal').classList.add('active');
-    }
+      const chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML += `<div class="chat-msg user">₦${offerAmount.toLocaleString()}</div>`;
 
-    function closeOffer() {
-      document.getElementById('offerModal').classList.remove('active');
-    }
+      // STRICT 10% FLOOR RULE: Minimum price allowed is 90% of original price
+      const minAcceptable = currentItem.price * 0.90;
 
-    async function submitOffer() {
-      const offerVal = parseFloat(document.getElementById('offerPrice').value);
-      if (!offerVal) return alert('Please enter a valid price');
-
-      // Connects with your local Node.js server!
-      try {
-        const response = await fetch('http://localhost:3000/api/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: offerVal, productType: 'in_stock' })
-        });
-        const data = await response.json();
-        if(data.success) {
-          alert('Offer Accepted! Upfront payment: ₦' + data.paymentDetails.upfront);
-          closeOffer();
+      setTimeout(() => {
+        if (offerAmount >= minAcceptable) {
+          chatBox.innerHTML += `
+            <div class="chat-msg bot" style="background: var(--accent-green); color: #000;">
+              🎉 <strong>Offer Accepted!</strong><br/>
+              Your price of ₦${offerAmount.toLocaleString()} has been approved. Proceed to checkout!
+            </div>
+          `;
         } else {
-          alert('Error: ' + data.message);
+          chatBox.innerHTML += `
+            <div class="chat-msg bot" style="background: var(--accent-red);">
+              ❌ <strong>Offer Rejected.</strong><br/>
+              The discount limit for this item is 10%. The minimum offer we can accept is ₦${minAcceptable.toLocaleString()}.
+            </div>
+          `;
         }
-      } catch(err) {
-        // Fallback for offline mode
-        const discount = ((currentPrice - offerVal) / currentPrice) * 100;
-        if (discount > 10) alert('Haggle limit is 10%!');
-        else {
-          alert('Offer submitted successfully!');
-          closeOffer();
-        }
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 500);
+
+      input.value = "";
+    }
+
+    function addNewProduct(e) {
+      e.preventDefault();
+      const newP = {
+        id: Date.now(),
+        name: document.getElementById("p-title").value,
+        category: document.getElementById("p-category").value,
+        price: Number(document.getElementById("p-price").value),
+        image: document.getElementById("p-image").value
+      };
+
+      const products = getStoredProducts();
+      products.push(newP);
+      localStorage.setItem("oversabi_products", JSON.stringify(products));
+
+      alert("Product uploaded successfully!");
+      e.target.reset();
+      switchTab('home', document.querySelectorAll('.nav-item')[0]);
+    }
+
+    function switchTab(tab, element) {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      element.classList.add('active');
+
+      if (tab === 'home') {
+        document.getElementById("home-view").style.display = "block";
+        document.getElementById("admin-view").style.display = "none";
+        renderProducts();
+      } else if (tab === 'admin') {
+        document.getElementById("home-view").style.display = "none";
+        document.getElementById("admin-view").style.display = "block";
       }
     }
-  </script>
 
+    // Initialize Page Load
+    renderProducts();
+  </script>
 </body>
 </html>
