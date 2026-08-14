@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oversabijojo | Premium Deals</title>
-  <!-- FontAwesome Icons -->
+  <title>Oversabijojo | Premium Store</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -19,7 +18,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -29,11 +28,11 @@
       padding-bottom: 70px;
     }
 
-    /* Top Sticky Header */
+    /* Header */
     header {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 90;
       background: #ffffff;
       padding: 10px 15px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -50,7 +49,6 @@
       font-size: 20px;
       font-weight: 900;
       color: var(--temu-orange);
-      letter-spacing: -0.5px;
     }
 
     .search-bar {
@@ -61,7 +59,6 @@
       border-radius: 20px;
       padding: 8px 14px;
       font-size: 14px;
-      color: var(--text-gray);
     }
 
     .search-bar input {
@@ -88,55 +85,12 @@
       font-size: 10px;
       font-weight: bold;
       border-radius: 50%;
-      padding: 2px 5px;
+      padding: 2px 6px;
     }
-
-    /* Category Chips */
-    .categories {
-      display: flex;
-      overflow-x: auto;
-      white-space: nowrap;
-      padding: 10px 15px;
-      background: #fff;
-      gap: 10px;
-      scrollbar-width: none;
-    }
-
-    .categories::-webkit-scrollbar { display: none; }
-
-    .chip {
-      padding: 6px 14px;
-      background: #f0f0f0;
-      border-radius: 16px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #444;
-    }
-
-    .chip.active {
-      background: var(--temu-orange);
-      color: white;
-    }
-
-    /* Hero Promo Banner */
-    .promo-banner {
-      margin: 12px 15px;
-      background: linear-gradient(135deg, #fb5200, #ff0055);
-      border-radius: 12px;
-      padding: 16px;
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(251, 82, 0, 0.25);
-    }
-
-    .promo-text h2 { font-size: 18px; font-weight: 800; }
-    .promo-text p { font-size: 12px; opacity: 0.9; margin-top: 4px; }
 
     /* Product Grid */
     .section-title {
-      padding: 10px 15px 5px;
+      padding: 12px 15px 5px;
       font-size: 16px;
       font-weight: 700;
     }
@@ -155,7 +109,6 @@
       display: flex;
       flex-direction: column;
       box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-      position: relative;
     }
 
     .product-img {
@@ -194,12 +147,6 @@
       font-weight: 800;
     }
 
-    .original-price {
-      color: var(--text-gray);
-      font-size: 11px;
-      text-decoration: line-through;
-    }
-
     .card-actions {
       margin-top: auto;
       display: flex;
@@ -214,7 +161,6 @@
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      text-align: center;
     }
 
     .btn-cart {
@@ -228,7 +174,133 @@
       color: #fff;
     }
 
-    /* Floating Bottom Nav */
+    /* Dedicated Full Cart View */
+    .page-view {
+      position: fixed;
+      inset: 0;
+      background: #f4f4f4;
+      z-index: 150;
+      display: none;
+      flex-direction: column;
+    }
+
+    .page-view.active {
+      display: flex;
+    }
+
+    .page-header {
+      background: #fff;
+      padding: 14px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .page-title {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .cart-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 15px;
+    }
+
+    .cart-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .cart-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--temu-orange);
+    }
+
+    .cart-item-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .cart-item-price {
+      color: var(--temu-orange);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .cart-qty-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .cart-qty-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-weight: bold;
+    }
+
+    .cart-footer {
+      background: #fff;
+      padding: 15px;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .cart-total-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-total-label {
+      font-size: 11px;
+      color: #777;
+    }
+
+    .cart-total-val {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--temu-orange);
+    }
+
+    .btn-checkout {
+      background: var(--temu-orange);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -251,6 +323,7 @@
       font-size: 10px;
       text-decoration: none;
       gap: 3px;
+      cursor: pointer;
     }
 
     .nav-item.active {
@@ -281,59 +354,11 @@
       padding: 20px;
       max-height: 85vh;
       overflow-y: auto;
-      animation: slideUp 0.25s ease-out;
     }
 
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-
-    .modal-title { font-size: 16px; font-weight: 700; }
-
-    .qty-picker {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin: 15px 0;
-    }
-
-    .qty-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid #ccc;
-      background: #fff;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: #444;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+    .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
 
     .btn-full {
       width: 100%;
@@ -345,141 +370,67 @@
       font-weight: 700;
       font-size: 15px;
       margin-top: 10px;
-      cursor: pointer;
-    }
-
-    .btn-secondary {
-      background: #f0f0f0;
-      color: #333;
-      margin-top: 6px;
-    }
-
-    /* GPS Button */
-    .btn-gps {
-      background: #e7f3ff;
-      color: #0066cc;
-      border: 1px dashed #0066cc;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: 600;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 10px;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Header -->
+  <!-- Top Navigation Header -->
   <header>
     <div class="header-top">
       <div class="logo">Oversabijojo</div>
       <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" placeholder="Search wholesale items...">
+        <input type="text" placeholder="Search items...">
       </div>
-      <div class="header-cart-icon" onclick="openCart()">
+      <div class="header-cart-icon" onclick="openCartView()">
         <i class="fa-solid fa-cart-shopping"></i>
         <span class="cart-badge" id="cartBadge">0</span>
       </div>
     </div>
   </header>
 
-  <!-- Categories -->
-  <div class="categories">
-    <div class="chip active">All</div>
-    <div class="chip">Electronics</div>
-    <div class="chip">Fashion</div>
-    <div class="chip">Home & Kitchen</div>
-    <div class="chip">Gadgets</div>
-  </div>
+  <!-- Main Storefront -->
+  <div class="section-title">Trending Wholesale Products</div>
+  <div class="product-grid" id="productGrid"></div>
 
-  <!-- Promo Banner -->
-  <div class="promo-banner">
-    <div class="promo-text">
-      <h2>⚡ Wholesale Discounts</h2>
-      <p>Direct deals & bargaining available on all products!</p>
+  <!-- Dedicated Cart Page Screen -->
+  <div class="page-view" id="cartPageView">
+    <div class="page-header">
+      <div class="page-title"><i class="fa-solid fa-cart-shopping" style="color: var(--temu-orange);"></i> Shopping Cart</div>
+      <i class="fa-solid fa-xmark" style="font-size: 20px; cursor: pointer;" onclick="closeCartView()"></i>
+    </div>
+
+    <div style="padding: 8px 15px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; font-size: 12px;">
+      <label style="display: flex; align-items: center; gap: 8px; font-weight: 600;">
+        <input type="checkbox" id="selectAllCheckbox" class="cart-checkbox" onchange="toggleSelectAll(this)" checked> Select All Items
+      </label>
+      <span style="color: #888;" id="selectedCountText">0 selected</span>
+    </div>
+
+    <div class="cart-content" id="cartItemsContainer">
+      <!-- Dynamic Cart Items Render Here -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-box">
+        <span class="cart-total-label">Total Selected:</span>
+        <span class="cart-total-val" id="cartTotalVal">₦0.00</span>
+      </div>
+      <button class="btn-checkout" onclick="proceedToCheckout()">Checkout Selected</button>
     </div>
   </div>
 
-  <!-- Product Showcase -->
-  <div class="section-title">Trending Items</div>
-  <div class="product-grid" id="productGrid">
-    <!-- Rendered Dynamically -->
-  </div>
-
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav">
-    <a href="#" class="nav-item active">
-      <i class="fa-solid fa-house"></i>
-      <span>Home</span>
-    </a>
-    <a href="#" class="nav-item" onclick="openCart()">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <span>Cart</span>
-    </a>
-    <a href="#" class="nav-item" onclick="openAccount()">
-      <i class="fa-solid fa-user"></i>
-      <span>Account</span>
-    </a>
-  </div>
-
-  <!-- Product Detail Modal (4 Action Options) -->
-  <div class="modal-overlay" id="productModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle">Product Options</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('productModal')"></i>
-      </div>
-      
-      <div class="qty-picker">
-        <span>Quantity:</span>
-        <button class="qty-btn" onclick="changeQty(-1)">-</button>
-        <span id="qtyVal" style="font-weight: bold;">1</span>
-        <button class="qty-btn" onclick="changeQty(1)">+</button>
-      </div>
-
-      <div style="font-size: 18px; font-weight: bold; color: var(--temu-orange); margin-bottom: 15px;" id="modalPrice">
-        ₦0.00
-      </div>
-
-      <button class="btn-full" onclick="addToCartFromModal()">Add to Cart</button>
-      <button class="btn-full" style="background: #28a745;" onclick="triggerDirectBuy()">Buy Now</button>
-      <button class="btn-full btn-secondary" onclick="openNegotiateModal()">Bargain / Negotiate Price</button>
-    </div>
-  </div>
-
-  <!-- Bargain Modal -->
-  <div class="modal-overlay" id="negotiateModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Make an Offer</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('negotiateModal')"></i>
-      </div>
-      <p style="font-size: 12px; color: #666; margin-bottom: 12px;">Submit your counter-offer price to the seller.</p>
-      <div class="form-group">
-        <label>Your Offered Price (₦)</label>
-        <input type="number" id="offerPriceInput" class="form-control" placeholder="Enter offer amount">
-      </div>
-      <button class="btn-full" onclick="submitOffer()">Send Counter Offer</button>
-    </div>
-  </div>
-
-  <!-- Checkout & Location Modal -->
+  <!-- Checkout / Delivery Location Modal -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Delivery & Checkout</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('checkoutModal')"></i>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="font-size: 16px;">Delivery Details</h3>
+        <i class="fa-solid fa-xmark" onclick="closeModal('checkoutModal')" style="cursor: pointer;"></i>
       </div>
 
-      <!-- GPS Detection Button -->
-      <button class="btn-gps" onclick="requestGPSLocation()">
-        <i class="fa-solid fa-location-crosshairs"></i> Use My Exact Phone GPS Location
+      <button style="background: #e7f3ff; color: #0066cc; border: 1px dashed #0066cc; padding: 10px; border-radius: 8px; font-weight: 600; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; cursor: pointer;" onclick="requestGPSLocation()">
+        <i class="fa-solid fa-location-crosshairs"></i> Detect Exact Phone Location
       </button>
 
       <p id="gpsStatus" style="font-size: 11px; color: green; margin-bottom: 10px; display: none;"></p>
@@ -505,7 +456,7 @@
 
       <div class="form-group">
         <label>State</label>
-        <input type="text" id="custState" class="form-control" placeholder="e.g. Lagos, Rivers, Abuja">
+        <input type="text" id="custState" class="form-control" placeholder="e.g. Lagos, Rivers">
       </div>
 
       <div class="form-group">
@@ -519,37 +470,36 @@
       </div>
 
       <button class="btn-full" onclick="completeOrderRequest()">Submit Order Request</button>
-      <button class="btn-full btn-secondary" onclick="redirectToApp()">Order via Mobile App</button>
     </div>
   </div>
 
-  <!-- Cart Modal -->
-  <div class="modal-overlay" id="cartModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Your Cart</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('cartModal')"></i>
-      </div>
-      <div id="cartItemsList" style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;">
-        <!-- Items inserted dynamically -->
-      </div>
-      <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px;" id="cartTotalVal">Total: ₦0.00</div>
-      <button class="btn-full" onclick="openCheckoutModal()">Pay All / Request Delivery</button>
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="closeCartView()">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </div>
+    <div class="nav-item" onclick="openCartView()">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span>Cart</span>
+    </div>
+    <div class="nav-item" onclick="alert('Account Page Coming Soon!')">
+      <i class="fa-solid fa-user"></i>
+      <span>Account</span>
     </div>
   </div>
 
   <script>
-    // Sample Products Data
+    // Sample Products
     const products = [
-      { id: 1, name: "Smart Bluetooth Earbuds Super Bass", price: 8500, oldPrice: 15000, img: "https://via.placeholder.com/200?text=Earbuds" },
-      { id: 2, name: "Luxury Quartz Wrist Watch Water-Resistant", price: 14200, oldPrice: 25000, img: "https://via.placeholder.com/200?text=Watch" },
-      { id: 3, name: "Wireless Fast Charging Power Bank 20000mAh", price: 12000, oldPrice: 18000, img: "https://via.placeholder.com/200?text=Powerbank" },
-      { id: 4, name: "Portable Mini Blender for Juices & Smoothies", price: 9500, oldPrice: 14000, img: "https://via.placeholder.com/200?text=Blender" }
+      { id: 1, name: "Smart Bluetooth Earbuds Super Bass", price: 8500, img: "https://via.placeholder.com/200?text=Earbuds" },
+      { id: 2, name: "Luxury Quartz Wrist Watch Water-Resistant", price: 14200, img: "https://via.placeholder.com/200?text=Watch" },
+      { id: 3, name: "Wireless Fast Charging Power Bank 20000mAh", price: 12000, img: "https://via.placeholder.com/200?text=Powerbank" },
+      { id: 4, name: "Portable Mini Blender for Juices", price: 9500, img: "https://via.placeholder.com/200?text=Blender" }
     ];
 
+    // Cart Store: [{ product, qty, selected }]
     let cart = [];
-    let selectedProduct = null;
-    let selectedQty = 1;
     let userGPS = null;
 
     // Render Storefront Grid
@@ -557,107 +507,131 @@
       const grid = document.getElementById('productGrid');
       grid.innerHTML = products.map(p => `
         <div class="product-card">
-          <img src="${p.img}" class="product-img" alt="${p.name}">
+          <img src="${p.img}" class="product-img">
           <div class="product-details">
             <div class="product-title">${p.name}</div>
             <div class="price-row">
               <span class="current-price">₦${p.price.toLocaleString()}</span>
-              <span class="original-price">₦${p.oldPrice.toLocaleString()}</span>
             </div>
             <div class="card-actions">
-              <button class="btn-action btn-cart" onclick="openProductModal(${p.id})"><i class="fa-solid fa-cart-plus"></i></button>
-              <button class="btn-action btn-buy" onclick="openProductModal(${p.id})">Buy</button>
+              <button class="btn-action btn-cart" onclick="addToCart(${p.id})">+ Cart</button>
+              <button class="btn-action btn-buy" onclick="buyNowDirect(${p.id})">Buy</button>
             </div>
           </div>
         </div>
       `).join('');
     }
 
-    function openProductModal(id) {
-      selectedProduct = products.find(p => p.id === id);
-      selectedQty = 1;
-      document.getElementById('modalTitle').innerText = selectedProduct.name;
-      document.getElementById('modalPrice').innerText = '₦' + (selectedProduct.price * selectedQty).toLocaleString();
-      document.getElementById('qtyVal').innerText = selectedQty;
-      document.getElementById('productModal').classList.add('active');
-    }
-
-    function changeQty(delta) {
-      if (selectedQty + delta >= 1) {
-        selectedQty += delta;
-        document.getElementById('qtyVal').innerText = selectedQty;
-        document.getElementById('modalPrice').innerText = '₦' + (selectedProduct.price * selectedQty).toLocaleString();
-      }
-    }
-
-    function addToCartFromModal() {
-      cart.push({ ...selectedProduct, qty: selectedQty });
-      updateCartBadge();
-      closeModal('productModal');
-      alert('Added to cart!');
-    }
-
-    function triggerDirectBuy() {
-      cart = [{ ...selectedProduct, qty: selectedQty }];
-      updateCartBadge();
-      closeModal('productModal');
-      openCheckoutModal();
-    }
-
-    function openCart() {
-      const container = document.getElementById('cartItemsList');
-      if (cart.length === 0) {
-        container.innerHTML = '<p style="font-size:12px; color:#777;">Your cart is currently empty.</p>';
+    // Add Item to Cart
+    function addToCart(id) {
+      const existing = cart.find(item => item.product.id === id);
+      if (existing) {
+        existing.qty += 1;
       } else {
-        container.innerHTML = cart.map(item => `
-          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px;">
-            <span>${item.name} (x${item.qty})</span>
-            <b>₦${(item.price * item.qty).toLocaleString()}</b>
-          </div>
-        `).join('');
+        const prod = products.find(p => p.id === id);
+        cart.push({ product: prod, qty: 1, selected: true });
       }
-      const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-      document.getElementById('cartTotalVal').innerText = 'Total: ₦' + total.toLocaleString();
-      document.getElementById('cartModal').classList.add('active');
+      updateCartBadge();
+      alert('Added to Cart!');
+    }
+
+    function buyNowDirect(id) {
+      addToCart(id);
+      openCartView();
     }
 
     function updateCartBadge() {
       document.getElementById('cartBadge').innerText = cart.length;
     }
 
-    function openNegotiateModal() {
-      closeModal('productModal');
-      document.getElementById('negotiateModal').classList.add('active');
+    // Open/Close Cart View
+    function openCartView() {
+      renderCartItems();
+      document.getElementById('cartPageView').classList.add('active');
     }
 
-    function submitOffer() {
-      const offer = document.getElementById('offerPriceInput').value;
-      if (!offer) return alert('Please enter an offer amount.');
-      alert(`Offer of ₦${Number(offer).toLocaleString()} submitted to seller!`);
-      closeModal('negotiateModal');
+    function closeCartView() {
+      document.getElementById('cartPageView').classList.remove('active');
     }
 
-    function openCheckoutModal() {
-      closeModal('cartModal');
+    // Render Cart Page Items
+    function renderCartItems() {
+      const container = document.getElementById('cartItemsContainer');
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 10px; color: #888;">
+            <i class="fa-solid fa-cart-arrow-down" style="font-size: 40px; margin-bottom: 10px; color: #ccc;"></i>
+            <p>Your cart is empty.</p>
+          </div>
+        `;
+      } else {
+        container.innerHTML = cart.map((item, index) => `
+          <div class="cart-item">
+            <input type="checkbox" class="cart-checkbox" ${item.selected ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)">
+            <img src="${item.product.img}" class="cart-item-img">
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.product.name}</div>
+              <div class="cart-item-price">₦${item.product.price.toLocaleString()}</div>
+              <div class="cart-qty-ctrl">
+                <button class="cart-qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                <span style="font-size: 12px; font-weight: bold;">${item.qty}</span>
+                <button class="cart-qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                <i class="fa-solid fa-trash" style="color: #dc3545; margin-left: 12px; font-size: 13px; cursor: pointer;" onclick="removeItem(${index})"></i>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      calculateTotal();
+    }
+
+    function toggleItemSelect(index, isChecked) {
+      cart[index].selected = isChecked;
+      calculateTotal();
+    }
+
+    function toggleSelectAll(masterCheckbox) {
+      cart.forEach(item => item.selected = masterCheckbox.checked);
+      renderCartItems();
+    }
+
+    function updateQty(index, delta) {
+      if (cart[index].qty + delta >= 1) {
+        cart[index].qty += delta;
+      }
+      renderCartItems();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCartBadge();
+      renderCartItems();
+    }
+
+    function calculateTotal() {
+      const selectedItems = cart.filter(item => item.selected);
+      const total = selectedItems.reduce((sum, item) => sum + (item.product.price * item.qty), 0);
+      document.getElementById('cartTotalVal').innerText = '₦' + total.toLocaleString();
+      document.getElementById('selectedCountText').innerText = `${selectedItems.length} selected`;
+    }
+
+    function proceedToCheckout() {
+      const selectedItems = cart.filter(item => item.selected);
+      if (selectedItems.length === 0) {
+        return alert('Please select at least 1 item to proceed with checkout!');
+      }
       document.getElementById('checkoutModal').classList.add('active');
     }
 
-    // GPS Location Fetching
+    // GPS & Checkout
     function requestGPSLocation() {
       if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(position => {
-          userGPS = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
+        navigator.geolocation.getCurrentPosition(pos => {
+          userGPS = { lat: pos.coords.latitude, lng: pos.coords.longitude };
           const status = document.getElementById('gpsStatus');
-          status.innerText = `✓ GPS Captured: (${userGPS.lat.toFixed(4)}, ${userGPS.lng.toFixed(4)})`;
+          status.innerText = `✓ Location Secured (${userGPS.lat.toFixed(4)}, ${userGPS.lng.toFixed(4)})`;
           status.style.display = 'block';
-        }, error => {
-          alert('GPS access denied or unavailable. Please fill address manually.');
-        });
-      } else {
-        alert('Geolocation is not supported by your browser.');
+        }, () => alert('GPS access denied. Enter address manually.'));
       }
     }
 
@@ -665,43 +639,37 @@
       const name = document.getElementById('custName').value;
       const phone = document.getElementById('custPhone').value;
 
-      if (!name || !phone) {
-        return alert('Please fill in your name and phone number.');
-      }
+      if (!name || !phone) return alert('Please enter your name and phone number.');
 
-      const orderData = {
+      const selectedItems = cart.filter(item => item.selected);
+
+      const orderPayload = {
         customer: { name, phone },
         gps: userGPS,
-        location: {
+        address: {
           country: document.getElementById('custCountry').value,
           state: document.getElementById('custState').value,
           lga: document.getElementById('custLGA').value,
-          address: document.getElementById('custAddress').value
+          street: document.getElementById('custAddress').value
         },
-        items: cart,
-        timestamp: new Date().toISOString()
+        items: selectedItems
       };
 
-      console.log('Order Sent to Admin:', orderData);
-      alert('Your Order Request has been submitted successfully! The seller will contact you shortly.');
-      cart = [];
+      console.log('Order Sent:', orderPayload);
+      alert('Order request submitted successfully!');
+
+      // Remove checked out items from cart, keep remaining items
+      cart = cart.filter(item => !item.selected);
       updateCartBadge();
       closeModal('checkoutModal');
-    }
-
-    function redirectToApp() {
-      alert('Redirecting to Oversabijojo Mobile App download...');
-    }
-
-    function openAccount() {
-      alert('Sign Up / Login feature active for buyers!');
+      closeCartView();
     }
 
     function closeModal(id) {
       document.getElementById(id).classList.remove('active');
     }
 
-    // Initialize Store
+    // Init
     renderProducts();
   </script>
 </body>
