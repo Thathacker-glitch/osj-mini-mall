@@ -3,779 +3,358 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oversabijojo | Wholesale Superstore</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Paystack Inline JS Library -->
+  <title>Oversabijojo - Online Store</title>
   <script src="https://js.paystack.co/v1/inline.js"></script>
   <style>
     :root {
-      --temu-orange: #fb5200;
-      --temu-bg: #f4f4f4;
-      --text-dark: #222222;
-      --text-gray: #777777;
-      --green-shipping: #098040;
+      --primary: #ff4747;
+      --primary-dark: #d63030;
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --text: #1d1d1f;
+      --text-muted: #6e6e73;
+      --border: #e5e5ea;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background-color: var(--temu-bg); color: var(--text-dark); padding-bottom: 70px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-    /* Header */
-    header { position: sticky; top: 0; z-index: 90; background: #ffffff; padding: 10px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .header-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .logo { font-size: 20px; font-weight: 900; color: var(--temu-orange); cursor: pointer; }
-    
-    .search-bar { flex: 1; display: flex; align-items: center; background: #f0f0f0; border-radius: 20px; padding: 8px 14px; font-size: 14px; }
-    .search-bar input { border: none; background: transparent; outline: none; width: 100%; margin-left: 8px; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 90px;
+    }
 
-    .header-cart-icon { position: relative; font-size: 20px; color: #333; cursor: pointer; }
-    .cart-badge { position: absolute; top: -6px; right: -8px; background: var(--temu-orange); color: white; font-size: 10px; font-weight: bold; border-radius: 50%; padding: 2px 6px; }
+    header {
+      background-color: var(--card-bg);
+      padding: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-    /* User Greeting Bar */
-    .user-bar { padding: 8px 15px; background: #fff3ed; font-size: 12px; color: var(--temu-orange); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
 
-    /* Category Chips */
-    .categories { display: flex; overflow-x: auto; white-space: nowrap; padding: 10px 15px; background: #fff; gap: 10px; border-top: 1px solid #f0f0f0; scrollbar-width: none; }
-    .categories::-webkit-scrollbar { display: none; }
-    .chip { padding: 6px 14px; background: #f0f0f0; border-radius: 16px; font-size: 13px; font-weight: 600; color: #444; cursor: pointer; }
-    .chip.active { background: var(--temu-orange); color: white; }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+    }
 
-    /* Product Grid */
-    .section-title { padding: 12px 15px 5px; font-size: 16px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; }
-    .product-card { background: #fff; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer; }
-    .product-img { width: 100%; aspect-ratio: 1; object-fit: cover; background: #eee; }
-    .product-details { padding: 10px; display: flex; flex-direction: column; flex: 1; }
-    .product-title { font-size: 13px; line-height: 1.3; font-weight: 500; height: 34px; overflow: hidden; margin-bottom: 6px; }
-    .price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; }
-    .current-price { color: var(--temu-orange); font-size: 16px; font-weight: 800; }
-    .card-actions { margin-top: auto; display: flex; gap: 6px; }
-    .btn-action { flex: 1; padding: 8px 0; border: none; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; }
-    .btn-haggle { background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe; }
-    .btn-cart { background: #fff3ed; color: var(--temu-orange); border: 1px solid var(--temu-orange); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
 
-    /* Views / Pages (Cart, Product Detail) */
-    .page-view { position: fixed; inset: 0; background: #f4f4f4; z-index: 150; display: none; flex-direction: column; overflow-y: auto; }
-    .page-view.active { display: flex; }
-    .page-header { background: #fff; padding: 14px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 10; }
-    .page-title { font-size: 17px; font-weight: 700; }
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
 
-    /* Product Detail Page */
-    .gallery-container { position: relative; width: 100%; background: #fff; }
-    .gallery-main { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
-    .gallery-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.6); color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
-    .gallery-thumbs { display: flex; gap: 8px; padding: 10px 15px; background: #fff; overflow-x: auto; border-bottom: 1px solid #eee; }
-    .thumb-img { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; border: 2px solid transparent; cursor: pointer; }
-    .thumb-img.active { border-color: var(--temu-orange); }
+    .product-image {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      background-color: #eee;
+    }
 
-    .detail-info { background: #fff; padding: 15px; margin-bottom: 10px; }
-    .detail-shipping { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--green-shipping); font-weight: 600; background: #eafaf1; padding: 8px 12px; border-radius: 6px; margin-bottom: 12px; }
-    .detail-title { font-size: 16px; font-weight: 700; line-height: 1.4; margin-bottom: 10px; }
-    .detail-stats { font-size: 12px; color: #666; margin-bottom: 10px; display: flex; gap: 10px; }
-    .detail-price-box { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
-    .detail-price { font-size: 24px; font-weight: 900; color: var(--temu-orange); }
-    .detail-old-price { text-decoration: line-through; color: #888; font-size: 14px; }
-    .detail-discount { background: #ffe6e6; color: #d9534f; font-size: 12px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+    .product-info {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
 
-    .detail-sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #eee; padding: 10px 15px; display: flex; gap: 8px; z-index: 160; }
-    .btn-detail-haggle { flex: 1; padding: 12px 0; background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe; border-radius: 25px; font-weight: 700; font-size: 13px; }
-    .btn-detail-add { flex: 1; padding: 12px 0; background: #fff3ed; color: var(--temu-orange); border: 1px solid var(--temu-orange); border-radius: 25px; font-weight: 700; font-size: 13px; }
-    .btn-detail-buy { flex: 1; padding: 12px 0; background: var(--temu-orange); color: white; border: none; border-radius: 25px; font-weight: 700; font-size: 13px; }
+    .product-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
 
-    /* Cart Items Page */
-    .cart-content { flex: 1; overflow-y: auto; padding: 12px 15px; }
-    .cart-item { background: #fff; border-radius: 10px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-    .cart-checkbox { width: 18px; height: 18px; accent-color: var(--temu-orange); }
-    .cart-item-img { width: 60px; height: 60px; border-radius: 6px; object-fit: cover; }
-    .cart-item-info { flex: 1; }
-    .cart-item-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-    .cart-item-price { color: var(--temu-orange); font-weight: 800; font-size: 14px; }
-    .cart-qty-ctrl { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-    .cart-qty-btn { width: 24px; height: 24px; border-radius: 4px; border: 1px solid #ccc; background: #fff; font-weight: bold; }
-    .cart-footer { background: #fff; padding: 15px; border-top: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .cart-total-val { font-size: 18px; font-weight: 800; color: var(--temu-orange); }
-    .btn-checkout { background: var(--temu-orange); color: #fff; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 700; font-size: 14px; cursor: pointer; }
+    .product-price {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
 
-    /* Modals */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: flex-end; z-index: 200; }
-    .modal-overlay.active { display: flex; }
-    .modal-content { background: #fff; width: 100%; max-width: 500px; border-radius: 16px 16px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; }
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
-    .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
-    .btn-full { width: 100%; padding: 12px; background: var(--temu-orange); color: white; border: none; border-radius: 25px; font-weight: 700; font-size: 15px; margin-top: 10px; cursor: pointer; }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: auto;
+    }
 
-    /* Bottom Nav */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #fff; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #eaeaea; z-index: 100; }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-gray); font-size: 10px; text-decoration: none; gap: 3px; cursor: pointer; }
-    .nav-item.active { color: var(--temu-orange); font-weight: 700; }
-    .nav-item i { font-size: 18px; }
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      margin-top: 6px;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .input-group {
+      margin-bottom: 12px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    /* Cart Bar */
+    .cart-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--card-bg);
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header>
-    <div class="header-top">
-      <div class="logo" onclick="filterCategory('All')">Oversabijojo</div>
-      <div class="search-bar">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Search products..." onkeyup="handleSearch()">
-      </div>
-      <div class="header-cart-icon" onclick="openCartView()">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span class="cart-badge" id="cartBadge">0</span>
-      </div>
-    </div>
+    <div class="brand-title">Oversabijojo</div>
+    <div id="user-display" style="font-size: 0.85rem; color: var(--text-muted);">Guest</div>
   </header>
 
-  <!-- User Greeting -->
-  <div class="user-bar">
-    <span id="userGreeting">👋 Welcome to Oversabijojo!</span>
-    <span style="text-decoration: underline; cursor: pointer;" onclick="openAuthModal()" id="authActionBtn">Sign Up / Login</span>
-  </div>
-
-  <!-- Category Bar -->
-  <div class="categories" id="categoryBar"></div>
-
-  <!-- Product Grid -->
-  <div class="section-title">
-    <span id="currentCategoryTitle">All Products</span>
-    <span style="font-size: 12px; color: #777;" id="itemCountText">0 items</span>
-  </div>
-  <div class="product-grid" id="productGrid"></div>
-
-  <!-- PRODUCT DETAIL PAGE -->
-  <div class="page-view" id="productDetailPage">
-    <div class="page-header">
-      <i class="fa-solid fa-arrow-left" style="font-size: 18px; cursor: pointer;" onclick="closeProductDetail()"></i>
-      <div class="page-title">Product Details</div>
-      <div class="header-cart-icon" onclick="openCartView()">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span class="cart-badge" id="detailCartBadge">0</span>
-      </div>
-    </div>
-    
-    <div id="detailViewBody" style="padding-bottom: 80px;"></div>
-
-    <div class="detail-sticky-bar">
-      <button class="btn-detail-haggle" id="detailHaggleBtn"><i class="fa-solid fa-handshake"></i> Haggle</button>
-      <button class="btn-detail-add" id="detailAddBtn">+ Cart</button>
-      <button class="btn-detail-buy" id="detailBuyBtn">Buy Now</button>
+  <!-- Welcome / Sign-up Pop-up Modal -->
+  <div id="signup-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-title">Welcome to Oversabijojo!</div>
+      <div class="modal-desc">Please enter your details to personalize your shopping experience.</div>
+      <form id="signup-form">
+        <div class="input-group">
+          <label for="user-name">Full Name</label>
+          <input type="text" id="user-name" required placeholder="e.g. Jane Doe">
+        </div>
+        <div class="input-group">
+          <label for="user-email">Email Address</label>
+          <input type="email" id="user-email" required placeholder="e.g. jane@example.com">
+        </div>
+        <div class="input-group">
+          <label for="user-phone">Phone Number</label>
+          <input type="tel" id="user-phone" required placeholder="e.g. 08012345678">
+        </div>
+        <button type="submit" class="btn btn-primary">Start Shopping</button>
+        <button type="button" class="btn btn-outline" id="skip-signup">Continue as Guest</button>
+      </form>
     </div>
   </div>
 
-  <!-- Dedicated Cart Page -->
-  <div class="page-view" id="cartPageView">
-    <div class="page-header">
-      <div class="page-title"><i class="fa-solid fa-cart-shopping" style="color: var(--temu-orange);"></i> Shopping Cart</div>
-      <i class="fa-solid fa-xmark" style="font-size: 20px; cursor: pointer;" onclick="closeCartView()"></i>
+  <main class="container">
+    <h2 style="margin-bottom: 12px; font-size: 1.1rem;">Featured Products</h2>
+    <div class="products-grid" id="products-list">
+      <!-- Products generated by JavaScript -->
     </div>
-    <div style="padding: 8px 15px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; font-size: 12px;">
-      <label style="display: flex; align-items: center; gap: 8px; font-weight: 600;">
-        <input type="checkbox" id="selectAllCheckbox" class="cart-checkbox" onchange="toggleSelectAll(this)" checked> Select All Items
-      </label>
-      <span style="color: #888;" id="selectedCountText">0 selected</span>
-    </div>
-    <div class="cart-content" id="cartItemsContainer"></div>
-    <div class="cart-footer">
-      <div>
-        <span style="font-size: 11px; color: #777;">Subtotal:</span><br>
-        <span class="cart-total-val" id="cartTotalVal">₦0</span>
-      </div>
-      <button class="btn-checkout" onclick="proceedToCheckout()">Checkout Selected</button>
-    </div>
-  </div>
+  </main>
 
-  <!-- Haggle Modal -->
-  <div class="modal-overlay" id="haggleModal">
-    <div class="modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="font-size: 16px;">🤝 Haggle / Make an Offer</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('haggleModal')" style="cursor: pointer;"></i>
-      </div>
-      <div id="haggleProductTitle" style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #444;"></div>
-      <div class="form-group">
-        <label>Listed Price</label>
-        <input type="text" id="haggleOriginalPrice" class="form-control" readonly style="background:#eee;">
-      </div>
-      <div class="form-group">
-        <label>Your Offered Price (₦)</label>
-        <input type="number" id="haggleOfferPrice" class="form-control" placeholder="Enter your offer amount">
-      </div>
-      <div class="form-group">
-        <label>Quantity Desired</label>
-        <input type="number" id="haggleQty" class="form-control" value="1" min="1">
-      </div>
-      <button class="btn-full" style="background: #4f46e5;" onclick="submitHaggleOffer()"><i class="fa-brands fa-whatsapp"></i> Send Offer on WhatsApp</button>
+  <div class="cart-bar">
+    <div>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">Total Amount</div>
+      <div style="font-size: 1.1rem; font-weight: 700;" id="cart-total">₦0.00</div>
     </div>
-  </div>
-
-  <!-- Sign Up / Account Modal -->
-  <div class="modal-overlay" id="authModal">
-    <div class="modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="font-size: 16px;">Buyer Account</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('authModal')" style="cursor: pointer;"></i>
-      </div>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="regName" class="form-control" placeholder="John Doe">
-      </div>
-      <div class="form-group">
-        <label>Email Address (For Payment Receipt)</label>
-        <input type="email" id="regEmail" class="form-control" placeholder="john@example.com">
-      </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" id="regPhone" class="form-control" placeholder="08012345678">
-      </div>
-      <button class="btn-full" onclick="registerUser()">Save & Continue</button>
-    </div>
-  </div>
-
-  <!-- Delivery & Online Payment Modal -->
-  <div class="modal-overlay" id="checkoutModal">
-    <div class="modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="font-size: 16px;">Delivery & Online Payment</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('checkoutModal')" style="cursor: pointer;"></i>
-      </div>
-      <button style="background: #e7f3ff; color: #0066cc; border: 1px dashed #0066cc; padding: 10px; border-radius: 8px; font-weight: 600; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; cursor: pointer;" onclick="requestGPSLocation()">
-        <i class="fa-solid fa-location-crosshairs"></i> Detect GPS Location
-      </button>
-      <p id="gpsStatus" style="font-size: 11px; color: green; margin-bottom: 10px; display: none;"></p>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="custName" class="form-control" placeholder="John Doe">
-      </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" id="custEmail" class="form-control" placeholder="john@example.com">
-      </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" id="custPhone" class="form-control" placeholder="08012345678">
-      </div>
-      <div class="form-group">
-        <label>Street Address</label>
-        <input type="text" id="custAddress" class="form-control" placeholder="House number and street name">
-      </div>
-      <button class="btn-full" style="background: #098040;" onclick="payWithPaystack()"><i class="fa-solid fa-lock"></i> Pay Now (Card / USSD / Transfer)</button>
-    </div>
-  </div>
-
-  <!-- Post-Payment WhatsApp / Summary Modal -->
-  <div class="modal-overlay" id="postPaymentModal">
-    <div class="modal-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="font-size: 16px; color: #098040;"><i class="fa-solid fa-circle-check"></i> Payment Successful!</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('postPaymentModal')" style="cursor: pointer;"></i>
-      </div>
-      <div id="paymentReceiptDetails" style="font-size: 13px; line-height: 1.5; background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 15px;"></div>
-      
-      <p style="font-size: 12px; color: #555; margin-bottom: 12px; text-align: center;">Would you like to send your order details and delivery pin directly to the seller via WhatsApp?</p>
-      
-      <button class="btn-full" style="background: #25D366;" onclick="sendToWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Send Details via WhatsApp</button>
-      <button class="btn-full" style="background: #888; margin-top: 8px;" onclick="closeModal('postPaymentModal')">No Thanks, I'm Done</button>
-    </div>
-  </div>
-
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav">
-    <div class="nav-item active" onclick="filterCategory('All')">
-      <i class="fa-solid fa-house"></i>
-      <span>Home</span>
-    </div>
-    <div class="nav-item" onclick="openCartView()">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <span>Cart</span>
-    </div>
-    <div class="nav-item" onclick="openAuthModal()">
-      <i class="fa-solid fa-user"></i>
-      <span>Account</span>
-    </div>
+    <button class="btn btn-primary" style="width: auto; padding: 10px 24px;" id="checkout-btn">Checkout</button>
   </div>
 
   <script>
-    // Set your Paystack Public Key here (e.g., pk_live_xxxxx or pk_test_xxxxx)
-    const PAYSTACK_PUBLIC_KEY = 'pk_test_2b08e01f6068d0c2859d1024513921d7c48ab484' 
-    const ADMIN_WHATSAPP_NUMBER = '+2349056558869'; // 
+    // ==========================================
+    // STORE CONFIGURATION & API KEYS
+    // ==========================================
+    const PAYSTACK_PUBLIC_KEY = 'pk_test_2b08e01f6068d0c2859d1024513921d7c48ab484';
+    const ADMIN_WHATSAPP_NUMBER = '2349056558869';
 
-
-    const categoryList = ["All", "Women", "Men", "Jewelry", "Toy", "Bags", "Kids", "Beauty", "Craft", "Baby", "Health", "Household", "Appliances", "Books"];
-
+    // Sample Products Data
     const products = [
-      { 
-        id: 1, 
-        name: "12pcs Stainless Steel Necklace and Earring Set, Fashionable Jewelry Pack", 
-        price: 11071, 
-        oldPrice: 23292,
-        discount: "52% OFF",
-        category: "Jewelry", 
-        sold: "2.4K+",
-        rating: "4.8 ★",
-        images: [
-          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600",
-          "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600",
-          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600"
-        ]
-      },
-      { 
-        id: 2, 
-        name: "Silk Floral Summer Dress - Elegant Vintage Wear", 
-        price: 12500, 
-        oldPrice: 25000,
-        discount: "50% OFF",
-        category: "Women", 
-        sold: "1.2K+",
-        rating: "4.9 ★",
-        images: [
-          "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600",
-          "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600"
-        ]
-      },
-      { 
-        id: 3, 
-        name: "High-Waist Stretch Denim Jeans", 
-        price: 9800, 
-        oldPrice: 15000,
-        discount: "35% OFF",
-        category: "Women", 
-        sold: "850+",
-        rating: "4.7 ★",
-        images: [
-          "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600"
-        ]
-      },
-      { 
-        id: 4, 
-        name: "Men's Slim Fit Corporate Long Sleeve Shirt", 
-        price: 8500, 
-        oldPrice: 12000,
-        discount: "29% OFF",
-        category: "Men", 
-        sold: "3.1K+",
-        rating: "4.8 ★",
-        images: [
-          "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600"
-        ]
-      },
-      { 
-        id: 5, 
-        name: "Men's Casual Designer Cushion Sneakers", 
-        price: 18500, 
-        oldPrice: 30000,
-        discount: "38% OFF",
-        category: "Men", 
-        sold: "4.5K+",
-        rating: "4.9 ★",
-        images: [
-          "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600"
-        ]
-      },
-      { 
-        id: 6, 
-        name: "Electric Smart Air Fryer 4.5L Multi-Cooker", 
-        price: 38000, 
-        oldPrice: 55000,
-        discount: "30% OFF",
-        category: "Appliances", 
-        sold: "1.8K+",
-        rating: "4.9 ★",
-        images: [
-          "https://images.unsplash.com/photo-1585515320310-259814833e62?w=600"
-        ]
-      }
+      { id: 1, name: 'Gold Layered Necklace', price: 8500, image: 'https://via.placeholder.com/150' },
+      { id: 2, name: 'Crystal Hoop Earrings', price: 4500, image: 'https://via.placeholder.com/150' },
+      { id: 3, name: 'Minimalist Wristwatch', price: 12000, image: 'https://via.placeholder.com/150' }
     ];
 
-    let currentCategory = "All";
     let cart = [];
-    let userGPS = null;
-    let currentUser = null;
-    let currentOrderPayload = null;
-    let activeDetailProduct = null;
-    let activeImageIndex = 0;
-    let haggleTargetProduct = null;
+    let currentUser = JSON.parse(localStorage.getItem('oversabi_user')) || null;
 
-    function initStore() {
-      try {
-        const stored = localStorage.getItem('oversabijojo_user');
-        if (stored) currentUser = JSON.parse(stored);
-      } catch(e) {}
-
-      renderCategories();
+    // Initialize App
+    document.addEventListener('DOMContentLoaded', () => {
+      checkUserSession();
       renderProducts();
-      updateUserUI();
+    });
+
+    // Check Sign-Up Modal Status
+    function checkUserSession() {
+      const modal = document.getElementById('signup-modal');
+      const userDisplay = document.getElementById('user-display');
+      
+      if (currentUser) {
+        userDisplay.textContent = currentUser.name;
+        modal.classList.add('hidden');
+      } else {
+        modal.classList.remove('hidden');
+      }
     }
 
-    function renderCategories() {
-      const bar = document.getElementById('categoryBar');
-      bar.innerHTML = categoryList.map(cat => `
-        <div class="chip ${cat === currentCategory ? 'active' : ''}" onclick="filterCategory('${cat}')">${cat}</div>
+    // Handle Sign-Up Form Submit
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      currentUser = {
+        name: document.getElementById('user-name').value,
+        email: document.getElementById('user-email').value,
+        phone: document.getElementById('user-phone').value
+      };
+      localStorage.setItem('oversabi_user', JSON.stringify(currentUser));
+      checkUserSession();
+    });
+
+    // Handle Skip Sign-Up
+    document.getElementById('skip-signup').addEventListener('click', () => {
+      document.getElementById('signup-modal').classList.add('hidden');
+    });
+
+    // Render Product Cards
+    function renderProducts() {
+      const container = document.getElementById('products-list');
+      container.innerHTML = products.map(product => `
+        <div class="product-card">
+          <img src="${product.image}" class="product-image" alt="${product.name}">
+          <div class="product-info">
+            <div class="product-title">${product.name}</div>
+            <div class="product-price">₦${product.price.toLocaleString()}</div>
+            <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
+            <button class="btn btn-outline" onclick="openHaggle('${product.name}', ${product.price})">Haggle Price</button>
+          </div>
+        </div>
       `).join('');
     }
 
-    function filterCategory(cat) {
-      currentCategory = cat;
-      renderCategories();
-      renderProducts();
+    // Add Item to Cart
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        cart.push(product);
+        updateCartTotal();
+      }
     }
 
-    function renderProducts(itemsToRender) {
-      const grid = document.getElementById('productGrid');
-      let filtered = itemsToRender || (currentCategory === "All" ? products : products.filter(p => p.category === currentCategory));
+    // Update Cart Total Display
+    function updateCartTotal() {
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      document.getElementById('cart-total').textContent = `₦${total.toLocaleString()}`;
+    }
 
-      document.getElementById('currentCategoryTitle').innerText = currentCategory + " Products";
-      document.getElementById('itemCountText').innerText = filtered.length + " items";
+    // Open WhatsApp Haggle
+    function openHaggle(productName, originalPrice) {
+      const message = encodeURIComponent(`Hello, I would like to make an offer for "${productName}" (Original: ₦${originalPrice.toLocaleString()}).`);
+      window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${message}`, '_blank');
+    }
 
-      if (filtered.length === 0) {
-        grid.innerHTML = '<p style="grid-column: span 2; text-align: center; padding: 40px; color: #888;">No products found in this category.</p>';
+    // Paystack Checkout Integration
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      const totalAmount = cart.reduce((sum, item) => sum + item.price, 0);
+
+      if (totalAmount === 0) {
+        alert('Your cart is empty!');
         return;
       }
 
-      grid.innerHTML = filtered.map(p => `
-        <div class="product-card" onclick="openProductDetail(${p.id})">
-          <img src="${p.images[0]}" class="product-img">
-          <div class="product-details">
-            <div class="product-title">${p.name}</div>
-            <div class="price-row">
-              <span class="current-price">₦${p.price.toLocaleString()}</span>
-            </div>
-            <div class="card-actions">
-              <button class="btn-action btn-haggle" onclick="event.stopPropagation(); openHaggleModal(${p.id});">Haggle</button>
-              <button class="btn-action btn-cart" onclick="event.stopPropagation(); addToCart(${p.id});">+ Cart</button>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
+      const email = currentUser ? currentUser.email : 'customer@oversabijojo.com';
 
-    /* Product Detail View */
-    function openProductDetail(productId) {
-      activeDetailProduct = products.find(p => p.id === productId);
-      if (!activeDetailProduct) return;
-
-      activeImageIndex = 0;
-      renderProductDetailBody();
-
-      document.getElementById('detailHaggleBtn').onclick = () => openHaggleModal(activeDetailProduct.id);
-      document.getElementById('detailAddBtn').onclick = () => addToCart(activeDetailProduct.id);
-      document.getElementById('detailBuyBtn').onclick = () => buyNowDirect(activeDetailProduct.id);
-
-      document.getElementById('productDetailPage').classList.add('active');
-    }
-
-    function closeProductDetail() {
-      document.getElementById('productDetailPage').classList.remove('active');
-    }
-
-    function renderProductDetailBody() {
-      const p = activeDetailProduct;
-      const totalImgs = p.images.length;
-
-      document.getElementById('detailViewBody').innerHTML = `
-        <div class="gallery-container">
-          <img id="mainGalleryImg" src="${p.images[activeImageIndex]}" class="gallery-main">
-          <div class="gallery-badge" id="galleryBadge">${activeImageIndex + 1}/${totalImgs}</div>
-        </div>
-
-        ${totalImgs > 1 ? `
-          <div class="gallery-thumbs">
-            ${p.images.map((img, idx) => `
-              <img src="${img}" class="thumb-img ${idx === activeImageIndex ? 'active' : ''}" onclick="switchGalleryImg(${idx})">
-            `).join('')}
-          </div>
-        ` : ''}
-
-        <div class="detail-info">
-          <div class="detail-shipping">
-            <i class="fa-solid fa-truck-fast"></i>
-            <span>Arrives in NG in as little as 5 days • Free shipping</span>
-          </div>
-
-          <div class="detail-title">${p.name}</div>
-
-          <div class="detail-stats">
-            <span>${p.rating || '4.8 ★'}</span> | 
-            <span>${p.sold || '1K+'} sold</span>
-          </div>
-
-          <div class="detail-price-box">
-            <span class="detail-price">₦${p.price.toLocaleString()}</span>
-            ${p.oldPrice ? `<span class="detail-old-price">₦${p.oldPrice.toLocaleString()}</span>` : ''}
-            ${p.discount ? `<span class="detail-discount">${p.discount}</span>` : ''}
-          </div>
-        </div>
-      `;
-    }
-
-    function switchGalleryImg(index) {
-      activeImageIndex = index;
-      document.getElementById('mainGalleryImg').src = activeDetailProduct.images[index];
-      document.getElementById('galleryBadge').innerText = `${index + 1}/${activeDetailProduct.images.length}`;
-      
-      const thumbs = document.querySelectorAll('.thumb-img');
-      thumbs.forEach((t, i) => {
-        if (i === index) t.classList.add('active');
-        else t.classList.remove('active');
-      });
-    }
-
-    /* Haggle Modal */
-    function openHaggleModal(productId) {
-      haggleTargetProduct = products.find(p => p.id === productId);
-      if (!haggleTargetProduct) return;
-
-      document.getElementById('haggleProductTitle').innerText = haggleTargetProduct.name;
-      document.getElementById('haggleOriginalPrice').value = '₦' + haggleTargetProduct.price.toLocaleString();
-      document.getElementById('haggleOfferPrice').value = '';
-      document.getElementById('haggleModal').classList.add('active');
-    }
-
-    function submitHaggleOffer() {
-      const offerPrice = document.getElementById('haggleOfferPrice').value;
-      const qty = document.getElementById('haggleQty').value || 1;
-
-      if (!offerPrice) return alert('Please enter your offer amount.');
-
-      let text = `*PRICE HAGGLE OFFER - OVERSABIJOJO*%0A%0A`;
-      text += `*Product:* ${haggleTargetProduct.name}%0A`;
-      text += `*Listed Price:* N${haggleTargetProduct.price.toLocaleString()}%0A`;
-      text += `*My Offered Price:* N${Number(offerPrice).toLocaleString()}%0A`;
-      text += `*Quantity:* ${qty}%0A`;
-      if (currentUser && currentUser.name) text += `*Customer:* ${currentUser.name} (${currentUser.phone})`;
-
-      window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${text}`, '_blank');
-      closeModal('haggleModal');
-    }
-
-    function handleSearch() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const matches = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
-      renderProducts(matches);
-    }
-
-    function addToCart(id) {
-      const existing = cart.find(item => item.product.id === id);
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        const prod = products.find(p => p.id === id);
-        cart.push({ product: prod, qty: 1, selected: true });
-      }
-      updateCartBadge();
-      alert('Added to cart!');
-    }
-
-    function buyNowDirect(id) {
-      addToCart(id);
-      openCartView();
-    }
-
-    function updateCartBadge() {
-      document.getElementById('cartBadge').innerText = cart.length;
-      document.getElementById('detailCartBadge').innerText = cart.length;
-    }
-
-    function openCartView() {
-      renderCartItems();
-      document.getElementById('cartPageView').classList.add('active');
-    }
-
-    function closeCartView() {
-      document.getElementById('cartPageView').classList.remove('active');
-    }
-
-    function renderCartItems() {
-      const container = document.getElementById('cartItemsContainer');
-      if (cart.length === 0) {
-        container.innerHTML = '<p style="text-align:center; padding:40px; color:#888;">Your cart is empty.</p>';
-      } else {
-        container.innerHTML = cart.map((item, index) => `
-          <div class="cart-item">
-            <input type="checkbox" class="cart-checkbox" ${item.selected ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)">
-            <img src="${item.product.images[0]}" class="cart-item-img">
-            <div class="cart-item-info">
-              <div class="cart-item-title">${item.product.name}</div>
-              <div class="cart-item-price">₦${item.product.price.toLocaleString()}</div>
-              <div class="cart-qty-ctrl">
-                <button class="cart-qty-btn" onclick="updateQty(${index}, -1)">-</button>
-                <span style="font-size: 12px; font-weight: bold;">${item.qty}</span>
-                <button class="cart-qty-btn" onclick="updateQty(${index}, 1)">+</button>
-                <i class="fa-solid fa-trash" style="color: #dc3545; margin-left: 12px; font-size: 13px; cursor: pointer;" onclick="removeItem(${index})"></i>
-              </div>
-            </div>
-          </div>
-        `).join('');
-      }
-      calculateTotal();
-    }
-
-    function toggleItemSelect(index, isChecked) {
-      cart[index].selected = isChecked;
-      calculateTotal();
-    }
-
-    function toggleSelectAll(masterCheckbox) {
-      cart.forEach(item => item.selected = masterCheckbox.checked);
-      renderCartItems();
-    }
-
-    function updateQty(index, delta) {
-      if (cart[index].qty + delta >= 1) cart[index].qty += delta;
-      renderCartItems();
-    }
-
-    function removeItem(index) {
-      cart.splice(index, 1);
-      updateCartBadge();
-      renderCartItems();
-    }
-
-    function calculateTotal() {
-      const selectedItems = cart.filter(item => item.selected);
-      const total = selectedItems.reduce((sum, item) => sum + (item.product.price * item.qty), 0);
-      document.getElementById('cartTotalVal').innerText = '₦' + total.toLocaleString();
-      document.getElementById('selectedCountText').innerText = `${selectedItems.length} selected`;
-    }
-
-    function proceedToCheckout() {
-      const selectedItems = cart.filter(item => item.selected);
-      if (selectedItems.length === 0) return alert('Please select at least 1 item in your cart.');
-      
-      if (currentUser) {
-        document.getElementById('custName').value = currentUser.name || '';
-        document.getElementById('custEmail').value = currentUser.email || '';
-        document.getElementById('custPhone').value = currentUser.phone || '';
-      }
-      document.getElementById('checkoutModal').classList.add('active');
-    }
-
-    function openAuthModal() {
-      document.getElementById('authModal').classList.add('active');
-    }
-
-    function registerUser() {
-      const name = document.getElementById('regName').value;
-      const email = document.getElementById('regEmail').value;
-      const phone = document.getElementById('regPhone').value;
-
-      if (!name || !phone || !email) return alert('Name, Email, and Phone Number are required.');
-
-      currentUser = { name, email, phone };
-      try { localStorage.setItem('oversabijojo_user', JSON.stringify(currentUser)); } catch(e){}
-      updateUserUI();
-      closeModal('authModal');
-      alert('Welcome, ' + name + '!');
-    }
-
-    function updateUserUI() {
-      if (currentUser && currentUser.name) {
-        document.getElementById('userGreeting').innerText = `👋 Hello, ${currentUser.name}!`;
-        document.getElementById('authActionBtn').innerText = 'Account Active';
-      }
-    }
-
-    function requestGPSLocation() {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          userGPS = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-          const status = document.getElementById('gpsStatus');
-          status.innerText = `✓ GPS Captured: (${userGPS.lat.toFixed(4)}, ${userGPS.lng.toFixed(4)})`;
-          status.style.display = 'block';
-        }, () => alert('GPS access denied. Please type your address manually.'));
-      } else {
-        alert('Geolocation is not supported by your browser.');
-      }
-    }
-
-    /* Paystack Online Payment Integration */
-    function payWithPaystack() {
-      const name = document.getElementById('custName').value;
-      const email = document.getElementById('custEmail').value;
-      const phone = document.getElementById('custPhone').value;
-      const address = document.getElementById('custAddress').value;
-
-      if (!name || !email || !phone) return alert('Name, Email, and Phone number are required.');
-
-      const selectedItems = cart.filter(item => item.selected);
-      const totalNaira = selectedItems.reduce((sum, item) => sum + (item.product.price * item.qty), 0);
-
-      currentOrderPayload = { name, email, phone, address, items: selectedItems, total: totalNaira };
-
-      // Initialize Paystack Pop-up
       const handler = PaystackPop.setup({
-        key: PAYSTACK_PUBLIC_KEY, 
+        key: PAYSTACK_PUBLIC_KEY,
         email: email,
-        amount: totalNaira * 100, // Paystack amount is in Kobo (multiply by 100)
-        currency: "NGN",
-        ref: 'OBJ_' + Math.floor((Math.random() * 1000000000) + 1),
-        metadata: {
-          custom_fields: [
-            { display_name: "Customer Name", variable_name: "customer_name", value: name },
-            { display_name: "Phone Number", variable_name: "phone_number", value: phone }
-          ]
-        },
+        amount: totalAmount * 100, // Amount in kobo
+        currency: 'NGN',
         callback: function(response) {
-          // Triggered on successful payment
-          currentOrderPayload.paymentRef = response.reference;
-          closeModal('checkoutModal');
-          displayPostPaymentOptions();
+          const successMessage = encodeURIComponent(`Hello! I just completed a payment of ₦${totalAmount.toLocaleString()} for my order. Payment Reference: ${response.reference}`);
+          window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${successMessage}`, '_blank');
+          cart = [];
+          updateCartTotal();
         },
         onClose: function() {
-          alert('Payment window closed.');
+          alert('Transaction was cancelled.');
         }
       });
 
       handler.openIframe();
-    }
-
-    function displayPostPaymentOptions() {
-      let receiptHTML = `
-        <b>Status:</b> <span style="color:green;">PAID ✓</span><br>
-        <b>Ref:</b> ${currentOrderPayload.paymentRef}<br>
-        <b>Customer:</b> ${currentOrderPayload.name} (${currentOrderPayload.phone})<br>
-        <b>Address:</b> ${currentOrderPayload.address || 'Not Provided'}<br>
-        <b>GPS Pin:</b> ${userGPS ? 'Captured ✓' : 'None'}<br><hr style="margin:8px 0;">
-        <b>Items Purchased:</b><br>
-        ${currentOrderPayload.items.map(i => `• ${i.product.name} (x${i.qty}) - ₦${(i.product.price * i.qty).toLocaleString()}`).join('<br>')}<br><hr style="margin:8px 0;">
-        <b style="font-size:15px; color:var(--temu-orange);">Paid Total: ₦${currentOrderPayload.total.toLocaleString()}</b>
-      `;
-
-      document.getElementById('paymentReceiptDetails').innerHTML = receiptHTML;
-      document.getElementById('postPaymentModal').classList.add('active');
-    }
-
-    function sendToWhatsApp() {
-      if (!currentOrderPayload) return;
-      
-      let text = `*PAID ORDER CONFIRMATION - OVERSABIJOJO*%0A%0A`;
-      text += `*Payment Ref:* ${currentOrderPayload.paymentRef}%0A`;
-      text += `*Customer:* ${currentOrderPayload.name}%0A`;
-      text += `*Phone:* ${currentOrderPayload.phone}%0A`;
-      text += `*Email:* ${currentOrderPayload.email}%0A`;
-      text += `*Address:* ${currentOrderPayload.address}%0A`;
-      if (userGPS) text += `*GPS Location:* https://maps.google.com/?q=${userGPS.lat},${userGPS.lng}%0A`;
-      text += `%0A*Items Paid For:*%0A`;
-      currentOrderPayload.items.forEach(i => {
-        text += `- ${i.product.name} (Qty: ${i.qty}) = N${(i.product.price * i.qty).toLocaleString()}%0A`;
-      });
-      text += `%0A*Total Amount Paid:* N${currentOrderPayload.total.toLocaleString()}`;
-
-      window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${text}`, '_blank');
-      
-      cart = cart.filter(item => !item.selected);
-      updateCartBadge();
-      closeModal('postPaymentModal');
-      closeCartView();
-      closeProductDetail();
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-    }
-
-    window.onload = initStore;
+    });
   </script>
 </body>
 </html>
