@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oversabijojo | Wholesale Superstore</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Paystack Inline JS Library -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
   <style>
     :root {
       --temu-orange: #fb5200;
@@ -103,7 +105,7 @@
     .btn-full { width: 100%; padding: 12px; background: var(--temu-orange); color: white; border: none; border-radius: 25px; font-weight: 700; font-size: 15px; margin-top: 10px; cursor: pointer; }
 
     /* Bottom Nav */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #fff; display: flex; justify-space-around; align-items: center; border-top: 1px solid #eaeaea; z-index: 100; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #fff; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #eaeaea; z-index: 100; }
     .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-gray); font-size: 10px; text-decoration: none; gap: 3px; cursor: pointer; }
     .nav-item.active { color: var(--temu-orange); font-weight: 700; }
     .nav-item i { font-size: 18px; }
@@ -111,7 +113,7 @@
 </head>
 <body>
 
-  <!-- Top Navigation Header -->
+  <!-- Header -->
   <header>
     <div class="header-top">
       <div class="logo" onclick="filterCategory('All')">Oversabijojo</div>
@@ -126,23 +128,23 @@
     </div>
   </header>
 
-  <!-- User Greeting Bar -->
+  <!-- User Greeting -->
   <div class="user-bar">
     <span id="userGreeting">👋 Welcome to Oversabijojo!</span>
     <span style="text-decoration: underline; cursor: pointer;" onclick="openAuthModal()" id="authActionBtn">Sign Up / Login</span>
   </div>
 
-  <!-- Category Chips Bar -->
+  <!-- Category Bar -->
   <div class="categories" id="categoryBar"></div>
 
-  <!-- Main Storefront Title & Grid -->
+  <!-- Product Grid -->
   <div class="section-title">
     <span id="currentCategoryTitle">All Products</span>
     <span style="font-size: 12px; color: #777;" id="itemCountText">0 items</span>
   </div>
   <div class="product-grid" id="productGrid"></div>
 
-  <!-- PRODUCT DETAIL PAGE (Interactive Screen) -->
+  <!-- PRODUCT DETAIL PAGE -->
   <div class="page-view" id="productDetailPage">
     <div class="page-header">
       <i class="fa-solid fa-arrow-left" style="font-size: 18px; cursor: pointer;" onclick="closeProductDetail()"></i>
@@ -184,7 +186,7 @@
     </div>
   </div>
 
-  <!-- Haggle / Make an Offer Modal -->
+  <!-- Haggle Modal -->
   <div class="modal-overlay" id="haggleModal">
     <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -220,6 +222,10 @@
         <input type="text" id="regName" class="form-control" placeholder="John Doe">
       </div>
       <div class="form-group">
+        <label>Email Address (For Payment Receipt)</label>
+        <input type="email" id="regEmail" class="form-control" placeholder="john@example.com">
+      </div>
+      <div class="form-group">
         <label>Phone Number</label>
         <input type="tel" id="regPhone" class="form-control" placeholder="08012345678">
       </div>
@@ -227,11 +233,11 @@
     </div>
   </div>
 
-  <!-- Delivery Details Modal -->
+  <!-- Delivery & Online Payment Modal -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="font-size: 16px;">Delivery Details</h3>
+        <h3 style="font-size: 16px;">Delivery & Online Payment</h3>
         <i class="fa-solid fa-xmark" onclick="closeModal('checkoutModal')" style="cursor: pointer;"></i>
       </div>
       <button style="background: #e7f3ff; color: #0066cc; border: 1px dashed #0066cc; padding: 10px; border-radius: 8px; font-weight: 600; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; cursor: pointer;" onclick="requestGPSLocation()">
@@ -243,6 +249,10 @@
         <input type="text" id="custName" class="form-control" placeholder="John Doe">
       </div>
       <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="custEmail" class="form-control" placeholder="john@example.com">
+      </div>
+      <div class="form-group">
         <label>Phone Number</label>
         <input type="tel" id="custPhone" class="form-control" placeholder="08012345678">
       </div>
@@ -250,19 +260,23 @@
         <label>Street Address</label>
         <input type="text" id="custAddress" class="form-control" placeholder="House number and street name">
       </div>
-      <button class="btn-full" onclick="generateOrderReceipt()">Review Order</button>
+      <button class="btn-full" style="background: #098040;" onclick="payWithPaystack()"><i class="fa-solid fa-lock"></i> Pay Now (Card / USSD / Transfer)</button>
     </div>
   </div>
 
-  <!-- WhatsApp Receipt Modal -->
-  <div class="modal-overlay" id="receiptModal">
+  <!-- Post-Payment WhatsApp / Summary Modal -->
+  <div class="modal-overlay" id="postPaymentModal">
     <div class="modal-content">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="font-size: 16px;">Order Request Summary</h3>
-        <i class="fa-solid fa-xmark" onclick="closeModal('receiptModal')" style="cursor: pointer;"></i>
+        <h3 style="font-size: 16px; color: #098040;"><i class="fa-solid fa-circle-check"></i> Payment Successful!</h3>
+        <i class="fa-solid fa-xmark" onclick="closeModal('postPaymentModal')" style="cursor: pointer;"></i>
       </div>
-      <div id="receiptDetails" style="font-size: 13px; line-height: 1.5; background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 12px;"></div>
-      <button class="btn-full" style="background: #25D366;" onclick="sendToWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Send Order via WhatsApp</button>
+      <div id="paymentReceiptDetails" style="font-size: 13px; line-height: 1.5; background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 15px;"></div>
+      
+      <p style="font-size: 12px; color: #555; margin-bottom: 12px; text-align: center;">Would you like to send your order details and delivery pin directly to the seller via WhatsApp?</p>
+      
+      <button class="btn-full" style="background: #25D366;" onclick="sendToWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Send Details via WhatsApp</button>
+      <button class="btn-full" style="background: #888; margin-top: 8px;" onclick="closeModal('postPaymentModal')">No Thanks, I'm Done</button>
     </div>
   </div>
 
@@ -283,6 +297,10 @@
   </div>
 
   <script>
+    // Set your Paystack Public Key here (e.g., pk_live_xxxxx or pk_test_xxxxx)
+    const PAYSTACK_PUBLIC_KEY = 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; 
+    const ADMIN_WHATSAPP_NUMBER = '2348000000000'; // Replace with admin WhatsApp number
+
     const categoryList = ["All", "Women", "Men", "Jewelry", "Toy", "Bags", "Kids", "Beauty", "Craft", "Baby", "Health", "Household", "Appliances", "Books"];
 
     const products = [
@@ -431,7 +449,7 @@
       `).join('');
     }
 
-    /* Product Detail Screen */
+    /* Product Detail View */
     function openProductDetail(productId) {
       activeDetailProduct = products.find(p => p.id === productId);
       if (!activeDetailProduct) return;
@@ -526,7 +544,7 @@
       text += `*Quantity:* ${qty}%0A`;
       if (currentUser && currentUser.name) text += `*Customer:* ${currentUser.name} (${currentUser.phone})`;
 
-      window.open(`https://wa.me/?text=${text}`, '_blank');
+      window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${text}`, '_blank');
       closeModal('haggleModal');
     }
 
@@ -626,6 +644,7 @@
       
       if (currentUser) {
         document.getElementById('custName').value = currentUser.name || '';
+        document.getElementById('custEmail').value = currentUser.email || '';
         document.getElementById('custPhone').value = currentUser.phone || '';
       }
       document.getElementById('checkoutModal').classList.add('active');
@@ -637,10 +656,12 @@
 
     function registerUser() {
       const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
       const phone = document.getElementById('regPhone').value;
-      if (!name || !phone) return alert('Enter your name and phone number.');
 
-      currentUser = { name, phone };
+      if (!name || !phone || !email) return alert('Name, Email, and Phone Number are required.');
+
+      currentUser = { name, email, phone };
       try { localStorage.setItem('oversabijojo_user', JSON.stringify(currentUser)); } catch(e){}
       updateUserUI();
       closeModal('authModal');
@@ -667,51 +688,84 @@
       }
     }
 
-    function generateOrderReceipt() {
+    /* Paystack Online Payment Integration */
+    function payWithPaystack() {
       const name = document.getElementById('custName').value;
+      const email = document.getElementById('custEmail').value;
       const phone = document.getElementById('custPhone').value;
       const address = document.getElementById('custAddress').value;
 
-      if (!name || !phone) return alert('Name and Phone Number are required.');
+      if (!name || !email || !phone) return alert('Name, Email, and Phone number are required.');
 
       const selectedItems = cart.filter(item => item.selected);
-      const total = selectedItems.reduce((sum, item) => sum + (item.product.price * item.qty), 0);
+      const totalNaira = selectedItems.reduce((sum, item) => sum + (item.product.price * item.qty), 0);
 
-      currentOrderPayload = { name, phone, address, items: selectedItems, total };
+      currentOrderPayload = { name, email, phone, address, items: selectedItems, total: totalNaira };
 
+      // Initialize Paystack Pop-up
+      const handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY, 
+        email: email,
+        amount: totalNaira * 100, // Paystack amount is in Kobo (multiply by 100)
+        currency: "NGN",
+        ref: 'OBJ_' + Math.floor((Math.random() * 1000000000) + 1),
+        metadata: {
+          custom_fields: [
+            { display_name: "Customer Name", variable_name: "customer_name", value: name },
+            { display_name: "Phone Number", variable_name: "phone_number", value: phone }
+          ]
+        },
+        callback: function(response) {
+          // Triggered on successful payment
+          currentOrderPayload.paymentRef = response.reference;
+          closeModal('checkoutModal');
+          displayPostPaymentOptions();
+        },
+        onClose: function() {
+          alert('Payment window closed.');
+        }
+      });
+
+      handler.openIframe();
+    }
+
+    function displayPostPaymentOptions() {
       let receiptHTML = `
-        <b>Customer:</b> ${name} (${phone})<br>
-        <b>Address:</b> ${address || 'Not Provided'}<br>
+        <b>Status:</b> <span style="color:green;">PAID ✓</span><br>
+        <b>Ref:</b> ${currentOrderPayload.paymentRef}<br>
+        <b>Customer:</b> ${currentOrderPayload.name} (${currentOrderPayload.phone})<br>
+        <b>Address:</b> ${currentOrderPayload.address || 'Not Provided'}<br>
         <b>GPS Pin:</b> ${userGPS ? 'Captured ✓' : 'None'}<br><hr style="margin:8px 0;">
-        <b>Items Ordered:</b><br>
-        ${selectedItems.map(i => `• ${i.product.name} (x${i.qty}) - ₦${(i.product.price * i.qty).toLocaleString()}`).join('<br>')}<br><hr style="margin:8px 0;">
-        <b style="font-size:15px; color:var(--temu-orange);">Total: ₦${total.toLocaleString()}</b>
+        <b>Items Purchased:</b><br>
+        ${currentOrderPayload.items.map(i => `• ${i.product.name} (x${i.qty}) - ₦${(i.product.price * i.qty).toLocaleString()}`).join('<br>')}<br><hr style="margin:8px 0;">
+        <b style="font-size:15px; color:var(--temu-orange);">Paid Total: ₦${currentOrderPayload.total.toLocaleString()}</b>
       `;
 
-      document.getElementById('receiptDetails').innerHTML = receiptHTML;
-      closeModal('checkoutModal');
-      document.getElementById('receiptModal').classList.add('active');
+      document.getElementById('paymentReceiptDetails').innerHTML = receiptHTML;
+      document.getElementById('postPaymentModal').classList.add('active');
     }
 
     function sendToWhatsApp() {
       if (!currentOrderPayload) return;
       
-      let text = `*NEW ORDER REQUEST - OVERSABIJOJO*%0A%0A`;
+      let text = `*PAID ORDER CONFIRMATION - OVERSABIJOJO*%0A%0A`;
+      text += `*Payment Ref:* ${currentOrderPayload.paymentRef}%0A`;
       text += `*Customer:* ${currentOrderPayload.name}%0A`;
       text += `*Phone:* ${currentOrderPayload.phone}%0A`;
+      text += `*Email:* ${currentOrderPayload.email}%0A`;
       text += `*Address:* ${currentOrderPayload.address}%0A`;
       if (userGPS) text += `*GPS Location:* https://maps.google.com/?q=${userGPS.lat},${userGPS.lng}%0A`;
-      text += `%0A*Items:*%0A`;
+      text += `%0A*Items Paid For:*%0A`;
       currentOrderPayload.items.forEach(i => {
         text += `- ${i.product.name} (Qty: ${i.qty}) = N${(i.product.price * i.qty).toLocaleString()}%0A`;
       });
-      text += `%0A*Total:* N${currentOrderPayload.total.toLocaleString()}`;
+      text += `%0A*Total Amount Paid:* N${currentOrderPayload.total.toLocaleString()}`;
 
-      window.open(`https://wa.me/?text=${text}`, '_blank');
+      window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${text}`, '_blank');
       
       cart = cart.filter(item => !item.selected);
       updateCartBadge();
-      closeModal('receiptModal');
+      closeModal('postPaymentModal');
       closeCartView();
       closeProductDetail();
     }
