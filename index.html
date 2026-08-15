@@ -11,6 +11,7 @@
       --temu-bg: #f4f4f4;
       --text-dark: #222222;
       --text-gray: #777777;
+      --green-shipping: #098040;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -39,22 +40,46 @@
     /* Product Grid */
     .section-title { padding: 12px 15px 5px; font-size: 16px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
     .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 15px; }
-    .product-card { background: #fff; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    .product-card { background: #fff; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer; }
     .product-img { width: 100%; aspect-ratio: 1; object-fit: cover; background: #eee; }
     .product-details { padding: 10px; display: flex; flex-direction: column; flex: 1; }
     .product-title { font-size: 13px; line-height: 1.3; font-weight: 500; height: 34px; overflow: hidden; margin-bottom: 6px; }
     .price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; }
     .current-price { color: var(--temu-orange); font-size: 16px; font-weight: 800; }
     .card-actions { margin-top: auto; display: flex; gap: 6px; }
-    .btn-action { flex: 1; padding: 8px 0; border: none; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .btn-action { flex: 1; padding: 8px 0; border: none; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .btn-haggle { background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe; }
     .btn-cart { background: #fff3ed; color: var(--temu-orange); border: 1px solid var(--temu-orange); }
-    .btn-buy { background: var(--temu-orange); color: #fff; }
 
-    /* Dedicated Cart View Page */
-    .page-view { position: fixed; inset: 0; background: #f4f4f4; z-index: 150; display: none; flex-direction: column; }
+    /* Views / Pages (Cart, Product Detail) */
+    .page-view { position: fixed; inset: 0; background: #f4f4f4; z-index: 150; display: none; flex-direction: column; overflow-y: auto; }
     .page-view.active { display: flex; }
-    .page-header { background: #fff; padding: 14px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; }
+    .page-header { background: #fff; padding: 14px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 10; }
     .page-title { font-size: 17px; font-weight: 700; }
+
+    /* Product Detail Page */
+    .gallery-container { position: relative; width: 100%; background: #fff; }
+    .gallery-main { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+    .gallery-badge { position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.6); color: white; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+    .gallery-thumbs { display: flex; gap: 8px; padding: 10px 15px; background: #fff; overflow-x: auto; border-bottom: 1px solid #eee; }
+    .thumb-img { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; border: 2px solid transparent; cursor: pointer; }
+    .thumb-img.active { border-color: var(--temu-orange); }
+
+    .detail-info { background: #fff; padding: 15px; margin-bottom: 10px; }
+    .detail-shipping { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--green-shipping); font-weight: 600; background: #eafaf1; padding: 8px 12px; border-radius: 6px; margin-bottom: 12px; }
+    .detail-title { font-size: 16px; font-weight: 700; line-height: 1.4; margin-bottom: 10px; }
+    .detail-stats { font-size: 12px; color: #666; margin-bottom: 10px; display: flex; gap: 10px; }
+    .detail-price-box { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+    .detail-price { font-size: 24px; font-weight: 900; color: var(--temu-orange); }
+    .detail-old-price { text-decoration: line-through; color: #888; font-size: 14px; }
+    .detail-discount { background: #ffe6e6; color: #d9534f; font-size: 12px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+
+    .detail-sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #eee; padding: 10px 15px; display: flex; gap: 8px; z-index: 160; }
+    .btn-detail-haggle { flex: 1; padding: 12px 0; background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe; border-radius: 25px; font-weight: 700; font-size: 13px; }
+    .btn-detail-add { flex: 1; padding: 12px 0; background: #fff3ed; color: var(--temu-orange); border: 1px solid var(--temu-orange); border-radius: 25px; font-weight: 700; font-size: 13px; }
+    .btn-detail-buy { flex: 1; padding: 12px 0; background: var(--temu-orange); color: white; border: none; border-radius: 25px; font-weight: 700; font-size: 13px; }
+
+    /* Cart Items Page */
     .cart-content { flex: 1; overflow-y: auto; padding: 12px 15px; }
     .cart-item { background: #fff; border-radius: 10px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
     .cart-checkbox { width: 18px; height: 18px; accent-color: var(--temu-orange); }
@@ -78,7 +103,7 @@
     .btn-full { width: 100%; padding: 12px; background: var(--temu-orange); color: white; border: none; border-radius: 25px; font-weight: 700; font-size: 15px; margin-top: 10px; cursor: pointer; }
 
     /* Bottom Nav */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #fff; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #eaeaea; z-index: 100; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: #fff; display: flex; justify-space-around; align-items: center; border-top: 1px solid #eaeaea; z-index: 100; }
     .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-gray); font-size: 10px; text-decoration: none; gap: 3px; cursor: pointer; }
     .nav-item.active { color: var(--temu-orange); font-weight: 700; }
     .nav-item i { font-size: 18px; }
@@ -117,6 +142,26 @@
   </div>
   <div class="product-grid" id="productGrid"></div>
 
+  <!-- PRODUCT DETAIL PAGE (Interactive Screen) -->
+  <div class="page-view" id="productDetailPage">
+    <div class="page-header">
+      <i class="fa-solid fa-arrow-left" style="font-size: 18px; cursor: pointer;" onclick="closeProductDetail()"></i>
+      <div class="page-title">Product Details</div>
+      <div class="header-cart-icon" onclick="openCartView()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-badge" id="detailCartBadge">0</span>
+      </div>
+    </div>
+    
+    <div id="detailViewBody" style="padding-bottom: 80px;"></div>
+
+    <div class="detail-sticky-bar">
+      <button class="btn-detail-haggle" id="detailHaggleBtn"><i class="fa-solid fa-handshake"></i> Haggle</button>
+      <button class="btn-detail-add" id="detailAddBtn">+ Cart</button>
+      <button class="btn-detail-buy" id="detailBuyBtn">Buy Now</button>
+    </div>
+  </div>
+
   <!-- Dedicated Cart Page -->
   <div class="page-view" id="cartPageView">
     <div class="page-header">
@@ -136,6 +181,30 @@
         <span class="cart-total-val" id="cartTotalVal">₦0</span>
       </div>
       <button class="btn-checkout" onclick="proceedToCheckout()">Checkout Selected</button>
+    </div>
+  </div>
+
+  <!-- Haggle / Make an Offer Modal -->
+  <div class="modal-overlay" id="haggleModal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="font-size: 16px;">🤝 Haggle / Make an Offer</h3>
+        <i class="fa-solid fa-xmark" onclick="closeModal('haggleModal')" style="cursor: pointer;"></i>
+      </div>
+      <div id="haggleProductTitle" style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #444;"></div>
+      <div class="form-group">
+        <label>Listed Price</label>
+        <input type="text" id="haggleOriginalPrice" class="form-control" readonly style="background:#eee;">
+      </div>
+      <div class="form-group">
+        <label>Your Offered Price (₦)</label>
+        <input type="number" id="haggleOfferPrice" class="form-control" placeholder="Enter your offer amount">
+      </div>
+      <div class="form-group">
+        <label>Quantity Desired</label>
+        <input type="number" id="haggleQty" class="form-control" value="1" min="1">
+      </div>
+      <button class="btn-full" style="background: #4f46e5;" onclick="submitHaggleOffer()"><i class="fa-brands fa-whatsapp"></i> Send Offer on WhatsApp</button>
     </div>
   </div>
 
@@ -217,32 +286,87 @@
     const categoryList = ["All", "Women", "Men", "Jewelry", "Toy", "Bags", "Kids", "Beauty", "Craft", "Baby", "Health", "Household", "Appliances", "Books"];
 
     const products = [
-      { id: 1, name: "Silk Floral Summer Dress", price: 12500, category: "Women", img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=300" },
-      { id: 2, name: "High-Waist Denim Jeans", price: 9800, category: "Women", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=300" },
-      { id: 3, name: "Men's Slim Fit Corporate Shirt", price: 8500, category: "Men", img: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300" },
-      { id: 4, name: "Men's Casual Designer Sneakers", price: 18500, category: "Men", img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=300" },
-      { id: 5, name: "18K Gold Plated Chain Necklace", price: 14000, category: "Jewelry", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=300" },
-      { id: 6, name: "Luxury Crystal Earring Set", price: 6500, category: "Jewelry", img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=300" },
-      { id: 7, name: "Remote Control Stunt Car Toy", price: 11000, category: "Toy", img: "https://images.unsplash.com/photo-1594787318286-3d835c1d207f?w=300" },
-      { id: 8, name: "Educational Building Block Set", price: 7500, category: "Toy", img: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=300" },
-      { id: 9, name: "Women's Designer Tote Handbag", price: 16000, category: "Bags", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300" },
-      { id: 10, name: "Waterproof Travel Laptop Backpack", price: 13500, category: "Bags", img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300" },
-      { id: 11, name: "Children's Cotton Cartoon Pajamas", price: 5000, category: "Kids", img: "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=300" },
-      { id: 12, name: "Kids Light-Up Sport Shoes", price: 8900, category: "Kids", img: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=300" },
-      { id: 13, name: "Hydrating Facial Glow Serum 30ml", price: 7200, category: "Beauty", img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=300" },
-      { id: 14, name: "Matte Long-Lasting Lipstick Set", price: 4800, category: "Beauty", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=300" },
-      { id: 15, name: "DIY Knitting & Craft Yarn Pack", price: 6000, category: "Craft", img: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=300" },
-      { id: 16, name: "Precision Craft Knife & Mat Kit", price: 5200, category: "Craft", img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=300" },
-      { id: 17, name: "Baby Stroller Lightweight Foldable", price: 35000, category: "Baby", img: "https://images.unsplash.com/photo-1591154669695-5f2a8d20c089?w=300" },
-      { id: 18, name: "Infant Soft Baby Carrier Wrap", price: 9500, category: "Baby", img: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=300" },
-      { id: 19, name: "Digital Arm Blood Pressure Monitor", price: 15000, category: "Health", img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=300" },
-      { id: 20, name: "Multivitamin Gummies Bottle", price: 8000, category: "Health", img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300" },
-      { id: 21, name: "Microfiber Spin Mop & Bucket System", price: 14500, category: "Household", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300" },
-      { id: 22, name: "Automatic Motion Sensor Trash Can", price: 18000, category: "Household", img: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=300" },
-      { id: 23, name: "Electric Smart Air Fryer 4.5L", price: 38000, category: "Appliances", img: "https://images.unsplash.com/photo-1585515320310-259814833e62?w=300" },
-      { id: 24, name: "High-Speed Electric Kitchen Blender", price: 16500, category: "Appliances", img: "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=300" },
-      { id: 25, name: "Financial Freedom Mindset Book", price: 4500, category: "Books", img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300" },
-      { id: 26, name: "Kids Story Book Collection", price: 6000, category: "Books", img: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300" }
+      { 
+        id: 1, 
+        name: "12pcs Stainless Steel Necklace and Earring Set, Fashionable Jewelry Pack", 
+        price: 11071, 
+        oldPrice: 23292,
+        discount: "52% OFF",
+        category: "Jewelry", 
+        sold: "2.4K+",
+        rating: "4.8 ★",
+        images: [
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600",
+          "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600",
+          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600"
+        ]
+      },
+      { 
+        id: 2, 
+        name: "Silk Floral Summer Dress - Elegant Vintage Wear", 
+        price: 12500, 
+        oldPrice: 25000,
+        discount: "50% OFF",
+        category: "Women", 
+        sold: "1.2K+",
+        rating: "4.9 ★",
+        images: [
+          "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600",
+          "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600"
+        ]
+      },
+      { 
+        id: 3, 
+        name: "High-Waist Stretch Denim Jeans", 
+        price: 9800, 
+        oldPrice: 15000,
+        discount: "35% OFF",
+        category: "Women", 
+        sold: "850+",
+        rating: "4.7 ★",
+        images: [
+          "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600"
+        ]
+      },
+      { 
+        id: 4, 
+        name: "Men's Slim Fit Corporate Long Sleeve Shirt", 
+        price: 8500, 
+        oldPrice: 12000,
+        discount: "29% OFF",
+        category: "Men", 
+        sold: "3.1K+",
+        rating: "4.8 ★",
+        images: [
+          "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600"
+        ]
+      },
+      { 
+        id: 5, 
+        name: "Men's Casual Designer Cushion Sneakers", 
+        price: 18500, 
+        oldPrice: 30000,
+        discount: "38% OFF",
+        category: "Men", 
+        sold: "4.5K+",
+        rating: "4.9 ★",
+        images: [
+          "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600"
+        ]
+      },
+      { 
+        id: 6, 
+        name: "Electric Smart Air Fryer 4.5L Multi-Cooker", 
+        price: 38000, 
+        oldPrice: 55000,
+        discount: "30% OFF",
+        category: "Appliances", 
+        sold: "1.8K+",
+        rating: "4.9 ★",
+        images: [
+          "https://images.unsplash.com/photo-1585515320310-259814833e62?w=600"
+        ]
+      }
     ];
 
     let currentCategory = "All";
@@ -250,6 +374,9 @@
     let userGPS = null;
     let currentUser = null;
     let currentOrderPayload = null;
+    let activeDetailProduct = null;
+    let activeImageIndex = 0;
+    let haggleTargetProduct = null;
 
     function initStore() {
       try {
@@ -288,20 +415,119 @@
       }
 
       grid.innerHTML = filtered.map(p => `
-        <div class="product-card">
-          <img src="${p.img}" class="product-img">
+        <div class="product-card" onclick="openProductDetail(${p.id})">
+          <img src="${p.images[0]}" class="product-img">
           <div class="product-details">
             <div class="product-title">${p.name}</div>
             <div class="price-row">
               <span class="current-price">₦${p.price.toLocaleString()}</span>
             </div>
             <div class="card-actions">
-              <button class="btn-action btn-cart" onclick="addToCart(${p.id})">+ Cart</button>
-              <button class="btn-action btn-buy" onclick="buyNowDirect(${p.id})">Buy</button>
+              <button class="btn-action btn-haggle" onclick="event.stopPropagation(); openHaggleModal(${p.id});">Haggle</button>
+              <button class="btn-action btn-cart" onclick="event.stopPropagation(); addToCart(${p.id});">+ Cart</button>
             </div>
           </div>
         </div>
       `).join('');
+    }
+
+    /* Product Detail Screen */
+    function openProductDetail(productId) {
+      activeDetailProduct = products.find(p => p.id === productId);
+      if (!activeDetailProduct) return;
+
+      activeImageIndex = 0;
+      renderProductDetailBody();
+
+      document.getElementById('detailHaggleBtn').onclick = () => openHaggleModal(activeDetailProduct.id);
+      document.getElementById('detailAddBtn').onclick = () => addToCart(activeDetailProduct.id);
+      document.getElementById('detailBuyBtn').onclick = () => buyNowDirect(activeDetailProduct.id);
+
+      document.getElementById('productDetailPage').classList.add('active');
+    }
+
+    function closeProductDetail() {
+      document.getElementById('productDetailPage').classList.remove('active');
+    }
+
+    function renderProductDetailBody() {
+      const p = activeDetailProduct;
+      const totalImgs = p.images.length;
+
+      document.getElementById('detailViewBody').innerHTML = `
+        <div class="gallery-container">
+          <img id="mainGalleryImg" src="${p.images[activeImageIndex]}" class="gallery-main">
+          <div class="gallery-badge" id="galleryBadge">${activeImageIndex + 1}/${totalImgs}</div>
+        </div>
+
+        ${totalImgs > 1 ? `
+          <div class="gallery-thumbs">
+            ${p.images.map((img, idx) => `
+              <img src="${img}" class="thumb-img ${idx === activeImageIndex ? 'active' : ''}" onclick="switchGalleryImg(${idx})">
+            `).join('')}
+          </div>
+        ` : ''}
+
+        <div class="detail-info">
+          <div class="detail-shipping">
+            <i class="fa-solid fa-truck-fast"></i>
+            <span>Arrives in NG in as little as 5 days • Free shipping</span>
+          </div>
+
+          <div class="detail-title">${p.name}</div>
+
+          <div class="detail-stats">
+            <span>${p.rating || '4.8 ★'}</span> | 
+            <span>${p.sold || '1K+'} sold</span>
+          </div>
+
+          <div class="detail-price-box">
+            <span class="detail-price">₦${p.price.toLocaleString()}</span>
+            ${p.oldPrice ? `<span class="detail-old-price">₦${p.oldPrice.toLocaleString()}</span>` : ''}
+            ${p.discount ? `<span class="detail-discount">${p.discount}</span>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function switchGalleryImg(index) {
+      activeImageIndex = index;
+      document.getElementById('mainGalleryImg').src = activeDetailProduct.images[index];
+      document.getElementById('galleryBadge').innerText = `${index + 1}/${activeDetailProduct.images.length}`;
+      
+      const thumbs = document.querySelectorAll('.thumb-img');
+      thumbs.forEach((t, i) => {
+        if (i === index) t.classList.add('active');
+        else t.classList.remove('active');
+      });
+    }
+
+    /* Haggle Modal */
+    function openHaggleModal(productId) {
+      haggleTargetProduct = products.find(p => p.id === productId);
+      if (!haggleTargetProduct) return;
+
+      document.getElementById('haggleProductTitle').innerText = haggleTargetProduct.name;
+      document.getElementById('haggleOriginalPrice').value = '₦' + haggleTargetProduct.price.toLocaleString();
+      document.getElementById('haggleOfferPrice').value = '';
+      document.getElementById('haggleModal').classList.add('active');
+    }
+
+    function submitHaggleOffer() {
+      const offerPrice = document.getElementById('haggleOfferPrice').value;
+      const qty = document.getElementById('haggleQty').value || 1;
+
+      if (!offerPrice) return alert('Please enter your offer amount.');
+
+      let text = `*PRICE HAGGLE OFFER - OVERSABIJOJO*%0A%0A`;
+      text += `*Product:* ${haggleTargetProduct.name}%0A`;
+      text += `*Listed Price:* N${haggleTargetProduct.price.toLocaleString()}%0A`;
+      text += `*My Offered Price:* N${Number(offerPrice).toLocaleString()}%0A`;
+      text += `*Quantity:* ${qty}%0A`;
+      if (currentUser && currentUser.name) text += `*Customer:* ${currentUser.name} (${currentUser.phone})`;
+
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+      closeModal('haggleModal');
     }
 
     function handleSearch() {
@@ -329,6 +555,7 @@
 
     function updateCartBadge() {
       document.getElementById('cartBadge').innerText = cart.length;
+      document.getElementById('detailCartBadge').innerText = cart.length;
     }
 
     function openCartView() {
@@ -348,7 +575,7 @@
         container.innerHTML = cart.map((item, index) => `
           <div class="cart-item">
             <input type="checkbox" class="cart-checkbox" ${item.selected ? 'checked' : ''} onchange="toggleItemSelect(${index}, this.checked)">
-            <img src="${item.product.img}" class="cart-item-img">
+            <img src="${item.product.images[0]}" class="cart-item-img">
             <div class="cart-item-info">
               <div class="cart-item-title">${item.product.name}</div>
               <div class="cart-item-price">₦${item.product.price.toLocaleString()}</div>
@@ -486,13 +713,13 @@
       updateCartBadge();
       closeModal('receiptModal');
       closeCartView();
+      closeProductDetail();
     }
 
     function closeModal(id) {
       document.getElementById(id).classList.remove('active');
     }
 
-    // Run initialization
     window.onload = initStore;
   </script>
 </body>
