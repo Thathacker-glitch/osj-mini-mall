@@ -3,358 +3,367 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oversabijojo - Online Store</title>
+  <title>OSJ Mini Mall | Shop More, Save More</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Paystack Inline JS -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#FF002B',
+            brandDarkRed: '#D00022',
+            lightGrayBg: '#F4F5F7'
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    :root {
-      --primary: #ff4747;
-      --primary-dark: #d63030;
-      --bg: #f5f5f7;
-      --card-bg: #ffffff;
-      --text: #1d1d1f;
-      --text-muted: #6e6e73;
-      --border: #e5e5ea;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      padding-bottom: 90px;
-    }
-
-    header {
-      background-color: var(--card-bg);
-      padding: 16px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-    }
-
-    .product-card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-image {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      background-color: #eee;
-    }
-
-    .product-info {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .product-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .product-price {
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 10px;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: auto;
-    }
-
-    .btn-primary {
-      background-color: var(--primary);
-      color: white;
-    }
-
-    .btn-outline {
-      background-color: transparent;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      margin-top: 6px;
-    }
-
-    /* Modal Styles */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 16px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .modal-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 20px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-
-    .modal-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .modal-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-
-    .input-group {
-      margin-bottom: 12px;
-    }
-
-    .input-group label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-    }
-
-    /* Cart Bar */
-    .cart-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--card-bg);
-      padding: 12px 16px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 20;
-    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body>
+<body class="bg-lightGrayBg dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans pb-24 transition-colors duration-200">
 
-  <header>
-    <div class="brand-title">Oversabijojo</div>
-    <div id="user-display" style="font-size: 0.85rem; color: var(--text-muted);">Guest</div>
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <!-- Logo & Brand -->
+      <div class="flex items-center gap-2">
+        <div class="bg-brandRed text-white p-2 rounded-lg font-black text-xl italic tracking-wider shadow">OSJ</div>
+        <div>
+          <h1 class="font-extrabold text-lg leading-none text-brandRed tracking-tight">OSJ MINI MALL</h1>
+          <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium">SHOP MORE, SAVE MORE</p>
+        </div>
+      </div>
+      
+      <!-- User Greeting & Dark Mode Toggle -->
+      <div class="flex items-center gap-3">
+        <button onclick="toggleDarkMode()" class="p-2 text-gray-600 dark:text-gray-300 hover:text-brandRed">
+          <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+        </button>
+        <button onclick="openAuthModal()" class="text-xs bg-gray-100 dark:bg-gray-700 px-3 py-1.5 rounded-full font-semibold border border-gray-200 dark:border-gray-600 truncate max-w-[100px]" id="userGreetBtn">
+          Sign In
+        </button>
+      </div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="max-w-md mx-auto px-4 pb-2">
+      <div class="relative flex items-center">
+        <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Search jewelry, bags, accessories..." class="w-full bg-gray-100 dark:bg-gray-700 text-sm py-2 pl-9 pr-4 rounded-full border border-transparent focus:border-brandRed focus:outline-none dark:text-white">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 text-gray-400 text-sm"></i>
+      </div>
+    </div>
+
+    <!-- CATEGORY CHIPS -->
+    <div class="max-w-md mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar border-t dark:border-gray-700 text-xs font-semibold">
+      <button onclick="selectCategory('All')" class="cat-btn bg-brandRed text-white px-3 py-1 rounded-full whitespace-nowrap shadow-sm" data-cat="All">All</button>
+      <button onclick="selectCategory('Jewelry')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Jewelry">Jewelry</button>
+      <button onclick="selectCategory('Bags')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Bags">Bags</button>
+      <button onclick="selectCategory('Women')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Women">Women</button>
+      <button onclick="selectCategory('Beauty')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Beauty">Beauty</button>
+      <button onclick="selectCategory('Household')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Household">Household</button>
+    </div>
   </header>
 
-  <!-- Welcome / Sign-up Pop-up Modal -->
-  <div id="signup-modal" class="modal-overlay hidden">
-    <div class="modal-card">
-      <div class="modal-title">Welcome to Oversabijojo!</div>
-      <div class="modal-desc">Please enter your details to personalize your shopping experience.</div>
-      <form id="signup-form">
-        <div class="input-group">
-          <label for="user-name">Full Name</label>
-          <input type="text" id="user-name" required placeholder="e.g. Jane Doe">
-        </div>
-        <div class="input-group">
-          <label for="user-email">Email Address</label>
-          <input type="email" id="user-email" required placeholder="e.g. jane@example.com">
-        </div>
-        <div class="input-group">
-          <label for="user-phone">Phone Number</label>
-          <input type="tel" id="user-phone" required placeholder="e.g. 08012345678">
-        </div>
-        <button type="submit" class="btn btn-primary">Start Shopping</button>
-        <button type="button" class="btn btn-outline" id="skip-signup">Continue as Guest</button>
-      </form>
+  <!-- MAIN FEED -->
+  <main class="max-w-md mx-auto px-3 pt-3">
+    <!-- BANNER PROMO -->
+    <div class="bg-gradient-to-r from-brandRed to-orange-500 rounded-xl p-4 text-white mb-4 shadow-lg flex items-center justify-between">
+      <div>
+        <span class="bg-black/20 text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wide">Limited Time Offer</span>
+        <h2 class="text-xl font-extrabold mt-1">Female Accessories Sale</h2>
+        <p class="text-xs opacity-90 mt-0.5">Min ₦6,500 – Max ₦200,000 Order Protection</p>
+      </div>
+      <i class="fa-solid fa-gem text-4xl opacity-80"></i>
     </div>
-  </div>
 
-  <main class="container">
-    <h2 style="margin-bottom: 12px; font-size: 1.1rem;">Featured Products</h2>
-    <div class="products-grid" id="products-list">
-      <!-- Products generated by JavaScript -->
+    <!-- PRODUCT GRID -->
+    <div id="productGrid" class="grid grid-cols-2 gap-2.5">
+      <!-- Dynamic Products Inserted Here via JS -->
     </div>
   </main>
 
-  <div class="cart-bar">
-    <div>
-      <div style="font-size: 0.75rem; color: var(--text-muted);">Total Amount</div>
-      <div style="font-size: 1.1rem; font-weight: 700;" id="cart-total">₦0.00</div>
+  <!-- BOTTOM NATIVE NAVIGATION BAR -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-gray-800 border-t dark:border-gray-700 shadow-lg">
+    <div class="max-w-md mx-auto flex justify-around items-center py-2">
+      <button onclick="switchTab('home')" class="flex flex-col items-center text-brandRed font-bold text-xs">
+        <i class="fa-solid fa-house text-lg"></i>
+        <span class="mt-0.5">Home</span>
+      </button>
+      <button onclick="openCartDrawer()" class="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brandRed text-xs relative">
+        <i class="fa-solid fa-cart-shopping text-lg"></i>
+        <span class="mt-0.5">Cart</span>
+        <span id="cartBadge" class="absolute -top-1 -right-2 bg-brandRed text-white text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+      </button>
+      <button onclick="openAuthModal()" class="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brandRed text-xs">
+        <i class="fa-solid fa-user text-lg"></i>
+        <span class="mt-0.5">Account</span>
+      </button>
     </div>
-    <button class="btn btn-primary" style="width: auto; padding: 10px 24px;" id="checkout-btn">Checkout</button>
+  </nav>
+
+  <!-- PRODUCT DETAILS & GALLERY MODAL -->
+  <div id="productModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-end justify-center">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-t-2xl max-h-[90vh] overflow-y-auto relative p-4 animate-slide-up">
+      <button onclick="closeProductModal()" class="absolute top-3 right-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 w-8 h-8 rounded-full font-bold flex items-center justify-center">✕</button>
+      
+      <!-- Main Image Preview -->
+      <div class="relative w-full h-64 bg-gray-100 dark:bg-gray-700 rounded-xl overflow-hidden mb-3">
+        <img id="modalMainImg" src="" class="w-full h-full object-cover">
+        <span id="imgCounter" class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full">1/3</span>
+      </div>
+
+      <!-- Thumbnail Carousel -->
+      <div id="modalThumbnails" class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
+        <!-- Thumbnails appended via JS -->
+      </div>
+
+      <h2 id="modalTitle" class="text-base font-bold dark:text-white leading-tight"></h2>
+      <div class="flex items-baseline gap-2 mt-2">
+        <span id="modalPrice" class="text-xl font-extrabold text-brandRed"></span>
+        <span id="modalOrigPrice" class="text-xs text-gray-400 line-through"></span>
+        <span id="modalDiscount" class="text-[10px] bg-red-100 text-brandRed font-bold px-1.5 py-0.5 rounded"></span>
+      </div>
+
+      <div class="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs p-2 rounded-lg my-3 flex items-center gap-2">
+        <i class="fa-solid fa-truck-fast"></i>
+        <span>Pre-order Eligible | Delivery in Nigeria: 5-8 Days</span>
+      </div>
+
+      <!-- Quantity Selector -->
+      <div class="flex items-center justify-between py-2 border-y dark:border-gray-700 my-3">
+        <span class="text-xs font-semibold dark:text-gray-300">Quantity</span>
+        <div class="flex items-center gap-3 bg-gray-100 dark:bg-gray-700 rounded-lg px-2 py-1">
+          <button onclick="changeModalQty(-1)" class="font-bold text-lg text-gray-600 dark:text-gray-300 px-1">-</button>
+          <span id="modalQty" class="font-bold text-sm dark:text-white">1</span>
+          <button onclick="changeModalQty(1)" class="font-bold text-lg text-gray-600 dark:text-gray-300 px-1">+</button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="grid grid-cols-2 gap-2 mt-4">
+        <button onclick="haggleFromModal()" class="border-2 border-brandRed text-brandRed font-bold py-2.5 rounded-xl text-xs hover:bg-red-50 dark:hover:bg-gray-700">
+          <i class="fa-solid fa-handshake"></i> Haggle Price
+        </button>
+        <button onclick="addToCartFromModal()" class="bg-brandRed text-white font-bold py-2.5 rounded-xl text-xs shadow-md hover:bg-brandDarkRed">
+          <i class="fa-solid fa-cart-plus"></i> Add To Cart
+        </button>
+      </div>
+    </div>
   </div>
 
-  <script>
-    // ==========================================
-    // STORE CONFIGURATION & API KEYS
-    // ==========================================
-    const PAYSTACK_PUBLIC_KEY = 'pk_test_2b08e01f6068d0c2859d1024513921d7c48ab484';
-    const ADMIN_WHATSAPP_NUMBER = '2349056558869';
+  <!-- HAGGLE / NEGOTIATE MODAL -->
+  <div id="haggleModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-2xl p-5 relative text-center">
+      <button onclick="closeHaggleModal()" class="absolute top-3 right-3 text-gray-400 font-bold">✕</button>
+      <div class="w-12 h-12 bg-red-100 dark:bg-red-900/40 text-brandRed rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+        <i class="fa-solid fa-comments-dollar"></i>
+      </div>
+      <h3 class="font-bold text-lg dark:text-white">Negotiate Price</h3>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Maximum allowed discount is 10% off actual store price.</p>
+      
+      <div class="my-4 bg-gray-50 dark:bg-gray-700 p-3 rounded-xl text-left text-xs">
+        <div class="flex justify-between mb-1">
+          <span class="text-gray-500 dark:text-gray-300">Original Price:</span>
+          <span id="haggleOrigPrice" class="font-bold dark:text-white"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-500 dark:text-gray-300">Lowest Allowed (90%):</span>
+          <span id="haggleLowestPrice" class="font-bold text-emerald-600 dark:text-emerald-400"></span>
+        </div>
+      </div>
 
-    // Sample Products Data
+      <input type="number" id="haggleInput" placeholder="Enter your offer (₦)" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl py-2.5 px-3 text-center text-sm font-bold focus:outline-none focus:border-brandRed dark:text-white mb-3">
+      <p id="haggleError" class="text-[11px] text-brandRed font-semibold hidden mb-2"></p>
+
+      <button onclick="submitHaggle()" class="w-full bg-brandRed text-white font-bold py-2.5 rounded-xl text-xs hover:bg-brandDarkRed shadow">
+        Submit Offer
+      </button>
+    </div>
+  </div>
+
+  <!-- CART DRAWER / FULL PAGE MODAL -->
+  <div id="cartDrawer" class="fixed inset-0 bg-black/70 z-50 hidden flex justify-end">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md h-full flex flex-col justify-between p-4">
+      <div>
+        <div class="flex items-center justify-between pb-3 border-b dark:border-gray-700">
+          <h2 class="text-base font-bold dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-cart-shopping text-brandRed"></i> Your Shopping Cart
+          </h2>
+          <button onclick="closeCartDrawer()" class="text-gray-500 font-bold">✕</button>
+        </div>
+
+        <!-- Cart Items Container -->
+        <div id="cartItemsList" class="my-4 max-h-[60vh] overflow-y-auto space-y-3 no-scrollbar">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Checkout Summary Bar -->
+      <div class="border-t dark:border-gray-700 pt-3">
+        <div class="flex justify-between text-xs mb-1">
+          <span class="text-gray-500 dark:text-gray-400">Selected Items:</span>
+          <span id="cartSelectedCount" class="font-bold dark:text-white">0</span>
+        </div>
+        <div class="flex justify-between text-base font-black mb-3">
+          <span class="dark:text-white">Total Amount:</span>
+          <span id="cartTotal" class="text-brandRed">₦0</span>
+        </div>
+        <button onclick="proceedToLocationCheckout()" class="w-full bg-brandRed text-white font-extrabold py-3 rounded-xl text-sm shadow-lg hover:bg-brandDarkRed">
+          Proceed To Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOCATION & CHECKOUT MODAL -->
+  <div id="checkoutModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl p-5 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeCheckoutModal()" class="absolute top-3 right-3 text-gray-400 font-bold">✕</button>
+      
+      <h3 class="font-bold text-lg dark:text-white mb-1">Delivery & Location</h3>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Grant location access for accurate local delivery pin.</p>
+
+      <!-- GPS Detection Button -->
+      <button onclick="requestGPSLocation()" class="w-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-500 text-emerald-700 dark:text-emerald-300 font-bold py-2.5 rounded-xl text-xs mb-3 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-location-crosshairs text-base"></i> Auto-Detect My Exact Location (GPS)
+      </button>
+
+      <div id="gpsStatus" class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mb-3 hidden text-center"></div>
+
+      <!-- Manual Location Fallback -->
+      <div class="space-y-2.5 text-xs">
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">State</label>
+          <input type="text" id="locState" placeholder="e.g. Lagos, Abuja, Rivers" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Local Government Area (LGA)</label>
+          <input type="text" id="locLGA" placeholder="e.g. Ikeja, Port Harcourt" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Full Street Address</label>
+          <textarea id="locStreet" rows="2" placeholder="House number, street name, nearest landmark" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none"></textarea>
+        </div>
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Phone Number for Delivery</label>
+          <input type="tel" id="locPhone" placeholder="+234..." class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+      </div>
+
+      <button onclick="launchPaystackPayment()" class="w-full bg-brandRed text-white font-extrabold py-3 rounded-xl text-xs mt-4 shadow-md hover:bg-brandDarkRed">
+        Pay Now via Paystack
+      </button>
+    </div>
+  </div>
+
+  <!-- AUTH POPUP MODAL -->
+  <div id="authModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-2xl p-5 relative">
+      <button onclick="closeAuthModal()" class="absolute top-3 right-3 text-gray-400 font-bold">✕</button>
+      <h3 id="authTitle" class="font-bold text-lg dark:text-white text-center mb-4">Sign Up to OSJ Mini Mall</h3>
+      
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Full Name</label>
+          <input type="text" id="authName" placeholder="Enter your name" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Phone Number</label>
+          <input type="tel" id="authPhone" placeholder="0905..." class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+      </div>
+
+      <button onclick="saveUserAuth()" class="w-full bg-brandRed text-white font-bold py-2.5 rounded-xl text-xs mt-4 shadow hover:bg-brandDarkRed">
+        Save Profile
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <script>
+    // CONFIGURATION & CONSTANTS
+    const PAYSTACK_PUBLIC_KEY = 'pk_test_2b08e01f6068d0c2859d1024513921d7c48ab484';
+    const ADMIN_WHATSAPP = '2349056558869';
+
+    // SAMPLE STORE PRODUCTS DATA
     const products = [
-      { id: 1, name: 'Gold Layered Necklace', price: 8500, image: 'https://via.placeholder.com/150' },
-      { id: 2, name: 'Crystal Hoop Earrings', price: 4500, image: 'https://via.placeholder.com/150' },
-      { id: 3, name: 'Minimalist Wristwatch', price: 12000, image: 'https://via.placeholder.com/150' }
+      {
+        id: 1,
+        title: "Crystal Butterfly Gold Pendant Necklace",
+        category: "Jewelry",
+        price: 8500,
+        origPrice: 12500,
+        images: [
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&auto=format&fit=crop"
+        ]
+      },
+      {
+        id: 2,
+        title: "Luxury Female Designer Handbag - Cream",
+        category: "Bags",
+        price: 35000,
+        origPrice: 48000,
+        images: [
+          "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=500&auto=format&fit=crop"
+        ]
+      },
+      {
+        id: 3,
+        title: "Vintage Solid Color Retro T-Shirt Set",
+        category: "Women",
+        price: 14146,
+        origPrice: 49227,
+        images: [
+          "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop"
+        ]
+      },
+      {
+        id: 4,
+        title: "Crystal Hoop Earrings & Jewelry Pack",
+        category: "Jewelry",
+        price: 6553,
+        origPrice: 11418,
+        images: [
+          "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=500&auto=format&fit=crop"
+        ]
+      }
     ];
 
+    // STATE MANAGEMENT
     let cart = [];
-    let currentUser = JSON.parse(localStorage.getItem('oversabi_user')) || null;
+    let selectedActiveProduct = null;
+    let modalQuantity = 1;
+    let userLocation = { latitude: null, longitude: null };
+    let activeCategory = 'All';
 
-    // Initialize App
-    document.addEventListener('DOMContentLoaded', () => {
-      checkUserSession();
-      renderProducts();
-    });
+    // RENDER PRODUCTS GRID
+    function renderProducts(itemsToRender = products) {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
 
-    // Check Sign-Up Modal Status
-    function checkUserSession() {
-      const modal = document.getElementById('signup-modal');
-      const userDisplay = document.getElementById('user-display');
-      
-      if (currentUser) {
-        userDisplay.textContent = currentUser.name;
-        modal.classList.add('hidden');
-      } else {
-        modal.classList.remove('hidden');
-      }
-    }
-
-    // Handle Sign-Up Form Submit
-    document.getElementById('signup-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      currentUser = {
-        name: document.getElementById('user-name').value,
-        email: document.getElementById('user-email').value,
-        phone: document.getElementById('user-phone').value
-      };
-      localStorage.setItem('oversabi_user', JSON.stringify(currentUser));
-      checkUserSession();
-    });
-
-    // Handle Skip Sign-Up
-    document.getElementById('skip-signup').addEventListener('click', () => {
-      document.getElementById('signup-modal').classList.add('hidden');
-    });
-
-    // Render Product Cards
-    function renderProducts() {
-      const container = document.getElementById('products-list');
-      container.innerHTML = products.map(product => `
-        <div class="product-card">
-          <img src="${product.image}" class="product-image" alt="${product.name}">
-          <div class="product-info">
-            <div class="product-title">${product.name}</div>
-            <div class="product-price">₦${product.price.toLocaleString()}</div>
-            <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
-            <button class="btn btn-outline" onclick="openHaggle('${product.name}', ${product.price})">Haggle Price</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // Add Item to Cart
-    function addToCart(productId) {
-      const product = products.find(p => p.id === productId);
-      if (product) {
-        cart.push(product);
-        updateCartTotal();
-      }
-    }
-
-    // Update Cart Total Display
-    function updateCartTotal() {
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      document.getElementById('cart-total').textContent = `₦${total.toLocaleString()}`;
-    }
-
-    // Open WhatsApp Haggle
-    function openHaggle(productName, originalPrice) {
-      const message = encodeURIComponent(`Hello, I would like to make an offer for "${productName}" (Original: ₦${originalPrice.toLocaleString()}).`);
-      window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${message}`, '_blank');
-    }
-
-    // Paystack Checkout Integration
-    document.getElementById('checkout-btn').addEventListener('click', () => {
-      const totalAmount = cart.reduce((sum, item) => sum + item.price, 0);
-
-      if (totalAmount === 0) {
-        alert('Your cart is empty!');
-        return;
-      }
-
-      const email = currentUser ? currentUser.email : 'customer@oversabijojo.com';
-
-      const handler = PaystackPop.setup({
-        key: PAYSTACK_PUBLIC_KEY,
-        email: email,
-        amount: totalAmount * 100, // Amount in kobo
-        currency: 'NGN',
-        callback: function(response) {
-          const successMessage = encodeURIComponent(`Hello! I just completed a payment of ₦${totalAmount.toLocaleString()} for my order. Payment Reference: ${response.reference}`);
-          window.open(`https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${successMessage}`, '_blank');
-          cart = [];
-          updateCartTotal();
-        },
-        onClose: function() {
-          alert('Transaction was cancelled.');
-        }
-      });
-
-      handler.openIframe();
-    });
-  </script>
-</body>
-</html>
+      itemsToRender.forEach(p => {
+        const discountPct = Math.round(((p.origPrice - p.price) / p.origPrice) * 100);
+        grid.innerHTML += `
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border dark:border-gray-700 shadow-sm flex flex-col justify-between">
+            <div onclick="openProductModal(${p.id})" class="cursor-pointer relative">
+              <img src="${p.images[0]}" class="w-full h-36 object-cover">
+              <span class="absolute top-2 left-2 bg-brandRed text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded">-${discountPct}%</span>
+            </div>
+            <div class="p-2.5 flex flex-col flex-grow justify-between">
+              <h3 onclick="openProductModal(${p.id})" class="text-xs font-semibold dark:text-white line-clamp-2 cursor-pointer leading-tight mb-2">${p.title}</h3>
+              <div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-sm font-extrabold text-brandRed">₦${p.price.toLocaleString()}</span>
+                  <span class="text-[10px] text-gray-400 line-through">₦$
