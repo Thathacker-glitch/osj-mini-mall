@@ -7,14 +7,14 @@
 <title>OSJ Mini Mall</title>
 <style>
 :root{
-  --red:#e60012; --red2:#ff3344; --bg:#f1f1f3; --card:#fff; --text:#171717;
-  --muted:#777; --line:#e5e5e5; --nav:#fff; --shadow:0 5px 20px rgba(0,0,0,.08);
+  --red:#e60012; --red2:#ff3344; --bg:#f7f5f7; --lav:#eee8f7; --purple:#68458a; --card:#fff; --text:#29252d;
+  --muted:#777; --line:#e8e2ed; --nav:#fff; --shadow:0 5px 20px rgba(65,45,80,.08);
 }
 @media(prefers-color-scheme:dark){
   :root{--bg:#111214;--card:#1b1c20;--text:#f5f5f5;--muted:#aaa;--line:#303238;--nav:#18191d}
 }
-html[data-theme="light"]{--bg:#f1f1f3;--card:#fff;--text:#171717;--muted:#777;--line:#e5e5e5;--nav:#fff}
-html[data-theme="dark"]{--bg:#111214;--card:#1b1c20;--text:#f5f5f5;--muted:#aaa;--line:#303238;--nav:#18191d}
+html[data-theme="light"]{--bg:#f7f5f7;--lav:#eee8f7;--purple:#68458a;--card:#fff;--text:#29252d;--muted:#777;--line:#e8e2ed;--nav:#fff}
+html[data-theme="dark"]{--bg:#242127;--lav:#382f43;--purple:#c6a9df;--card:#302b34;--text:#f8f5fa;--muted:#bdb5c3;--line:#48404e;--nav:#2a2630}
 *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
 button,input,select{font:inherit} button{cursor:pointer;border:0}
 .app{max-width:650px;margin:auto;min-height:100vh;padding-bottom:82px}
@@ -29,10 +29,11 @@ header{position:sticky;top:0;z-index:20;background:var(--card);padding:12px 14px
 .hero h1{font-size:27px;margin:0 0 7px}.hero p{margin:0 0 15px;opacity:.9}.hero button{background:#fff;color:#b0000e;padding:10px 15px;border-radius:10px;font-weight:800}
 .section{padding:0 12px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}
 .sectionhead h2{font-size:18px;margin:0}.sectionhead small{color:var(--red);font-weight:bold}
-.chips{display:flex;gap:8px;overflow:auto;padding-bottom:3px}.chip{white-space:nowrap;padding:9px 14px;border-radius:20px;background:var(--card);border:1px solid var(--line);color:var(--text)}.chip.active{background:var(--red);color:#fff;border-color:var(--red)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.product{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);position:relative}.product img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}.productbody{padding:10px}.tag{display:inline-block;font-size:10px;padding:4px 6px;border-radius:5px;background:#ffe3e6;color:#b0000e;font-weight:bold}.name{font-weight:700;margin:7px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.price{font-weight:900;font-size:17px}.old{text-decoration:line-through;color:var(--muted);font-size:12px;margin-left:5px}.stars{font-size:12px;color:#e09a00;margin-top:4px}.actions{display:flex;gap:7px;margin-top:9px}.cartbtn,.buybtn{flex:1;padding:9px;border-radius:9px;font-weight:800}.cartbtn{background:var(--bg);color:var(--text)}.buybtn{background:var(--red);color:#fff}
+.chips{display:flex;gap:8px;overflow:auto;padding-bottom:3px}.chip{white-space:nowrap;padding:9px 14px;border-radius:20px;background:var(--lav);border:1px solid transparent;color:var(--purple);font-weight:800}.chip.active{background:var(--red);color:#fff;border-color:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.product{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);position:relative}.product img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}.productbody{padding:10px}.tag{display:inline-block;font-size:10px;padding:4px 6px;border-radius:5px;background:#ffe3e6;color:#b0000e;font-weight:bold}.name{font-weight:700;margin:7px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.price{font-weight:900;font-size:17px}.old{text-decoration:line-through;color:var(--muted);font-size:12px;margin-left:5px}.stars{font-size:12px;color:#e09a00;margin-top:4px}.actions{display:flex;gap:7px;margin-top:9px}.cartbtn,.buybtn{flex:1;padding:9px;border-radius:9px;font-weight:800}.cartbtn{background:var(--lav);color:var(--purple)}.buybtn{background:var(--red);color:#fff}
 nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(650px,100%);height:70px;background:var(--nav);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:30;padding-bottom:env(safe-area-inset-bottom)}nav button{background:none;color:var(--muted);font-size:12px;font-weight:700}nav button.active{color:var(--red)}nav .navico{font-size:22px;display:block;margin-bottom:3px}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:none;align-items:flex-end}.overlay.show{display:flex}.sheet{width:min(650px,100%);max-height:92vh;overflow:auto;background:var(--card);color:var(--text);border-radius:22px 22px 0 0;padding:16px;margin:auto auto 0}.close{float:right;background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:50%}.gallery{position:relative}.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:15px}.counter{position:absolute;right:10px;bottom:10px;background:#000b;color:#fff;padding:5px 9px;border-radius:15px;font-size:12px}.thumbs{display:flex;gap:7px;margin-top:8px;overflow:auto}.thumbs img{width:60px;height:60px;object-fit:cover;border-radius:8px}.detailprice{font-size:25px;font-weight:900;margin-top:14px}.detailactions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.primary{background:var(--red);color:#fff;padding:13px;border-radius:10px;font-weight:900}.secondary{background:var(--bg);color:var(--text);padding:13px;border-radius:10px;font-weight:900}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:none;align-items:flex-end}.overlay.show{display:flex}.sheet{width:min(650px,100%);max-height:92vh;overflow:auto;background:var(--card);color:var(--text);border-radius:22px 22px 0 0;padding:16px;margin:auto auto 0}.close{float:right;background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:50%}.gallery{position:relative}.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:15px}.counter{position:absolute;right:10px;bottom:10px;background:#000b;color:#fff;padding:5px 9px;border-radius:15px;font-size:12px}.thumbs{display:flex;gap:7px;margin-top:8px;overflow:auto}.thumbs img{width:60px;height:60px;object-fit:cover;border-radius:8px}.detailprice{font-size:25px;font-weight:900;margin-top:14px}.detailactions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.primary{background:var(--red);color:#fff;padding:13px;border-radius:10px;font-weight:900}.secondary{background:var(--lav);color:var(--purple);padding:13px;border-radius:10px;font-weight:900}
+.optionGroup{margin-top:18px}.optionGroup>b{display:block;margin-bottom:8px}.optionChoices{display:flex;flex-wrap:wrap;gap:8px}.optionChoice{padding:10px 14px;border-radius:10px;background:var(--lav);color:var(--purple);border:1px solid transparent;font-weight:800}.optionChoice.selected{background:var(--red);color:#fff;border-color:var(--red)}
 .qty{display:flex;align-items:center;gap:15px}.qty button{width:34px;height:34px;border-radius:8px;background:var(--bg);color:var(--text)}.qty strong{min-width:25px;text-align:center}
 .field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:bold;margin-bottom:5px;color:var(--muted)}.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);outline:0}
 .row{display:flex;gap:8px}.row>*{flex:1}.empty{text-align:center;padding:50px 20px;color:var(--muted)}
@@ -86,27 +87,25 @@ nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(650px,
 </div>
 
 <div class="overlay" id="productModal"><div class="sheet"><button class="close" onclick="closeModal('productModal')">×</button><div id="productDetail"></div></div></div>
-<div class="overlay" id="loginModal"><div class="sheet"><button class="close" onclick="closeModal('loginModal')">×</button><h2 id="loginTitle">Create your account</h2><p style="color:var(--muted)">Save your cart and orders across visits.</p><div class="field"><label>NAME</label><input id="loginName" placeholder="Your name"></div><div class="field"><label>PHONE OR EMAIL</label><input id="loginContact" placeholder="Phone or email"></div><div class="field"><label>PASSWORD</label><input id="loginPass" type="password" placeholder="Password"></div><button class="primary" style="width:100%" onclick="login()">Continue</button><p style="font-size:12px;color:var(--muted)">Demo account storage only in this storefront build.</p></div></div>
-<div class="overlay" id="checkoutModal"><div class="sheet"><button class="close" onclick="closeModal('checkoutModal')">×</button><h2>Checkout</h2><div id="checkoutSummary"></div><div class="notice">Minimum order: ₦12,800 • Maximum order: ₦2,000,000</div><h3>Delivery location</h3><button class="secondary" style="width:100%" onclick="getLocation()">📍 Use my current location</button><p id="locationStatus" style="font-size:12px;color:var(--muted)"></p><div class="row"><div class="field"><label>COUNTRY</label><input id="country" value="Nigeria"></div><div class="field"><label>STATE</label><input id="state" placeholder="State"></div></div><div class="row"><div class="field"><label>LGA</label><input id="lga" placeholder="LGA"></div><div class="field"><label>STREET / ADDRESS</label><input id="address" placeholder="Delivery address"></div></div><button class="primary" style="width:100%" onclick="submitCheckout()">Continue to payment</button></div></div>
-<div class="overlay" id="negotiationModal"><div class="sheet"><button class="close" onclick="closeModal('negotiationModal')">×</button><h2>Negotiate with seller</h2><p id="negoProduct"></p><div class="notice">Maximum discount: 10%. Offers below 90% of listed price are automatically rejected.</div><div class="field"><label>YOUR OFFER (₦)</label><input id="offerInput" type="number"></div><button class="primary" style="width:100%" onclick="sendOffer()">Send offer</button></div></div>
+<div class="overlay" id="variantModal"><div class="sheet"><button class="close" onclick="closeModal('variantModal')">×</button><div id="variantContent"></div></div></div>
+<div class="overlay" id="loginModal"><div class="sheet"><button class="close" onclick="closeModal('loginModal')">×</button><h2 id="loginTitle">Create your account</h2><p style="color:var(--muted)">Save your cart and orders across visits.</p><div class="field"><label>NAME</label><input id="loginName" placeholder="Your name"></div><div class="field"><label>PHONE OR EMAIL</label><input id="loginContact" placeholder="Phone or email"></div><div class="field"><label>PASSWORD</label><input id="loginPass" type="password" placeholder="Password"></div><button class="primary" style="width:100%" onclick="login()">Continue</button><p style="font-size:12px;color:var(--muted)">Demo account storage only in this first storefront build. Secure server authentication comes in the backend phase.</p></div></div>
+<div class="overlay" id="checkoutModal"><div class="sheet"><button class="close" onclick="closeModal('checkoutModal')">×</button><h2>Checkout</h2><div id="checkoutSummary"></div><div class="notice">Minimum order: ₦12,800 • Maximum order: ₦2,000,000</div><h3>Delivery location</h3><button class="secondary" style="width:100%" onclick="getLocation()">📍 Use my current location</button><p id="locationStatus" style="font-size:12px;color:var(--muted)"></p><div class="row"><div class="field"><label>COUNTRY</label><input id="country" value="Nigeria"></div><div class="field"><label>STATE</label><input id="state" placeholder="State"></div></div><div class="row"><div class="field"><label>LGA</label><input id="lga" placeholder="LGA"></div><div class="field"><label>STREET / ADDRESS</label><input id="address" placeholder="Delivery address"></div></div><button class="primary" style="width:100%" onclick="submitCheckout()">Continue to payment</button><p style="font-size:11px;color:var(--muted)">Real Paystack payment will be connected in the backend/payment phase. This button currently creates a local test request only.</p></div></div>
+<div class="overlay" id="negotiationModal"><div class="sheet"><button class="close" onclick="closeModal('negotiationModal')">×</button><h2>Negotiate with seller</h2><p id="negoProduct"></p><div class="notice">Maximum discount: 10%. Offers below 90% of the listed price are automatically rejected.</div><div class="field"><label>YOUR OFFER (₦)</label><input id="offerInput" type="number"></div><button class="primary" style="width:100%" onclick="sendOffer()">Send offer</button><p style="font-size:12px;color:var(--muted)">The future backend will turn this into a real buyer/seller chat.</p></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
 const categories=["All","Women","Men","Jewelry","Toys","Bags","Kids","Beauty","Craft","Baby","Health","Household","Appliances","Books"];
-
-// GUARANTEED WORKING PLACEHOLDER IMAGES
 const products=[
-{id:1,name:"Elegant Gold-Tone Necklace",cat:"Jewelry",price:18500,old:24000,rating:4.8,type:"In-Stock",images:["https://via.placeholder.com/400x400/E60012/FFFFFF?text=Necklace"]},
-{id:2,name:"Classic Women's Handbag",cat:"Bags",price:35000,old:42000,rating:4.7,type:"In-Stock",images:["https://via.placeholder.com/400x400/333333/FFFFFF?text=Handbag"]},
-{id:3,name:"Fashion Sunglasses",cat:"Women",price:12800,old:16000,rating:4.6,type:"In-Stock",images:["https://via.placeholder.com/400x400/171717/FFFFFF?text=Sunglasses"]},
-{id:4,name:"Beauty Gift Set",cat:"Beauty",price:22000,old:28000,rating:4.8,type:"Pre-Order",images:["https://via.placeholder.com/400x400/FF3344/FFFFFF?text=Beauty+Set"]},
-{id:5,name:"Minimalist Bracelet",cat:"Jewelry",price:15000,old:19000,rating:4.5,type:"In-Stock",images:["https://via.placeholder.com/400x400/E60012/FFFFFF?text=Bracelet"]},
-{id:6,name:"Women's Casual Dress",cat:"Women",price:26000,old:33000,rating:4.7,type:"Pre-Order",images:["https://via.placeholder.com/400x400/8F0010/FFFFFF?text=Dress"]},
-{id:7,name:"Kids Educational Toy",cat:"Toys",price:14000,old:18000,rating:4.6,type:"In-Stock",images:["https://via.placeholder.com/400x400/FF9900/FFFFFF?text=Toy"]},
-{id:8,name:"Modern Home Organizer",cat:"Household",price:12900,old:17000,rating:4.4,type:"In-Stock",images:["https://via.placeholder.com/400x400/555555/FFFFFF?text=Organizer"]}
+{id:1,name:"Elegant Gold-Tone Necklace",cat:"Jewelry",price:18500,old:24000,rating:4.8,type:"In-Stock",images:["https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=80"],options:{Color:["Gold","Silver"],Length:["16 cm","18 cm","20 cm"]}},
+{id:2,name:"Classic Women's Handbag",cat:"Bags",price:35000,old:42000,rating:4.7,type:"In-Stock",images:["https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=900&q=80"],options:{Color:["Black","Brown","Cream"]}},
+{id:3,name:"Fashion Sunglasses",cat:"Women",price:12800,old:16000,rating:4.6,type:"In-Stock",images:["https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80"],options:{Color:["Black","Brown","Gold"]}},
+{id:4,name:"Beauty Gift Set",cat:"Beauty",price:22000,old:28000,rating:4.8,type:"Pre-Order",images:["https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=80"],options:{Style:["Classic Set","Premium Set"]}},
+{id:5,name:"Minimalist Bracelet",cat:"Jewelry",price:15000,old:19000,rating:4.5,type:"In-Stock",images:["https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=900&q=80"],options:{Color:["Gold","Silver"],Size:["Small","Medium","Large"]}},
+{id:6,name:"Women's Casual Dress",cat:"Women",price:26000,old:33000,rating:4.7,type:"Pre-Order",images:["https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80"],options:{Size:["S","M","L","XL","XXL"],Color:["Black","Red","White"]}},
+{id:7,name:"Kids Educational Toy",cat:"Toys",price:14000,old:18000,rating:4.6,type:"In-Stock",images:["https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=900&q=80"],options:{Color:["Blue","Pink","Yellow"]}},
+{id:8,name:"Modern Home Organizer",cat:"Household",price:12900,old:17000,rating:4.4,type:"In-Stock",images:["https://images.unsplash.com/photo-1558997519-83ea9252edf8?auto=format&fit=crop&w=900&q=80"],options:{Size:["Small","Medium","Large"]}}
 ];
-
-let selectedCat="All", cart=JSON.parse(localStorage.getItem("osjCart")||"[]"), user=JSON.parse(localStorage.getItem("osjUser")||"null"), currentProduct=null, currentQty=1, coords=null;
+let selectedCat="All", cart=JSON.parse(localStorage.getItem("osjCart")||"[]"), user=JSON.parse(localStorage.getItem("osjUser")||"null"), currentProduct=null, currentQty=1, coords=null, pendingAction=null, selectedOptions={};
 
 function money(n){return "₦"+Number(n).toLocaleString("en-NG")}
 function save(){localStorage.setItem("osjCart",JSON.stringify(cart));updateCount()}
@@ -114,22 +113,20 @@ function toast(t){let e=document.getElementById("toast");e.textContent=t;e.class
 function updateCount(){document.getElementById("cartCount").textContent=cart.reduce((a,x)=>a+x.qty,0)}
 function renderChips(){document.getElementById("chips").innerHTML=categories.map(c=>`<button class="chip ${c===selectedCat?"active":""}" onclick="setCat('${c}')">${c}</button>`).join("")}
 function setCat(c){selectedCat=c;renderChips();renderProducts()}
-
 function renderProducts(){
  let q=document.getElementById("search").value.toLowerCase();
  let list=products.filter(p=>(selectedCat==="All"||p.cat===selectedCat)&&(!q||p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)));
  document.getElementById("productTitle").textContent=selectedCat==="All"?"Popular for you":selectedCat;
  document.getElementById("products").innerHTML=list.map(p=>`
  <article class="product" onclick="openProduct(${p.id})">
-  <img src="${p.images[0]}" alt="${p.name}">
+  <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
   <div class="productbody"><span class="tag">${p.type}</span><div class="name">${p.name}</div>
   <div><span class="price">${money(p.price)}</span><span class="old">${money(p.old)}</span></div>
   <div class="stars">★ ${p.rating}</div>
-  <div class="actions" onclick="event.stopPropagation()"><button class="cartbtn" onclick="addCart(${p.id})">🛒</button><button class="buybtn" onclick="buyNow(${p.id})">Buy</button></div>
+  <div class="actions" onclick="event.stopPropagation()"><button class="cartbtn" onclick="startProductAction(${p.id},'cart')">🛒</button><button class="buybtn" onclick="startProductAction(${p.id},'buy')">Buy</button></div>
   </div>
  </article>`).join("")||'<div class="empty" style="grid-column:1/-1">No products found.</div>';
 }
-
 function openProduct(id){
  currentProduct=products.find(p=>p.id===id);currentQty=1;
  let p=currentProduct;
@@ -139,35 +136,37 @@ function openProduct(id){
  <span class="tag" style="margin-top:12px">${p.type}</span><h2>${p.name}</h2>
  <div class="detailprice">${money(p.price)} <span class="old">${money(p.old)}</span></div>
  <div class="stars">★ ${p.rating} • Nigeria delivery</div>
- <p style="color:var(--muted);line-height:1.5">Quality ${p.cat.toLowerCase()} item available from OSJ Mini Mall.</p>
+ <p style="color:var(--muted);line-height:1.5">Quality ${p.cat.toLowerCase()} item available from OSJ Mini Mall. Product details and real inventory will be managed from the future admin dashboard.</p>
  <div class="qty"><b>Quantity</b><button onclick="changeDetailQty(-1)">−</button><strong id="detailQty">1</strong><button onclick="changeDetailQty(1)">+</button></div>
- <div class="detailactions"><button class="secondary" onclick="addCart(${p.id});closeModal('productModal')">🛒 Add to Cart</button><button class="primary" onclick="buyNow(${p.id})">Buy Now</button></div>
+ <div class="detailactions"><button class="secondary" onclick="startProductAction(${p.id},'cart')">🛒 Add to Cart</button><button class="primary" onclick="startProductAction(${p.id},'buy')">Buy Now</button></div>
  <button class="secondary" style="width:100%;margin-top:8px" onclick="openNegotiation(${p.id})">💬 Negotiate with seller</button>`;
  document.getElementById("productModal").classList.add("show");
 }
-
 function changeDetailQty(n){currentQty=Math.max(1,currentQty+n);document.getElementById("detailQty").textContent=currentQty}
-function addCart(id,qty=1){let item=cart.find(x=>x.id===id);if(item)item.qty+=qty;else cart.push({id,qty});save();toast("Added to cart")}
-function buyNow(id){let item=cart.find(x=>x.id===id);openCheckout([{id,qty:item?item.qty:currentProduct&&currentProduct.id===id?currentQty:1}]);}
+function hasOptions(p){return p.options&&Object.keys(p.options).some(k=>Array.isArray(p.options[k])&&p.options[k].length)}
+function optionKey(options){return JSON.stringify(options||{})}
+function startProductAction(id,action){let p=products.find(x=>x.id===id);pendingAction={id,action,qty:(currentProduct&&currentProduct.id===id?currentQty:1)};if(hasOptions(p)){openVariantPicker(id,action);return}if(action==="cart")addCart(id,pendingAction.qty,{});else buyNow(id,pendingAction.qty,{});}
+function openVariantPicker(id,action){let p=products.find(x=>x.id===id);pendingAction={id,action,qty:(currentProduct&&currentProduct.id===id?currentQty:1)};selectedOptions={};Object.keys(p.options||{}).forEach(k=>selectedOptions[k]=p.options[k][0]);document.getElementById("variantContent").innerHTML=`<div style="display:flex;gap:12px;align-items:center"><img src="${p.images[0]}" style="width:78px;height:78px;object-fit:cover;border-radius:12px"><div><h2 style="margin:0 0 4px">Choose options</h2><div style="color:var(--muted);font-size:13px">${p.name}</div></div></div>${Object.entries(p.options||{}).map(([name,vals])=>`<div class="optionGroup"><b>${name}</b><div class="optionChoices">${vals.map((v,i)=>`<button class="optionChoice ${i===0?'selected':''}" data-option="${name}" data-value="${v}" onclick="chooseOption(this)">${v}</button>`).join("")}</div></div>`).join("")}<div class="qty" style="margin:16px 0"><b>Quantity</b><button onclick="changePendingQty(-1)">−</button><strong id="pendingQty">${pendingAction.qty}</strong><button onclick="changePendingQty(1)">+</button></div><button class="primary" style="width:100%" onclick="confirmVariantAction()">${action==="cart"?"🛒 Add to Cart":"Buy Now"}</button>`;document.getElementById("variantModal").classList.add("show")}
+function chooseOption(btn){let name=btn.dataset.option;selectedOptions[name]=btn.dataset.value;document.querySelectorAll(`.optionChoice[data-option="${CSS.escape(name)}"]`).forEach(b=>b.classList.remove("selected"));btn.classList.add("selected")}
+function changePendingQty(n){pendingAction.qty=Math.max(1,pendingAction.qty+n);document.getElementById("pendingQty").textContent=pendingAction.qty}
+function confirmVariantAction(){let a=pendingAction;if(!a)return;closeModal("variantModal");if(a.action==="cart"){addCart(a.id,a.qty,selectedOptions);if(document.getElementById("productModal").classList.contains("show"))closeModal("productModal")}else{buyNow(a.id,a.qty,selectedOptions)}}
+function addCart(id,qty=1,options={}){let key=optionKey(options),item=cart.find(x=>x.id===id&&optionKey(x.options||{})===key);if(item)item.qty+=qty;else cart.push({id,qty,options:{...options}});save();toast("Added to cart")}
+function buyNow(id,qty=1,options={}){openCheckout([{id,qty,options:{...options}}]);}
 function openCart(){showPage("cartPage");renderCart()}
-
 function renderCart(){
  let el=document.getElementById("cartItems");
  if(!cart.length){el.innerHTML='<div class="empty">🛒<br><br>Your cart is empty.</div>';document.getElementById("cartFooter").innerHTML="";return}
- el.innerHTML=cart.map(x=>{let p=products.find(y=>y.id===x.id);return `<div class="listitem"><input class="check" type="checkbox" data-id="${p.id}" checked onchange="renderCartFooter()"><img src="${p.images[0]}"><div class="listinfo"><b>${p.name}</b><div>${money(p.price)}</div><div class="qty" style="margin-top:7px"><button onclick="changeCartQty(${p.id},-1)">−</button><strong>${x.qty}</strong><button onclick="changeCartQty(${p.id},1)">+</button><button onclick="removeCart(${p.id})" style="margin-left:auto;background:none">🗑️</button></div></div></div>`}).join("");
- renderCartFooter();
+ el.innerHTML=cart.map((x,i)=>{let p=products.find(y=>y.id===x.id);let opts=Object.entries(x.options||{}).map(([k,v])=>`${k}: ${v}`).join(" • ");return `<div class="listitem"><input class="check" type="checkbox" data-index="${i}" checked onchange="renderCartFooter()"><img src="${p.images[0]}"><div class="listinfo"><b>${p.name}</b><div>${money(p.price)}</div>${opts?`<div style="font-size:11px;color:var(--purple);margin-top:3px">${opts}</div>`:""}<div class="qty" style="margin-top:7px"><button onclick="changeCartQty(${i},-1)">−</button><strong>${x.qty}</strong><button onclick="changeCartQty(${i},1)">+</button><button onclick="removeCart(${i})" style="margin-left:auto;background:none">🗑️</button></div></div></div>`}).join("");
+ renderCartFooter()
 }
-
-function selectedCartItems(){return [...document.querySelectorAll(".check:checked")].map(e=>({id:+e.dataset.id,qty:cart.find(x=>x.id==e.dataset.id).qty}))}
+function selectedCartItems(){return [...document.querySelectorAll(".check:checked")].map(e=>{let x=cart[+e.dataset.index];return {id:x.id,qty:x.qty,options:x.options||{}}})}
 function renderCartFooter(){
  let items=selectedCartItems(), total=items.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0);
- document.getElementById("cartFooter").innerHTML=`<div class="total">Selected total: ${money(total)}</div><button class="primary" style="width:100%" onclick="openCheckout(selectedCartItems())">Pay selected items</button>`;
+ document.getElementById("cartFooter").innerHTML=`<div class="total">Selected total: ${money(total)}</div><button class="primary" style="width:100%" onclick="openCheckout(selectedCartItems())">Pay selected items</button><button class="secondary" style="width:100%;margin-top:8px" onclick="toast('Select an item and use Negotiate from its product page')">💬 Negotiate</button>`;
 }
-
-function changeCartQty(id,n){let x=cart.find(a=>a.id===id);x.qty=Math.max(1,x.qty+n);save();renderCart()}
-function removeCart(id){cart=cart.filter(x=>x.id!==id);save();renderCart();toast("Removed")}
+function changeCartQty(index,n){let x=cart[index];x.qty=Math.max(1,x.qty+n);save();renderCart()}
+function removeCart(index){cart.splice(index,1);save();renderCart();toast("Removed")}
 function clearCart(){cart=[];save();renderCart()}
-
 function openCheckout(items){
  if(!items||!items.length){toast("Select at least one item");return}
  let total=items.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0);
@@ -177,26 +176,22 @@ function openCheckout(items){
  document.getElementById("checkoutModal").dataset.items=JSON.stringify(items);
  document.getElementById("checkoutModal").classList.add("show");
 }
-
 function getLocation(){
  if(!navigator.geolocation){document.getElementById("locationStatus").textContent="Location is not supported on this device.";return}
  document.getElementById("locationStatus").textContent="Requesting location permission…";
- navigator.geolocation.getCurrentPosition(pos=>{coords={lat:pos.coords.latitude,lng:pos.coords.longitude};document.getElementById("locationStatus").textContent=`Location captured: ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`},()=>document.getElementById("locationStatus").textContent="Location permission denied.")
+ navigator.geolocation.getCurrentPosition(pos=>{coords={lat:pos.coords.latitude,lng:pos.coords.longitude};document.getElementById("locationStatus").textContent=`Location captured: ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`},()=>document.getElementById("locationStatus").textContent="Location permission was not granted. You can enter your address manually.")
 }
-
 function submitCheckout(){
  let items=JSON.parse(document.getElementById("checkoutModal").dataset.items), address=document.getElementById("address").value.trim();
  if(!address&&!coords){toast("Add your address or allow location");return}
  let order={id:"OSJ-"+Date.now(),user,items,total:items.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0),location:coords,address:document.getElementById("country").value+", "+document.getElementById("state").value+", "+document.getElementById("lga").value+", "+address,status:"Payment pending"};
  localStorage.setItem("osjLastOrder",JSON.stringify(order));
  closeModal("checkoutModal");
- toast("Order created successfully!");
+ toast("Test order request created. Real Paystack comes next.");
 }
-
-function openNegotiation(id){currentProduct=products.find(p=>p.id===id);document.getElementById("negoProduct").textContent=`${currentProduct.name} — listed at ${money(currentProduct.price)}. Lowest offer: ${money(currentProduct.price*.9)}.`;document.getElementById("offerInput").value=Math.ceil(currentProduct.price*.9);document.getElementById("negotiationModal").classList.add("show")}
-function sendOffer(){let offer=Number(document.getElementById("offerInput").value),min=currentProduct.price*.9;if(offer<min){toast("Offer rejected: max discount 10%");return}closeModal("negotiationModal");toast("Offer accepted for review")}
+function openNegotiation(id){currentProduct=products.find(p=>p.id===id);document.getElementById("negoProduct").textContent=`${currentProduct.name} — listed at ${money(currentProduct.price)}. Lowest possible offer: ${money(currentProduct.price*.9)}.`;document.getElementById("offerInput").value=Math.ceil(currentProduct.price*.9);document.getElementById("negotiationModal").classList.add("show")}
+function sendOffer(){let offer=Number(document.getElementById("offerInput").value),min=currentProduct.price*.9;if(offer<min){toast("Offer rejected: maximum discount is 10%");return}closeModal("negotiationModal");toast("Offer accepted for review")}
 function closeModal(id){document.getElementById(id).classList.remove("show")}
-
 function showCategories(){showPage("home");document.getElementById("chips").scrollIntoView({behavior:"smooth"})}
 function showPage(id){
  ["home","cartPage","accountPage"].forEach(x=>document.getElementById(x).style.display=x===id?"block":"none");
@@ -206,18 +201,15 @@ function showPage(id){
  if(id==="accountPage"){document.getElementById("navAccount").classList.add("active");renderAccount()}
  window.scrollTo(0,0)
 }
-
 function renderAccount(){
  document.getElementById("accountContent").innerHTML=user?`
  <div class="profile"><div style="display:flex;gap:12px;align-items:center"><div class="avatar">${user.name[0].toUpperCase()}</div><div><h2 style="margin:0">${user.name}</h2><small>${user.contact}</small></div></div></div>
- <div style="margin-top:12px;background:var(--card);border-radius:15px;padding:8px"><button class="menuitem">💰 Wallet / Balance <b style="float:right">₦0</b></button><button class="menuitem">📦 My Orders</button><button class="menuitem" onclick="toggleTheme()">🌙 Toggle Light/Dark Theme</button><button class="menuitem" onclick="logout()">↪ Log out</button></div>`:
+ <div style="margin-top:12px;background:var(--card);border-radius:15px;padding:8px"><button class="menuitem">💰 Wallet / Balance <b style="float:right">₦0</b></button><button class="menuitem">📦 My Requests / Orders</button><button class="menuitem">📍 Delivery Addresses</button><button class="menuitem" onclick="toggleTheme()">🌙 Light / Dark mode</button><button class="menuitem" onclick="logout()">↪ Log out</button></div>`:
  `<div class="profile"><h2>Welcome to OSJ Mini Mall</h2><p style="color:var(--muted)">Create an account to save your cart and submit orders.</p><button class="primary" style="width:100%" onclick="document.getElementById('loginModal').classList.add('show')">Sign up / Login</button></div>`
 }
-
 function login(){let name=document.getElementById("loginName").value.trim(),contact=document.getElementById("loginContact").value.trim(),pass=document.getElementById("loginPass").value;if(!name||!contact||!pass){toast("Complete all fields");return}user={name,contact};localStorage.setItem("osjUser",JSON.stringify(user));closeModal("loginModal");toast("Welcome, "+name);renderAccount()}
 function logout(){user=null;localStorage.removeItem("osjUser");renderAccount();toast("Logged out")}
 function toggleTheme(){let dark=document.documentElement.getAttribute("data-theme")==="dark";document.documentElement.setAttribute("data-theme",dark?"light":"dark");localStorage.setItem("osjTheme",dark?"light":"dark")}
-
 (function(){let t=localStorage.getItem("osjTheme");if(t)document.documentElement.setAttribute("data-theme",t);renderChips();renderProducts();updateCount()})();
 </script>
 </body>
