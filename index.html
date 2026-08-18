@@ -1,216 +1,737 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#e60012">
-<title>OSJ Mini Mall</title>
-<style>
-:root{
-  --red:#e60012; --red2:#ff3344; --bg:#f7f5f7; --lav:#eee8f7; --purple:#68458a; --card:#fff; --text:#29252d;
-  --muted:#777; --line:#e8e2ed; --nav:#fff; --shadow:0 5px 20px rgba(65,45,80,.08);
-}
-@media(prefers-color-scheme:dark){
-  :root{--bg:#111214;--card:#1b1c20;--text:#f5f5f5;--muted:#aaa;--line:#303238;--nav:#18191d}
-}
-html[data-theme="light"]{--bg:#f7f5f7;--lav:#eee8f7;--purple:#68458a;--card:#fff;--text:#29252d;--muted:#777;--line:#e8e2ed;--nav:#fff}
-html[data-theme="dark"]{--bg:#242127;--lav:#382f43;--purple:#c6a9df;--card:#302b34;--text:#f8f5fa;--muted:#bdb5c3;--line:#48404e;--nav:#2a2630}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-button,input,select{font:inherit} button{cursor:pointer;border:0}
-.app{max-width:650px;margin:auto;min-height:100vh;padding-bottom:82px}
-header{position:sticky;top:0;z-index:20;background:var(--card);padding:12px 14px;border-bottom:1px solid var(--line)}
-.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.logo{font-size:22px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--red)}
-.iconbtn{width:42px;height:42px;border-radius:50%;background:var(--bg);color:var(--text);position:relative}
-.badge{position:absolute;right:-2px;top:-2px;background:var(--red);color:#fff;border-radius:20px;font-size:11px;padding:3px 6px;font-weight:bold}
-.search{margin-top:10px;background:var(--bg);border-radius:12px;display:flex;align-items:center;padding:0 12px}
-.search input{width:100%;padding:12px 8px;border:0;outline:0;background:transparent;color:var(--text)}
-.hero{margin:12px;border-radius:18px;padding:20px;background:linear-gradient(135deg,#e60012,#8f0010);color:#fff;min-height:145px;display:flex;justify-content:space-between;align-items:center;overflow:hidden}
-.hero h1{font-size:27px;margin:0 0 7px}.hero p{margin:0 0 15px;opacity:.9}.hero button{background:#fff;color:#b0000e;padding:10px 15px;border-radius:10px;font-weight:800}
-.section{padding:0 12px}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}
-.sectionhead h2{font-size:18px;margin:0}.sectionhead small{color:var(--red);font-weight:bold}
-.chips{display:flex;gap:8px;overflow:auto;padding-bottom:3px}.chip{white-space:nowrap;padding:9px 14px;border-radius:20px;background:var(--lav);border:1px solid transparent;color:var(--purple);font-weight:800}.chip.active{background:var(--red);color:#fff;border-color:var(--red)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.product{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);position:relative}.product img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}.productbody{padding:10px}.tag{display:inline-block;font-size:10px;padding:4px 6px;border-radius:5px;background:#ffe3e6;color:#b0000e;font-weight:bold}.name{font-weight:700;margin:7px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.price{font-weight:900;font-size:17px}.old{text-decoration:line-through;color:var(--muted);font-size:12px;margin-left:5px}.stars{font-size:12px;color:#e09a00;margin-top:4px}.actions{display:flex;gap:7px;margin-top:9px}.cartbtn,.buybtn{flex:1;padding:9px;border-radius:9px;font-weight:800}.cartbtn{background:var(--lav);color:var(--purple)}.buybtn{background:var(--red);color:#fff}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(650px,100%);height:70px;background:var(--nav);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:30;padding-bottom:env(safe-area-inset-bottom)}nav button{background:none;color:var(--muted);font-size:12px;font-weight:700}nav button.active{color:var(--red)}nav .navico{font-size:22px;display:block;margin-bottom:3px}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:none;align-items:flex-end}.overlay.show{display:flex}.sheet{width:min(650px,100%);max-height:92vh;overflow:auto;background:var(--card);color:var(--text);border-radius:22px 22px 0 0;padding:16px;margin:auto auto 0}.close{float:right;background:var(--bg);color:var(--text);width:36px;height:36px;border-radius:50%}.gallery{position:relative}.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:15px}.counter{position:absolute;right:10px;bottom:10px;background:#000b;color:#fff;padding:5px 9px;border-radius:15px;font-size:12px}.thumbs{display:flex;gap:7px;margin-top:8px;overflow:auto}.thumbs img{width:60px;height:60px;object-fit:cover;border-radius:8px}.detailprice{font-size:25px;font-weight:900;margin-top:14px}.detailactions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.primary{background:var(--red);color:#fff;padding:13px;border-radius:10px;font-weight:900}.secondary{background:var(--lav);color:var(--purple);padding:13px;border-radius:10px;font-weight:900}
-.optionGroup{margin-top:18px}.optionGroup>b{display:block;margin-bottom:8px}.optionChoices{display:flex;flex-wrap:wrap;gap:8px}.optionChoice{padding:10px 14px;border-radius:10px;background:var(--lav);color:var(--purple);border:1px solid transparent;font-weight:800}.optionChoice.selected{background:var(--red);color:#fff;border-color:var(--red)}
-.qty{display:flex;align-items:center;gap:15px}.qty button{width:34px;height:34px;border-radius:8px;background:var(--bg);color:var(--text)}.qty strong{min-width:25px;text-align:center}
-.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:bold;margin-bottom:5px;color:var(--muted)}.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);outline:0}
-.row{display:flex;gap:8px}.row>*{flex:1}.empty{text-align:center;padding:50px 20px;color:var(--muted)}
-.listitem{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.listitem img{width:70px;height:70px;object-fit:cover;border-radius:9px}.listinfo{flex:1}.check{width:22px;height:22px;accent-color:var(--red)}
-.total{font-size:20px;font-weight:900;margin:15px 0}.notice{padding:10px;border-radius:10px;background:#fff3d8;color:#735300;font-size:12px;margin:10px 0}
-.profile{background:var(--card);padding:18px;border-radius:15px;box-shadow:var(--shadow)}.avatar{width:60px;height:60px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:25px;font-weight:900}
-.menuitem{width:100%;padding:15px 4px;background:none;color:var(--text);border-bottom:1px solid var(--line);text-align:left}
-.toast{position:fixed;left:50%;bottom:85px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:11px 15px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:100;font-size:13px}.toast.show{opacity:1;transform:translateX(-50%)}
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSJ Mini Mall | Shop More, Save More</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Paystack Inline JS -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#FF002B',
+            brandDarkRed: '#D00022',
+            lightGrayBg: '#F4F5F7'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
-<body>
-<div class="app">
-<header>
-  <div class="top">
-    <div class="logo">OSJ <span>Mini Mall</span></div>
-    <button class="iconbtn" onclick="openCart()">🛒<span class="badge" id="cartCount">0</span></button>
+<body class="bg-lightGrayBg dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans pb-24 transition-colors duration-200">
+
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <!-- Logo & Brand -->
+      <div class="flex items-center gap-2">
+        <div class="bg-brandRed text-white p-2 rounded-lg font-black text-xl italic tracking-wider shadow">OSJ</div>
+        <div>
+          <h1 class="font-extrabold text-lg leading-none text-brandRed tracking-tight">OSJ MINI MALL</h1>
+          <p class="text-[10px] text-gray-500 dark:text-gray-400 font-medium">SHOP MORE, SAVE MORE</p>
+        </div>
+      </div>
+      
+      <!-- User Greeting & Dark Mode Toggle -->
+      <div class="flex items-center gap-3">
+        <button onclick="toggleDarkMode()" class="p-2 text-gray-600 dark:text-gray-300 hover:text-brandRed">
+          <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+        </button>
+        <button onclick="openAuthModal()" class="text-xs bg-gray-100 dark:bg-gray-700 px-3 py-1.5 rounded-full font-semibold border border-gray-200 dark:border-gray-600 truncate max-w-[100px]" id="userGreetBtn">
+          Sign In
+        </button>
+      </div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="max-w-md mx-auto px-4 pb-2">
+      <div class="relative flex items-center">
+        <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Search jewelry, bags, accessories..." class="w-full bg-gray-100 dark:bg-gray-700 text-sm py-2 pl-9 pr-4 rounded-full border border-transparent focus:border-brandRed focus:outline-none dark:text-white">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 text-gray-400 text-sm"></i>
+      </div>
+    </div>
+
+    <!-- CATEGORY CHIPS -->
+    <div class="max-w-md mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar border-t dark:border-gray-700 text-xs font-semibold">
+      <button onclick="selectCategory('All')" class="cat-btn bg-brandRed text-white px-3 py-1 rounded-full whitespace-nowrap shadow-sm" data-cat="All">All</button>
+      <button onclick="selectCategory('Jewelry')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Jewelry">Jewelry</button>
+      <button onclick="selectCategory('Bags')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Bags">Bags</button>
+      <button onclick="selectCategory('Women')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Women">Women</button>
+      <button onclick="selectCategory('Beauty')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Beauty">Beauty</button>
+      <button onclick="selectCategory('Household')" class="cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap" data-cat="Household">Household</button>
+    </div>
+  </header>
+
+  <!-- MAIN FEED -->
+  <main class="max-w-md mx-auto px-3 pt-3">
+    <!-- BANNER PROMO -->
+    <div class="bg-gradient-to-r from-brandRed to-orange-500 rounded-xl p-4 text-white mb-4 shadow-lg flex items-center justify-between">
+      <div>
+        <span class="bg-black/20 text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wide">Limited Time Offer</span>
+        <h2 class="text-xl font-extrabold mt-1">Female Accessories Sale</h2>
+        <p class="text-xs opacity-90 mt-0.5">Min ₦6,500 – Max ₦200,000 Order Protection</p>
+      </div>
+      <i class="fa-solid fa-gem text-4xl opacity-80"></i>
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div id="productGrid" class="grid grid-cols-2 gap-2.5">
+      <!-- Dynamic Products Inserted Here via JS -->
+    </div>
+  </main>
+
+  <!-- BOTTOM NATIVE NAVIGATION BAR -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-gray-800 border-t dark:border-gray-700 shadow-lg">
+    <div class="max-w-md mx-auto flex justify-around items-center py-2">
+      <button onclick="switchTab('home')" class="flex flex-col items-center text-brandRed font-bold text-xs">
+        <i class="fa-solid fa-house text-lg"></i>
+        <span class="mt-0.5">Home</span>
+      </button>
+      <button onclick="openCartDrawer()" class="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brandRed text-xs relative">
+        <i class="fa-solid fa-cart-shopping text-lg"></i>
+        <span class="mt-0.5">Cart</span>
+        <span id="cartBadge" class="absolute -top-1 -right-2 bg-brandRed text-white text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+      </button>
+      <button onclick="openAuthModal()" class="flex flex-col items-center text-gray-500 dark:text-gray-400 hover:text-brandRed text-xs">
+        <i class="fa-solid fa-user text-lg"></i>
+        <span class="mt-0.5">Account</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PRODUCT DETAILS & GALLERY MODAL -->
+  <div id="productModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-end justify-center">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-t-2xl max-h-[90vh] overflow-y-auto relative p-4 animate-slide-up">
+      <button onclick="closeProductModal()" class="absolute top-3 right-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 w-8 h-8 rounded-full font-bold flex items-center justify-center">✕</button>
+      
+      <!-- Main Image Preview -->
+      <div class="relative w-full h-64 bg-gray-100 dark:bg-gray-700 rounded-xl overflow-hidden mb-3">
+        <img id="modalMainImg" src="" class="w-full h-full object-cover">
+        <span id="imgCounter" class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full">1/3</span>
+      </div>
+
+      <!-- Thumbnail Carousel -->
+      <div id="modalThumbnails" class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
+        <!-- Thumbnails appended via JS -->
+      </div>
+
+      <h2 id="modalTitle" class="text-base font-bold dark:text-white leading-tight"></h2>
+      <div class="flex items-baseline gap-2 mt-2">
+        <span id="modalPrice" class="text-xl font-extrabold text-brandRed"></span>
+        <span id="modalOrigPrice" class="text-xs text-gray-400 line-through"></span>
+        <span id="modalDiscount" class="text-[10px] bg-red-100 text-brandRed font-bold px-1.5 py-0.5 rounded"></span>
+      </div>
+
+      <div class="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs p-2 rounded-lg my-3 flex items-center gap-2">
+        <i class="fa-solid fa-truck-fast"></i>
+        <span>Pre-order Eligible | Delivery in Nigeria: 5-8 Days</span>
+      </div>
+
+      <!-- Quantity Selector -->
+      <div class="flex items-center justify-between py-2 border-y dark:border-gray-700 my-3">
+        <span class="text-xs font-semibold dark:text-gray-300">Quantity</span>
+        <div class="flex items-center gap-3 bg-gray-100 dark:bg-gray-700 rounded-lg px-2 py-1">
+          <button onclick="changeModalQty(-1)" class="font-bold text-lg text-gray-600 dark:text-gray-300 px-1">-</button>
+          <span id="modalQty" class="font-bold text-sm dark:text-white">1</span>
+          <button onclick="changeModalQty(1)" class="font-bold text-lg text-gray-600 dark:text-gray-300 px-1">+</button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="grid grid-cols-2 gap-2 mt-4">
+        <button onclick="haggleFromModal()" class="border-2 border-brandRed text-brandRed font-bold py-2.5 rounded-xl text-xs hover:bg-red-50 dark:hover:bg-gray-700">
+          <i class="fa-solid fa-handshake"></i> Haggle Price
+        </button>
+        <button onclick="addToCartFromModal()" class="bg-brandRed text-white font-bold py-2.5 rounded-xl text-xs shadow-md hover:bg-brandDarkRed">
+          <i class="fa-solid fa-cart-plus"></i> Add To Cart
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="search">🔎 <input id="search" placeholder="Search products..." oninput="renderProducts()"></div>
-</header>
 
-<main id="home">
-  <div class="hero"><div><h1>Shop smart. Shop OSJ.</h1><p>Jewelry, fashion & everyday finds.</p><button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop now</button></div><div style="font-size:55px">🛍️</div></div>
-  <div class="section">
-    <div class="sectionhead"><h2>Categories</h2><small>View all</small></div>
-    <div class="chips" id="chips"></div>
+  <!-- HAGGLE / NEGOTIATE MODAL -->
+  <div id="haggleModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-2xl p-5 relative text-center">
+      <button onclick="closeHaggleModal()" class="absolute top-3 right-3 text-gray-400 font-bold">✕</button>
+      <div class="w-12 h-12 bg-red-100 dark:bg-red-900/40 text-brandRed rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+        <i class="fa-solid fa-comments-dollar"></i>
+      </div>
+      <h3 class="font-bold text-lg dark:text-white">Negotiate Price</h3>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Maximum allowed discount is 10% off actual store price.</p>
+      
+      <div class="my-4 bg-gray-50 dark:bg-gray-700 p-3 rounded-xl text-left text-xs">
+        <div class="flex justify-between mb-1">
+          <span class="text-gray-500 dark:text-gray-300">Original Price:</span>
+          <span id="haggleOrigPrice" class="font-bold dark:text-white"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-500 dark:text-gray-300">Lowest Allowed (90%):</span>
+          <span id="haggleLowestPrice" class="font-bold text-emerald-600 dark:text-emerald-400"></span>
+        </div>
+      </div>
+
+      <input type="number" id="haggleInput" placeholder="Enter your offer (₦)" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl py-2.5 px-3 text-center text-sm font-bold focus:outline-none focus:border-brandRed dark:text-white mb-3">
+      <p id="haggleError" class="text-[11px] text-brandRed font-semibold hidden mb-2"></p>
+
+      <button onclick="submitHaggle()" class="w-full bg-brandRed text-white font-bold py-2.5 rounded-xl text-xs hover:bg-brandDarkRed shadow">
+        Submit Offer
+      </button>
+    </div>
   </div>
-  <div class="section">
-    <div class="sectionhead"><h2 id="productTitle">Popular for you</h2><small>New picks</small></div>
-    <div class="grid" id="products"></div>
+
+  <!-- CART DRAWER / FULL PAGE MODAL -->
+  <div id="cartDrawer" class="fixed inset-0 bg-black/70 z-50 hidden flex justify-end">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md h-full flex flex-col justify-between p-4">
+      <div>
+        <div class="flex items-center justify-between pb-3 border-b dark:border-gray-700">
+          <h2 class="text-base font-bold dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-cart-shopping text-brandRed"></i> Your Shopping Cart
+          </h2>
+          <button onclick="closeCartDrawer()" class="text-gray-500 font-bold">✕</button>
+        </div>
+
+        <!-- Cart Items Container -->
+        <div id="cartItemsList" class="my-4 max-h-[60vh] overflow-y-auto space-y-3 no-scrollbar">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Checkout Summary Bar -->
+      <div class="border-t dark:border-gray-700 pt-3">
+        <div class="flex justify-between text-xs mb-1">
+          <span class="text-gray-500 dark:text-gray-400">Selected Items:</span>
+          <span id="cartSelectedCount" class="font-bold dark:text-white">0</span>
+        </div>
+        <div class="flex justify-between text-base font-black mb-3">
+          <span class="dark:text-white">Total Amount:</span>
+          <span id="cartTotal" class="text-brandRed">₦0</span>
+        </div>
+        <button onclick="proceedToLocationCheckout()" class="w-full bg-brandRed text-white font-extrabold py-3 rounded-xl text-sm shadow-lg hover:bg-brandDarkRed">
+          Proceed To Checkout
+        </button>
+      </div>
+    </div>
   </div>
-</main>
 
-<section class="section" id="cartPage" style="display:none">
-  <div class="sectionhead"><h2>Your Cart</h2><small onclick="clearCart()" style="cursor:pointer">Clear</small></div>
-  <div id="cartItems"></div>
-  <div id="cartFooter"></div>
-</section>
+  <!-- LOCATION & CHECKOUT MODAL -->
+  <div id="checkoutModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-2xl p-5 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeCheckoutModal()" class="absolute top-3 right-3 text-gray-400 font-bold">✕</button>
+      
+      <h3 class="font-bold text-lg dark:text-white mb-1">Delivery & Location</h3>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Grant location access for accurate local delivery pin.</p>
 
-<section class="section" id="accountPage" style="display:none">
-  <div class="sectionhead"><h2>Account</h2></div>
-  <div id="accountContent"></div>
-</section>
+      <!-- GPS Detection Button -->
+      <button onclick="requestGPSLocation()" class="w-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-500 text-emerald-700 dark:text-emerald-300 font-bold py-2.5 rounded-xl text-xs mb-3 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-location-crosshairs text-base"></i> Auto-Detect My Exact Location (GPS)
+      </button>
 
-<nav>
- <button id="navHome" class="active" onclick="showPage('home')"><span class="navico">⌂</span>Home</button>
- <button id="navCat" onclick="showCategories()"><span class="navico">▦</span>Categories</button>
- <button id="navCart" onclick="openCart()"><span class="navico">🛒</span>Cart</button>
- <button id="navAccount" onclick="showPage('accountPage')"><span class="navico">◯</span>Account</button>
-</nav>
-</div>
+      <div id="gpsStatus" class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mb-3 hidden text-center"></div>
 
-<div class="overlay" id="productModal"><div class="sheet"><button class="close" onclick="closeModal('productModal')">×</button><div id="productDetail"></div></div></div>
-<div class="overlay" id="variantModal"><div class="sheet"><button class="close" onclick="closeModal('variantModal')">×</button><div id="variantContent"></div></div></div>
-<div class="overlay" id="loginModal"><div class="sheet"><button class="close" onclick="closeModal('loginModal')">×</button><h2 id="loginTitle">Create your account</h2><p style="color:var(--muted)">Save your cart and orders across visits.</p><div class="field"><label>NAME</label><input id="loginName" placeholder="Your name"></div><div class="field"><label>PHONE OR EMAIL</label><input id="loginContact" placeholder="Phone or email"></div><div class="field"><label>PASSWORD</label><input id="loginPass" type="password" placeholder="Password"></div><button class="primary" style="width:100%" onclick="login()">Continue</button><p style="font-size:12px;color:var(--muted)">Demo account storage only in this first storefront build. Secure server authentication comes in the backend phase.</p></div></div>
-<div class="overlay" id="checkoutModal"><div class="sheet"><button class="close" onclick="closeModal('checkoutModal')">×</button><h2>Checkout</h2><div id="checkoutSummary"></div><div class="notice">Minimum order: ₦12,800 • Maximum order: ₦2,000,000</div><h3>Delivery location</h3><button class="secondary" style="width:100%" onclick="getLocation()">📍 Use my current location</button><p id="locationStatus" style="font-size:12px;color:var(--muted)"></p><div class="row"><div class="field"><label>COUNTRY</label><input id="country" value="Nigeria"></div><div class="field"><label>STATE</label><input id="state" placeholder="State"></div></div><div class="row"><div class="field"><label>LGA</label><input id="lga" placeholder="LGA"></div><div class="field"><label>STREET / ADDRESS</label><input id="address" placeholder="Delivery address"></div></div><button class="primary" style="width:100%" onclick="submitCheckout()">Continue to payment</button><p style="font-size:11px;color:var(--muted)">Real Paystack payment will be connected in the backend/payment phase. This button currently creates a local test request only.</p></div></div>
-<div class="overlay" id="negotiationModal"><div class="sheet"><button class="close" onclick="closeModal('negotiationModal')">×</button><h2>Negotiate with seller</h2><p id="negoProduct"></p><div class="notice">Maximum discount: 10%. Offers below 90% of the listed price are automatically rejected.</div><div class="field"><label>YOUR OFFER (₦)</label><input id="offerInput" type="number"></div><button class="primary" style="width:100%" onclick="sendOffer()">Send offer</button><p style="font-size:12px;color:var(--muted)">The future backend will turn this into a real buyer/seller chat.</p></div></div>
-<div class="toast" id="toast"></div>
+      <!-- Manual Location Fallback -->
+      <div class="space-y-2.5 text-xs">
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">State</label>
+          <input type="text" id="locState" placeholder="e.g. Lagos, Abuja, Rivers" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Local Government Area (LGA)</label>
+          <input type="text" id="locLGA" placeholder="e.g. Ikeja, Port Harcourt" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Full Street Address</label>
+          <textarea id="locStreet" rows="2" placeholder="House number, street name, nearest landmark" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none"></textarea>
+        </div>
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Phone Number for Delivery</label>
+          <input type="tel" id="locPhone" placeholder="+234..." class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+      </div>
 
-<script>
-const categories=["All","Women","Men","Jewelry","Toys","Bags","Kids","Beauty","Craft","Baby","Health","Household","Appliances","Books"];
-const products=[
-{id:1,name:"Elegant Gold-Tone Necklace",cat:"Jewelry",price:18500,old:24000,rating:4.8,type:"In-Stock",images:["https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=80"],options:{Color:["Gold","Silver"],Length:["16 cm","18 cm","20 cm"]}},
-{id:2,name:"Classic Women's Handbag",cat:"Bags",price:35000,old:42000,rating:4.7,type:"In-Stock",images:["https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=900&q=80"],options:{Color:["Black","Brown","Cream"]}},
-{id:3,name:"Fashion Sunglasses",cat:"Women",price:12800,old:16000,rating:4.6,type:"In-Stock",images:["https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80"],options:{Color:["Black","Brown","Gold"]}},
-{id:4,name:"Beauty Gift Set",cat:"Beauty",price:22000,old:28000,rating:4.8,type:"Pre-Order",images:["https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=80"],options:{Style:["Classic Set","Premium Set"]}},
-{id:5,name:"Minimalist Bracelet",cat:"Jewelry",price:15000,old:19000,rating:4.5,type:"In-Stock",images:["https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=900&q=80"],options:{Color:["Gold","Silver"],Size:["Small","Medium","Large"]}},
-{id:6,name:"Women's Casual Dress",cat:"Women",price:26000,old:33000,rating:4.7,type:"Pre-Order",images:["https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80"],options:{Size:["S","M","L","XL","XXL"],Color:["Black","Red","White"]}},
-{id:7,name:"Kids Educational Toy",cat:"Toys",price:14000,old:18000,rating:4.6,type:"In-Stock",images:["https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=900&q=80"],options:{Color:["Blue","Pink","Yellow"]}},
-{id:8,name:"Modern Home Organizer",cat:"Household",price:12900,old:17000,rating:4.4,type:"In-Stock",images:["https://images.unsplash.com/photo-1558997519-83ea9252edf8?auto=format&fit=crop&w=900&q=80"],options:{Size:["Small","Medium","Large"]}}
-];
-let selectedCat="All", cart=JSON.parse(localStorage.getItem("osjCart")||"[]"), user=JSON.parse(localStorage.getItem("osjUser")||"null"), currentProduct=null, currentQty=1, coords=null, pendingAction=null, selectedOptions={};
-
-function money(n){return "₦"+Number(n).toLocaleString("en-NG")}
-function save(){localStorage.setItem("osjCart",JSON.stringify(cart));updateCount()}
-function toast(t){let e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2200)}
-function updateCount(){document.getElementById("cartCount").textContent=cart.reduce((a,x)=>a+x.qty,0)}
-function renderChips(){document.getElementById("chips").innerHTML=categories.map(c=>`<button class="chip ${c===selectedCat?"active":""}" onclick="setCat('${c}')">${c}</button>`).join("")}
-function setCat(c){selectedCat=c;renderChips();renderProducts()}
-function renderProducts(){
- let q=document.getElementById("search").value.toLowerCase();
- let list=products.filter(p=>(selectedCat==="All"||p.cat===selectedCat)&&(!q||p.name.toLowerCase().includes(q)||p.cat.toLowerCase().includes(q)));
- document.getElementById("productTitle").textContent=selectedCat==="All"?"Popular for you":selectedCat;
- document.getElementById("products").innerHTML=list.map(p=>`
- <article class="product" onclick="openProduct(${p.id})">
-  <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
-  <div class="productbody"><span class="tag">${p.type}</span><div class="name">${p.name}</div>
-  <div><span class="price">${money(p.price)}</span><span class="old">${money(p.old)}</span></div>
-  <div class="stars">★ ${p.rating}</div>
-  <div class="actions" onclick="event.stopPropagation()"><button class="cartbtn" onclick="startProductAction(${p.id},'cart')">🛒</button><button class="buybtn" onclick="startProductAction(${p.id},'buy')">Buy</button></div>
+      <button onclick="launchPaystackPayment()" class="w-full bg-brandRed text-white font-extrabold py-3 rounded-xl text-xs mt-4 shadow-md hover:bg-brandDarkRed">
+        Pay Now via Paystack
+      </button>
+    </div>
   </div>
- </article>`).join("")||'<div class="empty" style="grid-column:1/-1">No products found.</div>';
-}
-function openProduct(id){
- currentProduct=products.find(p=>p.id===id);currentQty=1;
- let p=currentProduct;
- document.getElementById("productDetail").innerHTML=`
- <div class="gallery"><img id="mainImg" src="${p.images[0]}" alt="${p.name}"><span class="counter">1/${p.images.length}</span></div>
- <div class="thumbs">${p.images.map((x,i)=>`<img src="${x}" onclick="document.getElementById('mainImg').src='${x}'">`).join("")}</div>
- <span class="tag" style="margin-top:12px">${p.type}</span><h2>${p.name}</h2>
- <div class="detailprice">${money(p.price)} <span class="old">${money(p.old)}</span></div>
- <div class="stars">★ ${p.rating} • Nigeria delivery</div>
- <p style="color:var(--muted);line-height:1.5">Quality ${p.cat.toLowerCase()} item available from OSJ Mini Mall. Product details and real inventory will be managed from the future admin dashboard.</p>
- <div class="qty"><b>Quantity</b><button onclick="changeDetailQty(-1)">−</button><strong id="detailQty">1</strong><button onclick="changeDetailQty(1)">+</button></div>
- <div class="detailactions"><button class="secondary" onclick="startProductAction(${p.id},'cart')">🛒 Add to Cart</button><button class="primary" onclick="startProductAction(${p.id},'buy')">Buy Now</button></div>
- <button class="secondary" style="width:100%;margin-top:8px" onclick="openNegotiation(${p.id})">💬 Negotiate with seller</button>`;
- document.getElementById("productModal").classList.add("show");
-}
-function changeDetailQty(n){currentQty=Math.max(1,currentQty+n);document.getElementById("detailQty").textContent=currentQty}
-function hasOptions(p){return p.options&&Object.keys(p.options).some(k=>Array.isArray(p.options[k])&&p.options[k].length)}
-function optionKey(options){return JSON.stringify(options||{})}
-function startProductAction(id,action){let p=products.find(x=>x.id===id);pendingAction={id,action,qty:(currentProduct&&currentProduct.id===id?currentQty:1)};if(hasOptions(p)){openVariantPicker(id,action);return}if(action==="cart")addCart(id,pendingAction.qty,{});else buyNow(id,pendingAction.qty,{});}
-function openVariantPicker(id,action){let p=products.find(x=>x.id===id);pendingAction={id,action,qty:(currentProduct&&currentProduct.id===id?currentQty:1)};selectedOptions={};Object.keys(p.options||{}).forEach(k=>selectedOptions[k]=p.options[k][0]);document.getElementById("variantContent").innerHTML=`<div style="display:flex;gap:12px;align-items:center"><img src="${p.images[0]}" style="width:78px;height:78px;object-fit:cover;border-radius:12px"><div><h2 style="margin:0 0 4px">Choose options</h2><div style="color:var(--muted);font-size:13px">${p.name}</div></div></div>${Object.entries(p.options||{}).map(([name,vals])=>`<div class="optionGroup"><b>${name}</b><div class="optionChoices">${vals.map((v,i)=>`<button class="optionChoice ${i===0?'selected':''}" data-option="${name}" data-value="${v}" onclick="chooseOption(this)">${v}</button>`).join("")}</div></div>`).join("")}<div class="qty" style="margin:16px 0"><b>Quantity</b><button onclick="changePendingQty(-1)">−</button><strong id="pendingQty">${pendingAction.qty}</strong><button onclick="changePendingQty(1)">+</button></div><button class="primary" style="width:100%" onclick="confirmVariantAction()">${action==="cart"?"🛒 Add to Cart":"Buy Now"}</button>`;document.getElementById("variantModal").classList.add("show")}
-function chooseOption(btn){let name=btn.dataset.option;selectedOptions[name]=btn.dataset.value;document.querySelectorAll(`.optionChoice[data-option="${CSS.escape(name)}"]`).forEach(b=>b.classList.remove("selected"));btn.classList.add("selected")}
-function changePendingQty(n){pendingAction.qty=Math.max(1,pendingAction.qty+n);document.getElementById("pendingQty").textContent=pendingAction.qty}
-function confirmVariantAction(){let a=pendingAction;if(!a)return;closeModal("variantModal");if(a.action==="cart"){addCart(a.id,a.qty,selectedOptions);if(document.getElementById("productModal").classList.contains("show"))closeModal("productModal")}else{buyNow(a.id,a.qty,selectedOptions)}}
-function addCart(id,qty=1,options={}){let key=optionKey(options),item=cart.find(x=>x.id===id&&optionKey(x.options||{})===key);if(item)item.qty+=qty;else cart.push({id,qty,options:{...options}});save();toast("Added to cart")}
-function buyNow(id,qty=1,options={}){openCheckout([{id,qty,options:{...options}}]);}
-function openCart(){showPage("cartPage");renderCart()}
-function renderCart(){
- let el=document.getElementById("cartItems");
- if(!cart.length){el.innerHTML='<div class="empty">🛒<br><br>Your cart is empty.</div>';document.getElementById("cartFooter").innerHTML="";return}
- el.innerHTML=cart.map((x,i)=>{let p=products.find(y=>y.id===x.id);let opts=Object.entries(x.options||{}).map(([k,v])=>`${k}: ${v}`).join(" • ");return `<div class="listitem"><input class="check" type="checkbox" data-index="${i}" checked onchange="renderCartFooter()"><img src="${p.images[0]}"><div class="listinfo"><b>${p.name}</b><div>${money(p.price)}</div>${opts?`<div style="font-size:11px;color:var(--purple);margin-top:3px">${opts}</div>`:""}<div class="qty" style="margin-top:7px"><button onclick="changeCartQty(${i},-1)">−</button><strong>${x.qty}</strong><button onclick="changeCartQty(${i},1)">+</button><button onclick="removeCart(${i})" style="margin-left:auto;background:none">🗑️</button></div></div></div>`}).join("");
- renderCartFooter()
-}
-function selectedCartItems(){return [...document.querySelectorAll(".check:checked")].map(e=>{let x=cart[+e.dataset.index];return {id:x.id,qty:x.qty,options:x.options||{}}})}
-function renderCartFooter(){
- let items=selectedCartItems(), total=items.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0);
- document.getElementById("cartFooter").innerHTML=`<div class="total">Selected total: ${money(total)}</div><button class="primary" style="width:100%" onclick="openCheckout(selectedCartItems())">Pay selected items</button><button class="secondary" style="width:100%;margin-top:8px" onclick="toast('Select an item and use Negotiate from its product page')">💬 Negotiate</button>`;
-}
-function changeCartQty(index,n){let x=cart[index];x.qty=Math.max(1,x.qty+n);save();renderCart()}
-function removeCart(index){cart.splice(index,1);save();renderCart();toast("Removed")}
-function clearCart(){cart=[];save();renderCart()}
-function openCheckout(items){
- if(!items||!items.length){toast("Select at least one item");return}
- let total=items.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0);
- if(total<12800||total>2000000){toast("Order must be between ₦12,800 and ₦2,000,000");return}
- if(!user){document.getElementById("loginModal").classList.add("show");toast("Create an account first");return}
- document.getElementById("checkoutSummary").innerHTML=items.map(x=>{let p=products.find(a=>a.id===x.id);return `<div style="display:flex;justify-content:space-between;margin:7px 0"><span>${p.name} × ${x.qty}</span><b>${money(p.price*x.qty)}</b></div>`}).join("")+`<hr><div class="total">Total: ${money(total)}</div>`;
- document.getElementById("checkoutModal").dataset.items=JSON.stringify(items);
- document.getElementById("checkoutModal").classList.add("show");
-}
-function getLocation(){
- if(!navigator.geolocation){document.getElementById("locationStatus").textContent="Location is not supported on this device.";return}
- document.getElementById("locationStatus").textContent="Requesting location permission…";
- navigator.geolocation.getCurrentPosition(pos=>{coords={lat:pos.coords.latitude,lng:pos.coords.longitude};document.getElementById("locationStatus").textContent=`Location captured: ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`},()=>document.getElementById("locationStatus").textContent="Location permission was not granted. You can enter your address manually.")
-}
-function submitCheckout(){
- let items=JSON.parse(document.getElementById("checkoutModal").dataset.items), address=document.getElementById("address").value.trim();
- if(!address&&!coords){toast("Add your address or allow location");return}
- let order={id:"OSJ-"+Date.now(),user,items,total:items.reduce((s,x)=>s+products.find(p=>p.id===x.id).price*x.qty,0),location:coords,address:document.getElementById("country").value+", "+document.getElementById("state").value+", "+document.getElementById("lga").value+", "+address,status:"Payment pending"};
- localStorage.setItem("osjLastOrder",JSON.stringify(order));
- closeModal("checkoutModal");
- toast("Test order request created. Real Paystack comes next.");
-}
-function openNegotiation(id){currentProduct=products.find(p=>p.id===id);document.getElementById("negoProduct").textContent=`${currentProduct.name} — listed at ${money(currentProduct.price)}. Lowest possible offer: ${money(currentProduct.price*.9)}.`;document.getElementById("offerInput").value=Math.ceil(currentProduct.price*.9);document.getElementById("negotiationModal").classList.add("show")}
-function sendOffer(){let offer=Number(document.getElementById("offerInput").value),min=currentProduct.price*.9;if(offer<min){toast("Offer rejected: maximum discount is 10%");return}closeModal("negotiationModal");toast("Offer accepted for review")}
-function closeModal(id){document.getElementById(id).classList.remove("show")}
-function showCategories(){showPage("home");document.getElementById("chips").scrollIntoView({behavior:"smooth"})}
-function showPage(id){
- ["home","cartPage","accountPage"].forEach(x=>document.getElementById(x).style.display=x===id?"block":"none");
- document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
- if(id==="home")document.getElementById("navHome").classList.add("active");
- if(id==="cartPage")document.getElementById("navCart").classList.add("active");
- if(id==="accountPage"){document.getElementById("navAccount").classList.add("active");renderAccount()}
- window.scrollTo(0,0)
-}
-function renderAccount(){
- document.getElementById("accountContent").innerHTML=user?`
- <div class="profile"><div style="display:flex;gap:12px;align-items:center"><div class="avatar">${user.name[0].toUpperCase()}</div><div><h2 style="margin:0">${user.name}</h2><small>${user.contact}</small></div></div></div>
- <div style="margin-top:12px;background:var(--card);border-radius:15px;padding:8px"><button class="menuitem">💰 Wallet / Balance <b style="float:right">₦0</b></button><button class="menuitem">📦 My Requests / Orders</button><button class="menuitem">📍 Delivery Addresses</button><button class="menuitem" onclick="toggleTheme()">🌙 Light / Dark mode</button><button class="menuitem" onclick="logout()">↪ Log out</button></div>`:
- `<div class="profile"><h2>Welcome to OSJ Mini Mall</h2><p style="color:var(--muted)">Create an account to save your cart and submit orders.</p><button class="primary" style="width:100%" onclick="document.getElementById('loginModal').classList.add('show')">Sign up / Login</button></div>`
-}
-function login(){let name=document.getElementById("loginName").value.trim(),contact=document.getElementById("loginContact").value.trim(),pass=document.getElementById("loginPass").value;if(!name||!contact||!pass){toast("Complete all fields");return}user={name,contact};localStorage.setItem("osjUser",JSON.stringify(user));closeModal("loginModal");toast("Welcome, "+name);renderAccount()}
-function logout(){user=null;localStorage.removeItem("osjUser");renderAccount();toast("Logged out")}
-function toggleTheme(){let dark=document.documentElement.getAttribute("data-theme")==="dark";document.documentElement.setAttribute("data-theme",dark?"light":"dark");localStorage.setItem("osjTheme",dark?"light":"dark")}
-(function(){let t=localStorage.getItem("osjTheme");if(t)document.documentElement.setAttribute("data-theme",t);renderChips();renderProducts();updateCount()})();
-</script>
+
+  <!-- AUTH POPUP MODAL -->
+  <div id="authModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-2xl p-5 relative">
+      <button onclick="closeAuthModal()" class="absolute top-3 right-3 text-gray-400 font-bold">✕</button>
+      <h3 id="authTitle" class="font-bold text-lg dark:text-white text-center mb-4">Sign Up to OSJ Mini Mall</h3>
+      
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Full Name</label>
+          <input type="text" id="authName" placeholder="Enter your name" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">Phone Number</label>
+          <input type="tel" id="authPhone" placeholder="0905..." class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-2.5 dark:text-white focus:outline-none">
+        </div>
+      </div>
+
+      <button onclick="saveUserAuth()" class="w-full bg-brandRed text-white font-bold py-2.5 rounded-xl text-xs mt-4 shadow hover:bg-brandDarkRed">
+        Save Profile
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <script>
+    // CONFIGURATION & CONSTANTS
+    const PAYSTACK_PUBLIC_KEY = 'pk_test_2b08e01f6068d0c2859d1024513921d7c48ab484';
+    const ADMIN_WHATSAPP = '2349056558869';
+
+    // SAMPLE STORE PRODUCTS DATA
+    const products = [
+      {
+        id: 1,
+        title: "Crystal Butterfly Gold Pendant Necklace",
+        category: "Jewelry",
+        price: 8500,
+        origPrice: 12500,
+        images: [
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&auto=format&fit=crop"
+        ]
+      },
+      {
+        id: 2,
+        title: "Luxury Female Designer Handbag - Cream",
+        category: "Bags",
+        price: 35000,
+        origPrice: 48000,
+        images: [
+          "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=500&auto=format&fit=crop"
+        ]
+      },
+      {
+        id: 3,
+        title: "Vintage Solid Color Retro T-Shirt Set",
+        category: "Women",
+        price: 14146,
+        origPrice: 49227,
+        images: [
+          "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop"
+        ]
+      },
+      {
+        id: 4,
+        title: "Crystal Hoop Earrings & Jewelry Pack",
+        category: "Jewelry",
+        price: 6553,
+        origPrice: 11418,
+        images: [
+          "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=500&auto=format&fit=crop"
+        ]
+      }
+    ];
+
+    // STATE MANAGEMENT
+    let cart = [];
+    let selectedActiveProduct = null;
+    let modalQuantity = 1;
+    let userLocation = { latitude: null, longitude: null };
+    let activeCategory = 'All';
+
+    // RENDER PRODUCTS GRID
+    function renderProducts(itemsToRender = products) {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+
+      itemsToRender.forEach(p => {
+        const discountPct = Math.round(((p.origPrice - p.price) / p.origPrice) * 100);
+        grid.innerHTML += `
+          <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border dark:border-gray-700 shadow-sm flex flex-col justify-between">
+            <div onclick="openProductModal(${p.id})" class="cursor-pointer relative">
+              <img src="${p.images[0]}" class="w-full h-36 object-cover">
+              <span class="absolute top-2 left-2 bg-brandRed text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded">-${discountPct}%</span>
+            </div>
+            <div class="p-2.5 flex flex-col flex-grow justify-between">
+              <h3 onclick="openProductModal(${p.id})" class="text-xs font-semibold dark:text-white line-clamp-2 cursor-pointer leading-tight mb-2">${p.title}</h3>
+              <div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-sm font-extrabold text-brandRed">₦${p.price.toLocaleString()}</span>
+                  <span class="text-[10px] text-gray-400 line-through">₦${p.origPrice.toLocaleString()}</span>
+                </div>
+                <div class="grid grid-cols-2 gap-1 mt-2">
+                  <button onclick="openHaggleDirect(${p.id})" class="text-[10px] border border-brandRed text-brandRed font-bold py-1 rounded-lg">Haggle</button>
+                  <button onclick="quickAddToCart(${p.id})" class="text-[10px] bg-brandRed text-white font-bold py-1 rounded-lg shadow">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // CATEGORY SELECTION
+    function selectCategory(cat) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = "cat-btn bg-brandRed text-white px-3 py-1 rounded-full whitespace-nowrap shadow-sm";
+        } else {
+          btn.className = "cat-btn bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full whitespace-nowrap";
+        }
+      });
+
+      if (cat === 'All') {
+        renderProducts(products);
+      } else {
+        const filtered = products.filter(p => p.category === cat);
+        renderProducts(filtered);
+      }
+    }
+
+    // SEARCH FILTER
+    function filterProducts() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = products.filter(p => p.title.toLowerCase().includes(q));
+      renderProducts(filtered);
+    }
+
+    // PRODUCT MODAL GALLERY
+    function openProductModal(id) {
+      selectedActiveProduct = products.find(p => p.id === id);
+      modalQuantity = 1;
+      document.getElementById('modalQty').innerText = modalQuantity;
+      document.getElementById('modalTitle').innerText = selectedActiveProduct.title;
+      document.getElementById('modalPrice').innerText = '₦' + selectedActiveProduct.price.toLocaleString();
+      document.getElementById('modalOrigPrice').innerText = '₦' + selectedActiveProduct.origPrice.toLocaleString();
+      
+      const discountPct = Math.round(((selectedActiveProduct.origPrice - selectedActiveProduct.price) / selectedActiveProduct.origPrice) * 100);
+      document.getElementById('modalDiscount').innerText = `-${discountPct}% OFF`;
+
+      document.getElementById('modalMainImg').src = selectedActiveProduct.images[0];
+      document.getElementById('imgCounter').innerText = `1/${selectedActiveProduct.images.length}`;
+
+      const thumbsContainer = document.getElementById('modalThumbnails');
+      thumbsContainer.innerHTML = '';
+      selectedActiveProduct.images.forEach((imgUrl, index) => {
+        thumbsContainer.innerHTML += `
+          <img src="${imgUrl}" onclick="setModalMainImg('${imgUrl}', ${index + 1})" class="w-12 h-12 object-cover rounded-lg border-2 border-transparent hover:border-brandRed cursor-pointer">
+        `;
+      });
+
+      document.getElementById('productModal').classList.remove('hidden');
+    }
+
+    function setModalMainImg(url, idx) {
+      document.getElementById('modalMainImg').src = url;
+      document.getElementById('imgCounter').innerText = `${idx}/${selectedActiveProduct.images.length}`;
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.add('hidden');
+    }
+
+    function changeModalQty(delta) {
+      modalQuantity = Math.max(1, modalQuantity + delta);
+      document.getElementById('modalQty').innerText = modalQuantity;
+    }
+
+    // HAGGLE & NEGOTIATION ENGINE (STRICT 10% FLOOR)
+    function openHaggleDirect(id) {
+      selectedActiveProduct = products.find(p => p.id === id);
+      setupHaggleModal();
+    }
+
+    function haggleFromModal() {
+      closeProductModal();
+      setupHaggleModal();
+    }
+
+    function setupHaggleModal() {
+      const lowest = Math.round(selectedActiveProduct.price * 0.90);
+      document.getElementById('haggleOrigPrice').innerText = '₦' + selectedActiveProduct.price.toLocaleString();
+      document.getElementById('haggleLowestPrice').innerText = '₦' + lowest.toLocaleString();
+      document.getElementById('haggleInput').value = '';
+      document.getElementById('haggleError').classList.add('hidden');
+      document.getElementById('haggleModal').classList.remove('hidden');
+    }
+
+    function closeHaggleModal() {
+      document.getElementById('haggleModal').classList.add('hidden');
+    }
+
+    function submitHaggle() {
+      const offer = parseFloat(document.getElementById('haggleInput').value);
+      const lowestAllowed = selectedActiveProduct.price * 0.90;
+
+      if (isNaN(offer) || offer < lowestAllowed) {
+        const err = document.getElementById('haggleError');
+        err.innerText = `Offer rejected! The lowest acceptable offer (10% max discount) is ₦${lowestAllowed.toLocaleString()}.`;
+        err.classList.remove('hidden');
+        return;
+      }
+
+      // Add haggled price item to cart
+      cart.push({
+        ...selectedActiveProduct,
+        price: offer, // Override with agreed haggled price
+        quantity: 1,
+        selected: true
+      });
+
+      closeHaggleModal();
+      updateCartUI();
+      openCartDrawer();
+    }
+
+    // CART MANAGEMENT
+    function quickAddToCart(id) {
+      const prod = products.find(p => p.id === id);
+      const existing = cart.find(c => c.id === id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...prod, quantity: 1, selected: true });
+      }
+      updateCartUI();
+    }
+
+    function addToCartFromModal() {
+      const existing = cart.find(c => c.id === selectedActiveProduct.id);
+      if (existing) {
+        existing.quantity += modalQuantity;
+      } else {
+        cart.push({ ...selectedActiveProduct, quantity: modalQuantity, selected: true });
+      }
+      closeProductModal();
+      updateCartUI();
+      openCartDrawer();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cartBadge');
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      
+      if (totalItems > 0) {
+        badge.innerText = totalItems;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      renderCartItems();
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cartItemsList');
+      container.innerHTML = '';
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-xs text-gray-400 text-center py-6">Your shopping cart is empty.</p>`;
+        document.getElementById('cartTotal').innerText = '₦0';
+        document.getElementById('cartSelectedCount').innerText = '0';
+        return;
+      }
+
+      let runningTotal = 0;
+      let selectedCount = 0;
+
+      cart.forEach((item, index) => {
+        if (item.selected) {
+          runningTotal += item.price * item.quantity;
+          selectedCount += item.quantity;
+        }
+
+        container.innerHTML += `
+          <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-700/50 p-2.5 rounded-xl border dark:border-gray-700">
+            <input type="checkbox" ${item.selected ? 'checked' : ''} onclick="toggleCartSelection(${index})" class="accent-brandRed w-4 h-4">
+            <img src="${item.images[0]}" class="w-12 h-12 object-cover rounded-lg">
+            <div class="flex-grow">
+              <h4 class="text-xs font-bold dark:text-white line-clamp-1">${item.title}</h4>
+              <p class="text-xs font-extrabold text-brandRed mt-0.5">₦${item.price.toLocaleString()}</p>
+            </div>
+            <div class="flex items-center gap-1.5 bg-white dark:bg-gray-800 px-2 py-1 rounded-lg border dark:border-gray-600">
+              <button onclick="updateCartItemQty(${index}, -1)" class="text-xs font-bold text-gray-500 dark:text-gray-300">-</button>
+              <span class="text-xs font-bold dark:text-white">${item.quantity}</span>
+              <button onclick="updateCartItemQty(${index}, 1)" class="text-xs font-bold text-gray-500 dark:text-gray-300">+</button>
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById('cartTotal').innerText = '₦' + runningTotal.toLocaleString();
+      document.getElementById('cartSelectedCount').innerText = selectedCount;
+    }
+
+    function toggleCartSelection(idx) {
+      cart[idx].selected = !cart[idx].selected;
+      renderCartItems();
+    }
+
+    function updateCartItemQty(idx, delta) {
+      cart[idx].quantity += delta;
+      if (cart[idx].quantity <= 0) {
+        cart.splice(idx, 1);
+      }
+      updateCartUI();
+    }
+
+    function openCartDrawer() {
+      renderCartItems();
+      document.getElementById('cartDrawer').classList.remove('hidden');
+    }
+
+    function closeCartDrawer() {
+      document.getElementById('cartDrawer').classList.add('hidden');
+    }
+
+    // LOCATION & GPS
+    function proceedToLocationCheckout() {
+      const selectedItems = cart.filter(c => c.selected);
+      if (selectedItems.length === 0) {
+        alert('Please select at least one item in your cart to proceed.');
+        return;
+      }
+      closeCartDrawer();
+      document.getElementById('checkoutModal').classList.remove('hidden');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkoutModal').classList.add('hidden');
+    }
+
+    function requestGPSLocation() {
+      const status = document.getElementById('gpsStatus');
+      status.innerText = "Acquiring satellite GPS pin...";
+      status.classList.remove('hidden');
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            userLocation.latitude = pos.coords.latitude;
+            userLocation.longitude = pos.coords.longitude;
+            status.innerText = `GPS Captured: Lat ${pos.coords.latitude.toFixed(4)}, Long ${pos.coords.longitude.toFixed(4)}`;
+          },
+          (err) => {
+            status.innerText = "GPS access denied or unavailable. Please fill address manually below.";
+          }
+        );
+      } else {
+        status.innerText = "Geolocation is not supported by your browser.";
+      }
+    }
+
+    // PAYSTACK PAYMENT DIRECT INTEGRATION
+    function launchPaystackPayment() {
+      const selectedItems = cart.filter(c => c.selected);
+      const totalAmount = selectedItems.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
+      // Validate threshold
+      if (totalAmount < 6500 || totalAmount > 200000) {
+        alert("Store policy requires total checkout value between ₦6,500 and ₦200,000 NGN.");
+        return;
+      }
+
+      const phone = document.getElementById('locPhone').value || "09000000000";
+      const user = JSON.parse(localStorage.getItem('osj_user') || '{"name": "Customer"}');
+
+      let handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: 'customer@osjminimall.com',
+        amount: totalAmount * 100, // Paystack operates in kobo
+        currency: "NGN",
+        ref: 'OSJ_' + Math.floor((Math.random() * 1000000000) + 1),
+        callback: function(response) {
+          closeCheckoutModal();
+          triggerWhatsAppOrderReceipt(response.reference, totalAmount, selectedItems, user.name, phone);
+        },
+        onClose: function() {
+          alert('Payment window closed.');
+        }
+      });
+      handler.openIframe();
+    }
+
+    // WHATSAPP RECEIPT & ORDER DISPATCH
+    function triggerWhatsAppOrderReceipt(ref, amount, items, name, phone) {
+      let street = document.getElementById('locStreet').value || "Not specified";
+      let state = document.getElementById('locState').value || "NG";
+      let lga = document.getElementById('locLGA').value || "NG";
+
+      let mapsLink = userLocation.latitude ? 
+        `https://maps.google.com/?q=${userLocation.latitude},${userLocation.longitude}` : "GPS Not Attached";
+
+      let itemDetails = items.map(i => `• ${i.title} (x${i.quantity}) - ₦${(i.price * i.quantity).toLocaleString()}`).join('%0A');
+
+      let msg = `*NEW ORDER REQUEST - OSJ MINI MALL*%0A%0A` +
+        `*Payment Ref:* ${ref}%0A` +
+        `*Customer Name:* ${name}%0A` +
+        `*Phone Number:* ${phone}%0A%0A` +
+        `*Ordered Items:*%0A${itemDetails}%0A%0A` +
+        `*Total Paid:* ₦${amount.toLocaleString()}%0A%0A` +
+        `*Delivery Address:*%0A${street}, ${lga}, ${state}%0A` +
+        `*GPS Location Pin:* ${mapsLink}`;
+
+      // Reset cart
+      cart = cart.filter(c => !c.selected);
+      updateCartUI();
+
+      // Redirect to Admin WhatsApp
+      window.location.href = `https://wa.me/${ADMIN_WHATSAPP}?text=${msg}`;
+    }
+
+    // AUTH MODAL LOGIC
+    function openAuthModal() {
+      document.getElementById('authModal').classList.remove('hidden');
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function saveUserAuth() {
+      const name = document.getElementById('authName').value;
+      const phone = document.getElementById('authPhone').value;
+      if (name) {
+        localStorage.setItem('osj_user', JSON.stringify({ name, phone }));
+        document.getElementById('userGreetBtn').innerText = `Hi, ${name}`;
+        closeAuthModal();
+      }
+    }
+
+    function checkSavedUser() {
+      const saved = localStorage.getItem('osj_user');
+      if (saved) {
+        const u = JSON.parse(saved);
+        document.getElementById('userGreetBtn').innerText = `Hi, ${u.name}`;
+      }
+    }
+
+    // DARK / LIGHT SYSTEM THEME TOGGLE
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      const icon = document.getElementById('themeIcon');
+      if (document.documentElement.classList.contains('dark')) {
+        icon.className = "fa-solid fa-sun text-lg text-yellow-400";
+      } else {
+        icon.className = "fa-solid fa-moon text-lg";
+      }
+    }
+
+    // INITIALIZATION
+    window.onload = function() {
+      renderProducts();
+      checkSavedUser();
+    };
+  </script>
 </body>
 </html>
