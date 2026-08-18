@@ -88,14 +88,14 @@
 
     <!-- PRODUCT GRID -->
     <div id="productGrid" class="grid grid-cols-2 gap-2.5">
-      <!-- Dynamic Products Inserted Here via JS -->
+      <!-- Dynamic Products Inserted Here -->
     </div>
   </main>
 
-  <!-- BOTTOM NATIVE NAVIGATION BAR -->
+  <!-- BOTTOM NAVIGATION BAR -->
   <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-gray-800 border-t dark:border-gray-700 shadow-lg">
     <div class="max-w-md mx-auto flex justify-around items-center py-2">
-      <button onclick="switchTab('home')" class="flex flex-col items-center text-brandRed font-bold text-xs">
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center text-brandRed font-bold text-xs">
         <i class="fa-solid fa-house text-lg"></i>
         <span class="mt-0.5">Home</span>
       </button>
@@ -111,21 +111,17 @@
     </div>
   </nav>
 
-  <!-- PRODUCT DETAILS & GALLERY MODAL -->
+  <!-- PRODUCT DETAILS MODAL -->
   <div id="productModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-end justify-center">
-    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-t-2xl max-h-[90vh] overflow-y-auto relative p-4 animate-slide-up">
+    <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-t-2xl max-h-[90vh] overflow-y-auto relative p-4">
       <button onclick="closeProductModal()" class="absolute top-3 right-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 w-8 h-8 rounded-full font-bold flex items-center justify-center">✕</button>
       
-      <!-- Main Image Preview -->
       <div class="relative w-full h-64 bg-gray-100 dark:bg-gray-700 rounded-xl overflow-hidden mb-3">
         <img id="modalMainImg" src="" class="w-full h-full object-cover">
-        <span id="imgCounter" class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full">1/3</span>
+        <span id="imgCounter" class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full">1/1</span>
       </div>
 
-      <!-- Thumbnail Carousel -->
-      <div id="modalThumbnails" class="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
-        <!-- Thumbnails appended via JS -->
-      </div>
+      <div id="modalThumbnails" class="flex gap-2 mb-4 overflow-x-auto no-scrollbar"></div>
 
       <h2 id="modalTitle" class="text-base font-bold dark:text-white leading-tight"></h2>
       <div class="flex items-baseline gap-2 mt-2">
@@ -139,7 +135,6 @@
         <span>Pre-order Eligible | Delivery in Nigeria: 5-8 Days</span>
       </div>
 
-      <!-- Quantity Selector -->
       <div class="flex items-center justify-between py-2 border-y dark:border-gray-700 my-3">
         <span class="text-xs font-semibold dark:text-gray-300">Quantity</span>
         <div class="flex items-center gap-3 bg-gray-100 dark:bg-gray-700 rounded-lg px-2 py-1">
@@ -149,7 +144,6 @@
         </div>
       </div>
 
-      <!-- Actions -->
       <div class="grid grid-cols-2 gap-2 mt-4">
         <button onclick="haggleFromModal()" class="border-2 border-brandRed text-brandRed font-bold py-2.5 rounded-xl text-xs hover:bg-red-50 dark:hover:bg-gray-700">
           <i class="fa-solid fa-handshake"></i> Haggle Price
@@ -161,7 +155,7 @@
     </div>
   </div>
 
-  <!-- HAGGLE / NEGOTIATE MODAL -->
+  <!-- HAGGLE MODAL -->
   <div id="haggleModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-2xl p-5 relative text-center">
       <button onclick="closeHaggleModal()" class="absolute top-3 right-3 text-gray-400 font-bold">✕</button>
@@ -191,7 +185,7 @@
     </div>
   </div>
 
-  <!-- CART DRAWER / FULL PAGE MODAL -->
+  <!-- CART DRAWER -->
   <div id="cartDrawer" class="fixed inset-0 bg-black/70 z-50 hidden flex justify-end">
     <div class="bg-white dark:bg-gray-800 w-full max-w-md h-full flex flex-col justify-between p-4">
       <div>
@@ -202,13 +196,11 @@
           <button onclick="closeCartDrawer()" class="text-gray-500 font-bold">✕</button>
         </div>
 
-        <!-- Cart Items Container -->
         <div id="cartItemsList" class="my-4 max-h-[60vh] overflow-y-auto space-y-3 no-scrollbar">
           <!-- Dynamically populated -->
         </div>
       </div>
 
-      <!-- Checkout Summary Bar -->
       <div class="border-t dark:border-gray-700 pt-3">
         <div class="flex justify-between text-xs mb-1">
           <span class="text-gray-500 dark:text-gray-400">Selected Items:</span>
@@ -233,14 +225,12 @@
       <h3 class="font-bold text-lg dark:text-white mb-1">Delivery & Location</h3>
       <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Grant location access for accurate local delivery pin.</p>
 
-      <!-- GPS Detection Button -->
       <button onclick="requestGPSLocation()" class="w-full bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-500 text-emerald-700 dark:text-emerald-300 font-bold py-2.5 rounded-xl text-xs mb-3 flex items-center justify-center gap-2">
         <i class="fa-solid fa-location-crosshairs text-base"></i> Auto-Detect My Exact Location (GPS)
       </button>
 
       <div id="gpsStatus" class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mb-3 hidden text-center"></div>
 
-      <!-- Manual Location Fallback -->
       <div class="space-y-2.5 text-xs">
         <div>
           <label class="block font-medium text-gray-600 dark:text-gray-300 mb-1">State</label>
@@ -270,7 +260,7 @@
   <div id="authModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-2xl p-5 relative">
       <button onclick="closeAuthModal()" class="absolute top-3 right-3 text-gray-400 font-bold">✕</button>
-      <h3 id="authTitle" class="font-bold text-lg dark:text-white text-center mb-4">Sign Up to OSJ Mini Mall</h3>
+      <h3 id="authTitle" class="font-bold text-lg dark:text-white text-center mb-4">Sign Up / Account</h3>
       
       <div class="space-y-3 text-xs">
         <div>
@@ -289,13 +279,12 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <!-- SCRIPT ENGINE -->
   <script>
-    // CONFIGURATION & CONSTANTS
     const PAYSTACK_PUBLIC_KEY = 'pk_test_2b08e01f6068d0c2859d1024513921d7c48ab484';
     const ADMIN_WHATSAPP = '2349056558869';
 
-    // SAMPLE STORE PRODUCTS DATA
+    // GUARANTEED WORKING PLACEHOLDER IMAGES
     const products = [
       {
         id: 1,
@@ -303,10 +292,7 @@
         category: "Jewelry",
         price: 8500,
         origPrice: 12500,
-        images: [
-          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&auto=format&fit=crop"
-        ]
+        images: ["https://via.placeholder.com/400x400/FF002B/FFFFFF?text=Pendant+Necklace"]
       },
       {
         id: 2,
@@ -314,10 +300,7 @@
         category: "Bags",
         price: 35000,
         origPrice: 48000,
-        images: [
-          "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=500&auto=format&fit=crop"
-        ]
+        images: ["https://via.placeholder.com/400x400/333333/FFFFFF?text=Designer+Handbag"]
       },
       {
         id: 3,
@@ -325,9 +308,7 @@
         category: "Women",
         price: 14146,
         origPrice: 49227,
-        images: [
-          "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop"
-        ]
+        images: ["https://via.placeholder.com/400x400/E53E3E/FFFFFF?text=Retro+T-Shirt"]
       },
       {
         id: 4,
@@ -335,20 +316,15 @@
         category: "Jewelry",
         price: 6553,
         origPrice: 11418,
-        images: [
-          "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=500&auto=format&fit=crop"
-        ]
+        images: ["https://via.placeholder.com/400x400/D69E2E/FFFFFF?text=Hoop+Earrings"]
       }
     ];
 
-    // STATE MANAGEMENT
     let cart = [];
     let selectedActiveProduct = null;
     let modalQuantity = 1;
     let userLocation = { latitude: null, longitude: null };
-    let activeCategory = 'All';
 
-    // RENDER PRODUCTS GRID
     function renderProducts(itemsToRender = products) {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = '';
@@ -379,9 +355,7 @@
       });
     }
 
-    // CATEGORY SELECTION
     function selectCategory(cat) {
-      activeCategory = cat;
       document.querySelectorAll('.cat-btn').forEach(btn => {
         if (btn.dataset.cat === cat) {
           btn.className = "cat-btn bg-brandRed text-white px-3 py-1 rounded-full whitespace-nowrap shadow-sm";
@@ -393,19 +367,15 @@
       if (cat === 'All') {
         renderProducts(products);
       } else {
-        const filtered = products.filter(p => p.category === cat);
-        renderProducts(filtered);
+        renderProducts(products.filter(p => p.category === cat));
       }
     }
 
-    // SEARCH FILTER
     function filterProducts() {
       const q = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = products.filter(p => p.title.toLowerCase().includes(q));
-      renderProducts(filtered);
+      renderProducts(products.filter(p => p.title.toLowerCase().includes(q)));
     }
 
-    // PRODUCT MODAL GALLERY
     function openProductModal(id) {
       selectedActiveProduct = products.find(p => p.id === id);
       modalQuantity = 1;
@@ -416,24 +386,9 @@
       
       const discountPct = Math.round(((selectedActiveProduct.origPrice - selectedActiveProduct.price) / selectedActiveProduct.origPrice) * 100);
       document.getElementById('modalDiscount').innerText = `-${discountPct}% OFF`;
-
       document.getElementById('modalMainImg').src = selectedActiveProduct.images[0];
-      document.getElementById('imgCounter').innerText = `1/${selectedActiveProduct.images.length}`;
-
-      const thumbsContainer = document.getElementById('modalThumbnails');
-      thumbsContainer.innerHTML = '';
-      selectedActiveProduct.images.forEach((imgUrl, index) => {
-        thumbsContainer.innerHTML += `
-          <img src="${imgUrl}" onclick="setModalMainImg('${imgUrl}', ${index + 1})" class="w-12 h-12 object-cover rounded-lg border-2 border-transparent hover:border-brandRed cursor-pointer">
-        `;
-      });
 
       document.getElementById('productModal').classList.remove('hidden');
-    }
-
-    function setModalMainImg(url, idx) {
-      document.getElementById('modalMainImg').src = url;
-      document.getElementById('imgCounter').innerText = `${idx}/${selectedActiveProduct.images.length}`;
     }
 
     function closeProductModal() {
@@ -445,7 +400,6 @@
       document.getElementById('modalQty').innerText = modalQuantity;
     }
 
-    // HAGGLE & NEGOTIATION ENGINE (STRICT 10% FLOOR)
     function openHaggleDirect(id) {
       selectedActiveProduct = products.find(p => p.id === id);
       setupHaggleModal();
@@ -480,20 +434,12 @@
         return;
       }
 
-      // Add haggled price item to cart
-      cart.push({
-        ...selectedActiveProduct,
-        price: offer, // Override with agreed haggled price
-        quantity: 1,
-        selected: true
-      });
-
+      cart.push({ ...selectedActiveProduct, price: offer, quantity: 1, selected: true });
       closeHaggleModal();
       updateCartUI();
       openCartDrawer();
     }
 
-    // CART MANAGEMENT
     function quickAddToCart(id) {
       const prod = products.find(p => p.id === id);
       const existing = cart.find(c => c.id === id);
@@ -594,7 +540,6 @@
       document.getElementById('cartDrawer').classList.add('hidden');
     }
 
-    // LOCATION & GPS
     function proceedToLocationCheckout() {
       const selectedItems = cart.filter(c => c.selected);
       if (selectedItems.length === 0) {
@@ -621,7 +566,7 @@
             userLocation.longitude = pos.coords.longitude;
             status.innerText = `GPS Captured: Lat ${pos.coords.latitude.toFixed(4)}, Long ${pos.coords.longitude.toFixed(4)}`;
           },
-          (err) => {
+          () => {
             status.innerText = "GPS access denied or unavailable. Please fill address manually below.";
           }
         );
@@ -630,12 +575,10 @@
       }
     }
 
-    // PAYSTACK PAYMENT DIRECT INTEGRATION
     function launchPaystackPayment() {
       const selectedItems = cart.filter(c => c.selected);
       const totalAmount = selectedItems.reduce((sum, i) => sum + (i.price * i.quantity), 0);
 
-      // Validate threshold
       if (totalAmount < 6500 || totalAmount > 200000) {
         alert("Store policy requires total checkout value between ₦6,500 and ₦200,000 NGN.");
         return;
@@ -647,7 +590,7 @@
       let handler = PaystackPop.setup({
         key: PAYSTACK_PUBLIC_KEY,
         email: 'customer@osjminimall.com',
-        amount: totalAmount * 100, // Paystack operates in kobo
+        amount: totalAmount * 100,
         currency: "NGN",
         ref: 'OSJ_' + Math.floor((Math.random() * 1000000000) + 1),
         callback: function(response) {
@@ -661,7 +604,6 @@
       handler.openIframe();
     }
 
-    // WHATSAPP RECEIPT & ORDER DISPATCH
     function triggerWhatsAppOrderReceipt(ref, amount, items, name, phone) {
       let street = document.getElementById('locStreet').value || "Not specified";
       let state = document.getElementById('locState').value || "NG";
@@ -681,15 +623,12 @@
         `*Delivery Address:*%0A${street}, ${lga}, ${state}%0A` +
         `*GPS Location Pin:* ${mapsLink}`;
 
-      // Reset cart
       cart = cart.filter(c => !c.selected);
       updateCartUI();
 
-      // Redirect to Admin WhatsApp
       window.location.href = `https://wa.me/${ADMIN_WHATSAPP}?text=${msg}`;
     }
 
-    // AUTH MODAL LOGIC
     function openAuthModal() {
       document.getElementById('authModal').classList.remove('hidden');
     }
@@ -716,7 +655,6 @@
       }
     }
 
-    // DARK / LIGHT SYSTEM THEME TOGGLE
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
       const icon = document.getElementById('themeIcon');
@@ -727,7 +665,6 @@
       }
     }
 
-    // INITIALIZATION
     window.onload = function() {
       renderProducts();
       checkSavedUser();
